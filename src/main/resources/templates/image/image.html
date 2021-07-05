@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--<link href="/static/bootstrap_5/bootstrap-5.0.1-dist/css/bootstrap.min.css">-->
+<!--<link href="../../bootstrap_5/bootstrap-5.0.1-dist/js/bootstrap.min.js">-->
+<!--<link href="https://code.jquery.com/jquery-3.6.0.min.js">-->
+<body>
+<h1>Spring Boot - Multiple file upload example - AJAX</h1>
+
+<form method="post" enctype="multipart/form-data" id="fileUploadForm">
+    <input type="text" name="extraField"/><br/><br/>
+    <input type="file" name="files"/><br/><br/>
+    <input type="file" name="files"/><br/><br/>
+    <input type="submit" value="submit" id="btnSubmit"/>
+</form>
+
+<h1>Ajax Post Result</h1>
+&lt;pre&gt;
+<span id="result"></span>
+&lt;/pre&gt;
+
+<!--<script type="text/javascript"-->
+<!--        src="static/jquery/2.2.4/jquery.min.js"></script>-->
+<!--<script></script>-->
+<!--<script type="text/javascript" src="js/main.js"></script>-->
+</body>
+</html>
+<script rel="stylesheet" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#btnSubmit").click(function (event) {
+            let form = $('#fileUploadForm')[0];
+
+            let data = new FormData(form);
+
+            data.append("CustomField", "This is some extra data, testing");
+
+            $("#btnSubmit").prop("disabled", true);
+
+
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: "/api/upload/multi",
+                data: data,
+                //http://api.jquery.com/jQuery.ajax/
+                //https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
+                processData: false, //prevent jQuery from automatically transforming the data into a query string
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+
+                    $("#result").text(data);
+                    console.log("SUCCESS : ", data);
+                    $("#btnSubmit").prop("disabled", false);
+
+                },
+                error: function (e) {
+
+                    $("#result").text(e.responseText);
+                    console.log("ERROR : ", e);
+                    $("#btnSubmit").prop("disabled", false);
+
+                }
+            });
+            // fire_ajax_submit();
+            //stop submit the form, we will post it manually.
+            event.preventDefault();
+
+
+        });
+
+    });
+
+
+    function fire_ajax_submit() {
+
+        // Get form
+        let form = $('#fileUploadForm')[0];
+
+        let data = new FormData(form);
+
+        data.append("CustomField", "This is some extra data, testing");
+
+        $("#btnSubmit").prop("disabled", true);
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/api/upload/multi",
+            data: data,
+            //http://api.jquery.com/jQuery.ajax/
+            //https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
+            processData: false, //prevent jQuery from automatically transforming the data into a query string
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+
+                $("#result").text(data);
+                console.log("SUCCESS : ", data);
+                $("#btnSubmit").prop("disabled", false);
+
+            },
+            error: function (e) {
+
+                $("#result").text(e.responseText);
+                console.log("ERROR : ", e);
+                $("#btnSubmit").prop("disabled", false);
+
+            }
+        });
+
+    }
+
+</script>
