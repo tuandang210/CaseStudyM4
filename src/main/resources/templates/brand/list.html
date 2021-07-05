@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Brand</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+
+<div id="container">
+    <h1>Brand List</h1>
+    <p><a class="btn btn-info" data-bs-toggle="modal" data-bs-target="#createNew">Create New Brand</a></p>
+    <hr>
+    <input type="text" id="search" name="search" placeholder="Search By name">
+    <input onclick="findBrand()" type="submit" value="Search">
+    <hr>
+    <table id="brandList" border="1px">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <tr th:each="x:${brands}">
+            <td th:text="${x.id}"></td>
+            <td th:text="${x.name}"></td>
+            <td><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal"
+                   th:attr="data-brands-id=''+${x.id}+''">edit</a></td>
+            <td><a data-bs-target="#deleteModal" data-bs-toggle="modal" class="btn btn-danger"
+                   th:attr="data-brands-id=''+${x.id}+''">delete</a></td>
+        </tr>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script>
+
+    function findBrand() {
+        let search = $('#search').val();
+        $.ajax({
+            type: "GET",
+            url: `/brands?search=${search}`,
+            success: function (data) {
+                $('#search').val("");
+                let content = '    <tr>\n' +
+                    '        <th>Id</th>\n' +
+                    '        <th>Name</th>\n' +
+                    '        <th>Edit</th>\n' +
+                    '        <th>Delete</th>\n' +
+                    '    </tr>';
+                for (let i = 0; i < data.content.length; i++) {
+                    content += getBrand(data.content[i]);
+                }
+                document.getElementById('brandList').innerHTML = content;
+
+                $(document).ready(function () {
+                    $('#deleteModal').on('show.bs.modal', function (e) {
+                        let brandId = $(e.relatedTarget).data('brands-id')
+                        $('#deleteBrand').click(function (ev) {
+                            $.ajax({
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                type: "DELETE",
+                                url: `/brands/${brandId}`,
+                                success: successHandler
+                            });
+                        })
+                        event.preventDefault();
+                    });
+                })
+            }
+        })
+    }
+
+    function successHandler() {
+        $('#editModal').modal('hide');
+        $('#createNew').modal('hide');
+        $('#deleteModal').modal('hide');
+
+        $.ajax({
+            type: "GET",
+            url: `/brands`,
+            success: function (data) {
+                let content = '    <tr>\n' +
+                    '        <th>Id</th>\n' +
+                    '        <th>Name</th>\n' +
+                    '        <th>Edit</th>\n' +
+                    '        <th>Delete</th>\n' +
+                    '    </tr>';
+                for (let i = 0; i < data.content.length; i++) {
+                    content += getBrand(data.content[i]);
+                }
+                document.getElementById("brandList").innerHTML = content;
+
+                $(document).ready(function () {
+                    $('#deleteModal').on('show.bs.modal', function (e) {
+                        let brandId = $(e.relatedTarget).data('brands-id')
+                        $('#deleteBrand').click(function (ev) {
+                            $.ajax({
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                type: "DELETE",
+                                url: `/brands/${brandId}`,
+                                success: successHandler
+                            });
+                        })
+                        event.preventDefault();
+                    });
+                })
+            }
+        })
+    }
+
+    //hàm create
+    $(document).ready(function () {
+        $("#createBrand").click(function (e) {
+            let name = $('#brand_name').val()
+            $('#brand_name').val("");
+            let newBrand = {
+                name: name
+            }
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                url: `/brands`,
+                data: JSON.stringify(newBrand),
+                success: successHandler
+            })
+            event.preventDefault();
+        })
+    })
+
+    //hàm edit
+    $(document).ready(function () {
+        $('#editModal').on('show.bs.modal', function (e) {
+            let brandId = $(e.relatedTarget).data('brands-id')
+            $.ajax({
+                type: "GET",
+                url: `/brands/${brandId}`,
+                success: function (data) {
+                    $('#recipient-id').val(data.id)
+                    $('#message-name').val(data.name)
+
+                    $('#save-changes').click(function (e) {
+                        let id = $('#recipient-id').val()
+                        let name = $('#message-name').val()
+                        let newBrand = {
+                            id: id,
+                            name: name
+                        }
+                        $.ajax({
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            type: "PUT",
+                            url: `/brands/${id}`,
+                            data: JSON.stringify(newBrand),
+                            success: successHandler
+                        })
+                        event.preventDefault();
+                    })
+                }
+            })
+        });
+    })
+
+    //hàm delete
+    $(document).ready(function () {
+        $('#deleteModal').on('show.bs.modal', function (e) {
+            let brandId = $(e.relatedTarget).data('brands-id')
+            $('#deleteBrand').click(function (e) {
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    type: "DELETE",
+                    url: `/brands/${brandId}`,
+                    success: successHandler
+                });
+            })
+            event.preventDefault();
+        });
+    })
+
+    //vẽ lại html
+    function getBrand(brand) {
+        return `<tr>
+            <td >${brand.id}</td>
+            <td >${brand.name}</td>` +
+            `<td><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal"
+                    data-brands-id=${brand.id}>edit</a></td>` +
+            `<td><a data-bs-target="#deleteModal" data-bs-toggle="modal" class="btn btn-danger" data-brands-id=${brand.id}>delete</a></td></tr>`;
+    }
+</script>
+
+<!--modal edit-->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Manager Brand</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-id" class="col-form-label">Id:</label>
+                        <input readonly type="text" class="form-control" id="recipient-id">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-name" class="col-form-label">Name:</label>
+                        <input class="form-control" id="message-name">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary" id="save-changes">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal create-->
+<div class="modal fade" id="createNew" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create New Brand</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="brand_name" class="col-form-label">Name:</label>
+                        <input class="form-control" id="brand_name"/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                <button class="btn btn-primary" id="createBrand">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal delete-->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Manager Brand</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <h3 style="color: red">Are You Sure?</h3>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-danger" id="deleteBrand">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
