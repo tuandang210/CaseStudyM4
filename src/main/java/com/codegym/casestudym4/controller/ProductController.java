@@ -1,10 +1,15 @@
 package com.codegym.casestudym4.controller;
 
 import com.codegym.casestudym4.model.Brand;
+import com.codegym.casestudym4.model.Color;
+import com.codegym.casestudym4.model.Image;
 import com.codegym.casestudym4.model.Product;
+import com.codegym.casestudym4.service.Image.IImageService;
 import com.codegym.casestudym4.service.brand.IBrandService;
+import com.codegym.casestudym4.service.color.IColorService;
 import com.codegym.casestudym4.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -12,33 +17,55 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
+
     @Autowired
     private IProductService productService;
+
     @Autowired
     private IBrandService brandService;
+
+    @Autowired
+    private IImageService imageService;
+
+    @Autowired
+    private IColorService colorService;
+
     @ModelAttribute("brands")
     public Iterable<Brand>brands(){
-        return brandService.findAll();
+            return brandService.findAll();
     }
+
+     @ModelAttribute("images")
+    public Iterable<Image>images(){
+        return imageService.findAll();
+    }
+
+    @ModelAttribute("colors")
+    public Iterable<Color>colors(){
+        return colorService.findAll();
+    }
+
     @GetMapping("/list")
     public ModelAndView showList(Pageable pageable){
         ModelAndView modelAndView = new ModelAndView("/products/list");
         modelAndView.addObject("products",productService.findAll(pageable));
         return modelAndView;
     }
+
     @GetMapping()
-    public ResponseEntity<List<Product>> getAllCustomerUsingPagination(@RequestParam int page, @RequestParam int size){
-        List<Product> customers = productService.findAllUsingQueryForPagination(size, page);
-        if (customers.isEmpty()) {
+    public ResponseEntity<Page<Product>> getAllUsingPagination(Pageable pageable){
+        Page<Product> products = productService.findAll(pageable);
+        if (products.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(customers, HttpStatus.OK);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @GetMapping("/search")
@@ -52,30 +79,30 @@ public class ProductController {
         }
     }
 
-    @PostMapping("{/id}")
+    @PostMapping()
     public ResponseEntity<Product> createNew(@RequestBody Product product){
         return new ResponseEntity<>(productService.save(product),HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> deleteSmartphone(@PathVariable Long id) {
-        Optional<Product> smartphoneOptional = productService.findById(id);
-        if (!smartphoneOptional.isPresent()) {
+    public ResponseEntity<Product> deleteProduct(@PathVariable Long id) {
+        Optional<Product> productOptional = productService.findById(id);
+        if (!productOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         productService.delete(id);
-        return new ResponseEntity<>(smartphoneOptional.get(), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(productOptional.get(), HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getInfoSmartPhone(@PathVariable Long id){
-        Optional<Product> smartphoneOptional = productService.findById(id);
-        if (!smartphoneOptional.isPresent()) {
+    public ResponseEntity<Product> getInfoProduct(@PathVariable Long id){
+        Optional<Product> productOptional = productService.findById(id);
+        if (!productOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(smartphoneOptional.get(), HttpStatus.OK);
+        return new ResponseEntity<>(productOptional.get(), HttpStatus.OK);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Product> editSmartPhone(@PathVariable Long id,@RequestBody Product productEdit){
+    public ResponseEntity<Product> editProduct(@PathVariable Long id,@RequestBody Product productEdit){
         Optional<Product> productOptional = productService.findById(productEdit.getId());
         if (!productOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

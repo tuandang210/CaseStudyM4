@@ -1,8 +1,12 @@
 package com.codegym.casestudym4.controller;
 
+import com.codegym.casestudym4.model.Image;
 import com.codegym.casestudym4.model.dtoimage.ImageDTO;
+import com.codegym.casestudym4.service.Image.IImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,19 +19,24 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
 public class RestUploadController {
+    @Value("${upload.path}")
+    private String filePart;
+    @Autowired
+    private IImageService imageService;
+
 
     private final Logger logger = LoggerFactory.getLogger(RestUploadController.class);
 
     @GetMapping("/")
-    public ModelAndView show(){
+    public ModelAndView show() {
         return new ModelAndView("/image/image");
     }
+
     // 3.1.1 Single file upload
     @PostMapping("/api/upload")
     // If not @RestController, uncomment this
@@ -47,7 +56,6 @@ public class RestUploadController {
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
         return new ResponseEntity("Successfully uploaded - " +
                 uploadfile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
 
@@ -55,8 +63,7 @@ public class RestUploadController {
 
     // 3.1.2 Multiple file upload
     @PostMapping("/api/upload/multi")
-    public ResponseEntity<?> uploadFileMulti(@RequestParam("extraField") String extraField,
-            @RequestParam("uploadFiles") MultipartFile[] uploadFiles) {
+    public ResponseEntity<?> uploadFileMulti(@RequestParam("files") MultipartFile[] uploadFiles) {
 
         logger.debug("Multiple file upload!");
 
@@ -75,9 +82,12 @@ public class RestUploadController {
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-        return new ResponseEntity("Successfully uploaded - "
-                + uploadedFileName, HttpStatus.OK);
+        String[] strings = uploadedFileName.split(",");
+        Set<Image> imageSet = new HashSet<>();
+        for(String string : strings){
+            imageSet.add(imageService.save(new Image(string)));
+        }
+        return new ResponseEntity(imageSet, HttpStatus.OK);
 
     }
 
@@ -110,8 +120,8 @@ public class RestUploadController {
 
             byte[] bytes = file.getBytes();
             //Save the uploaded file to this folder
-            String UPLOADED_FOLDER = "D://temp//";
-            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+//            String UPLOADED_FOLDER = "D://temp//";
+            Path path = Paths.get(filePart + file.getOriginalFilename());
             Files.write(path, bytes);
 
         }
