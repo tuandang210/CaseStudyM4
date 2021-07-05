@@ -17,8 +17,17 @@ public class Comment {
     private Long rate;
     @ManyToOne
     private Product product;
+    private Long likes;
 
     public Comment() {
+    }
+
+    public Comment(String author, String content, Long rate, Product product, Long likes) {
+        this.author = author;
+        this.content = content;
+        this.rate = rate;
+        this.product = product;
+        this.likes = likes;
     }
 
     public Comment(String author, String content, Long rate, Product product) {
