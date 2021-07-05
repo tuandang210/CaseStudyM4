@@ -15,6 +15,6 @@ public interface IProductService extends IGeneralService<Product> {
 
     List<Product> findAll(int page, int size);
 
-    @Query(value = "select * from customers limit ?1 offset ?2", nativeQuery = true)
+    @Query(value = "select * from products limit ?1 offset ?2", nativeQuery = true)
     List<Product> findAllUsingQueryForPagination(Integer limit, Integer offset);
 }

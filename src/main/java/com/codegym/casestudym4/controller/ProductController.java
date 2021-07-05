@@ -1,6 +1,8 @@
 package com.codegym.casestudym4.controller;
 
+import com.codegym.casestudym4.model.Brand;
 import com.codegym.casestudym4.model.Product;
+import com.codegym.casestudym4.service.brand.IBrandService;
 import com.codegym.casestudym4.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +20,10 @@ import java.util.Optional;
 public class ProductController {
     @Autowired
     private IProductService productService;
-
+    @Autowired
+    private IBrandService brandService;
+    @ModelAttribute("brands")
+    public Iterable<Brand>brands(){return brandService.fillAll()};
     @GetMapping("/list")
     public ModelAndView showList(Pageable pageable){
         ModelAndView modelAndView = new ModelAndView("/products/list");
