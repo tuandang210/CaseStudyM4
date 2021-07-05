@@ -23,7 +23,9 @@ public class ProductController {
     @Autowired
     private IBrandService brandService;
     @ModelAttribute("brands")
-    public Iterable<Brand>brands(){return brandService.fillAll()};
+    public Iterable<Brand>brands(){
+        return brandService.findAll();
+    }
     @GetMapping("/list")
     public ModelAndView showList(Pageable pageable){
         ModelAndView modelAndView = new ModelAndView("/products/list");

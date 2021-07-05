@@ -140,8 +140,11 @@
                     </tr>
                     <tr>
                         <td>Brand</td>
-                        <td th:each="">
-                            <input type="text"  id="createBrand">
+                        <td>
+                            <select  id="createBrand" >
+                                <option th:each="brand:${brands}" th:text="${brand.name}" th:value="${brand.id}"></option>
+                            </select>
+
                         </td>
                     </tr>
                     <tr>
