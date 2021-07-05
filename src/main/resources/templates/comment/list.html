@@ -30,7 +30,9 @@
             <td th:text="${x.content}"></td>
             <td th:text="${x.rate}"></td>
             <td th:text="${x.product.name}"></td>
-            <td><button th:text="${x.likes}" id="clickLike"></button></td>
+            <td>
+                <input type="button" class="clickLike" value="likes" th:href="${x.id}">
+                <span th:id="${x.id}" th:text="${x.likes}"></span></td>
         </tr>
     </table>
 </div>
@@ -42,6 +44,7 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
 
@@ -68,10 +71,43 @@
         })
     }
 
+    //hàm tăng like
+    $(document).ready(function () {
+        $(".clickLike").click(function (e) {
+            let a = $(this);
+            let commentId = a.attr('href');
+            $.ajax({
+                type: "GET",
+                url: `/comments/${commentId}`,
+                success: function (data) {
+                    document.getElementById(commentId).innerText = data.likes;
+                }
+            })
+            event.preventDefault();
+        });
+    });
+
+    function likes(id) {
+             let commentId = id;
+             $.ajax({
+                 type: "GET",
+                 url: `/comments/${commentId}`,
+                 success: function (data) {
+                     document.getElementById(commentId).innerText = data.likes;
+                 }
+             })
+             event.preventDefault();
+    }
+
     function successHandler() {
         $('#editModal').modal('hide');
         $('#createNew').modal('hide');
         $('#deleteModal').modal('hide');
+        $('#comment_id').val("");
+        $('#comment_author').val("");
+        $('#comment_content').val("");
+        $('#comment_rate').val("");
+        $('#comment_product').val("");
 
         $.ajax({
             type: "GET",
@@ -89,8 +125,24 @@
                     content += getComment(data.content[i]);
                 }
                 document.getElementById("commentList").innerHTML = content;
+                $(document).ready(function () {
+                    $(".clickLike").click(function (e) {
+                        let a = $(this);
+                        let commentId = a.attr('href');
+                        $.ajax({
+                            type: "GET",
+                            url: `/comments/${commentId}`,
+                            success: function (data) {
+                                document.getElementById(commentId).innerText = data.likes;
+                            }
+                        })
+                        event.preventDefault();
+                    });
+                });
+
             }
         })
+        event.preventDefault();
     }
 
     //hàm create
@@ -104,10 +156,10 @@
             $('#comment_content').val("");
             let newComment = {
                 author: author,
-                content:content,
-                rate:rate,
-                product:{
-                    id:product
+                content: content,
+                rate: rate,
+                product: {
+                    id: product
                 },
                 likes: 0
             }
@@ -127,12 +179,14 @@
 
     // vẽ lại html
     function getComment(comment) {
-        return `<tr><td >${comment.id}</td>`+
+        return `<tr><td >${comment.id}</td>` +
             `<td>${comment.author}</td>` +
             `<td>${comment.content}</td>` +
             `<td>${comment.rate}</td>` +
-            `<td>${comment.product.name}</td>`+
-            `<td><button id="clickLike">like</button>${comment.likes}</td></tr>`;
+            `<td>${comment.product.name}</td>` +
+            `<td>
+                <input type="button" onclick="likes(${comment.id})" value="likes">
+                <span id="${comment.id}"> ${comment.likes}</span></td></tr>`;
     }
 </script>
 
@@ -146,6 +200,7 @@
             </div>
             <div class="modal-body">
                 <form>
+                    <input hidden class="form-control" id="comment_id"/>
                     <div class="mb-3">
                         <label for="comment_author" class="col-form-label">Author:</label>
                         <input class="form-control" id="comment_author"/>

@@ -67,11 +67,13 @@ public class CommentController {
     @GetMapping("/{id}")
     public ResponseEntity<Comment> findById(@PathVariable Long id) {
         try {
-            Optional<Comment> commentOptional = commentService.findById(id);
-            if (!commentOptional.isPresent()) {
+            Comment commentOptional = commentService.findById(id).get();
+            if (commentOptional==null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(commentOptional.get(), HttpStatus.OK);
+            commentOptional.setLikes(commentOptional.getLikes()+1);
+            commentService.save(commentOptional);
+            return new ResponseEntity<>(commentOptional, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
