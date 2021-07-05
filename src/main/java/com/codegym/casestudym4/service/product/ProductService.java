@@ -2,6 +2,7 @@ package com.codegym.casestudym4.service.product;
 
 import com.codegym.casestudym4.model.Product;
 import com.codegym.casestudym4.repository.IProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 @Service
 public class ProductService implements IProductService {
+    @Autowired
     private IProductRepository productRepository;
     @Override
     public Iterable<Product> findAll() {

@@ -17,14 +17,14 @@ public class OrderDetail {
     public OrderDetail() {
     }
 
-    public OrderDetail(Long id, Orders orders, Product product, Long quantity) {
-        this.id = id;
+    public OrderDetail(Orders orders, Product product, Long quantity) {
         this.orders = orders;
         this.product = product;
         this.quantity = quantity;
     }
 
-    public OrderDetail(Orders orders, Product product, Long quantity) {
+    public OrderDetail(Long id, Orders orders, Product product, Long quantity) {
+        this.id = id;
         this.orders = orders;
         this.product = product;
         this.quantity = quantity;
