@@ -14,16 +14,16 @@
 </head>
 <body>
 <div id="container">
-    <h1>Brand List</h1>
-    <p><a class="btn btn-info" data-bs-toggle="modal" data-bs-target="#createNew">Create New Order</a></p>
-    <hr>
+<!--    <h1>Brand List</h1>-->
+<!--    <p><a class="btn btn-info" data-bs-toggle="modal" data-bs-target="#createNew">Create New Order</a></p>-->
+<!--    <hr>-->
     <!--    <input type="text" id="search" name="search" placeholder="Search By name">-->
     <!--    <input onclick="findBrand()" type="submit" value="Search">-->
     <hr>
     <table id="orderList" class="table table-striped table-hover">
         <tr>
             <th>Id</th>
-            <th>User</th>
+            <th>Name</th>
             <th>Date</th>
             <th>View</th>
         </tr>
@@ -53,13 +53,12 @@
                 type: "GET",
                 url: `/orderdetails/${brandId}`,
                 success: function (data) {
-                    $('#order_Detail_Id').val(data.id)
-                    let content = `<tr>\n
-                                <th>Product Name</th>\n
-                                <th>Price</th>\n
-                                <th>Quantity</th>\n
-                                <th></th>\n
-                            </tr>\n`;
+                    $('#name_user_id').val(data.content[0].orders.user.fullName)
+                    let content = `<tr>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                            </tr>`;
                     for (let i = 0; i < data.content.length; i++) {
                         content += getContent(data.content[i])
                     }
@@ -70,8 +69,7 @@
                     content += `<tr><td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td colspan="4">Total: ${total}</td>
+        <td colspan="3">Total: ${total}</td>
         </tr>`;
                     document.getElementById("list_product").innerHTML = content;
                 }
@@ -91,18 +89,17 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="showCate">Category Detail</h5>
+                <h5 class="modal-title" id="showCate">Order Detail</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
-                        <label for="order_Detail_Id" class="col-form-label">Id:</label>
-                        <input readonly type="text" class="form-control" id="order_Detail_Id">
+                        <label for="name_user_id" class="col-form-label">full name:</label>
+                        <input readonly type="text" class="form-control" id="name_user_id">
                     </div>
                     <div class="mb-3">
                         <table class="table table-striped table-hover" id="list_product">
-
                         </table>
                     </div>
                 </form>
