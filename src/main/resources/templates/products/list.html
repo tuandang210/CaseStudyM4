@@ -78,19 +78,11 @@
             <div class="modal-body">
                 <table>
                     <tr>
-                        <td><input type="hidden" value="${data.id}" id="editId"></td>
+                        <td><input type="hidden" id="editId"></td>
                     </tr>
                     <tr>
                         <td>Name</td>
                         <td><input type="text" id="editName"></td>
-                    </tr>
-                    <tr>
-                        <td>Buy Price</td>
-                        <td><input type="text" id="editBuyPrice"></td>
-                    </tr>
-                    <tr>
-                        <td>Sell Price</td>
-                        <td><input type="text" id="editSellPrice"></td>
                     </tr>
                     <tr>
                         <td>Type</td>
@@ -102,14 +94,22 @@
                         <td><input type="text" id="editSeat"></td>
                     </tr>
                     <tr>
+                        <td>Color</td>
+                        <td><select id="editColor">
+                            <option th:each="color:${colors}" th:text="${color.name}" th:value="${color.id}"  ></option>
+                        </select></td>
+                    </tr>
+                    <tr>
                         <td>Quantity</td>
                         <td><input type="text" id="editQuantity"></td>
                     </tr>
                     <tr>
-                        <td>Color</td>
-                        <td><select id="editColor">
-                            <option th:each="color:${colors}" th:text="${color.name}" th:value="${color.id}" ></option>
-                        </select></td>
+                        <td>Buy Price</td>
+                        <td><input type="text" id="editBuyPrice"></td>
+                    </tr>
+                    <tr>
+                        <td>Sell Price</td>
+                        <td><input type="text" id="editSellPrice"></td>
                     </tr>
                     <tr>
                         <td>Brand</td>
@@ -124,7 +124,12 @@
                     <tr>
                         <td>Image</td>
                         <td>
-                            <input type="text" id="editImage">
+                            <form method="post" enctype="multipart/form-data" id="editFileUploadForm">
+                                <img id ="imgEdit">
+                                <input type="file" name="files" id="img1" placeholder="Edit image 1">
+                                <img id ="imgEdit2">
+                                <input type="file" name="files" id ="img2" placeholder="Edit image 2">
+                            </form>
                         </td>
                     </tr>
                 </table>
@@ -141,73 +146,73 @@
 
 <!-- Modal Create-->
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Create new</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table>
-                    <tr>
-                        <td>Name</td>
-                        <td><input type="text" id="createName"></td>
-                    </tr>
-                    <tr>
-                        <td>Type</td>
-                        <td><input type="text" id="createType"></td>
-                    </tr>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="createModalLabel">Create new</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td><input type="text" id="createName"></td>
+                </tr>
+                <tr>
+                    <td>Type</td>
+                    <td><input type="text" id="createType"></td>
+                </tr>
 
-                    <tr>
-                        <td>Seat</td>
-                        <td><input type="text" id="createSeat"></td>
-                    </tr>
-                    <tr>
-                        <td>Color</td>
-                        <td><select id="createColor">
-                            <option th:each="color:${colors}" th:text="${color.name}" th:value="${color.id}"></option>
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <td>Quantity</td>
-                        <td><input type="text" id="createQuantity"></td>
-                    </tr>
-                    <tr>
-                        <td>Buy Price</td>
-                        <td><input type="text" id="createBuyPrice"></td>
-                    </tr>
-                    <tr>
-                        <td>Sell Price</td>
-                        <td><input type="text" id="createSellPrice"></td>
-                    </tr>
-                    <tr>
-                        <td>Brand</td>
-                        <td>
-                            <select id="createBrand">
-                                <option th:each="brand:${brands}" th:text="${brand.name}"
-                                        th:value="${brand.id}"></option>
-                            </select>
+                <tr>
+                    <td>Seat</td>
+                    <td><input type="text" id="createSeat"></td>
+                </tr>
+                <tr>
+                    <td>Color</td>
+                    <td><select id="createColor">
+                        <option th:each="color:${colors}" th:text="${color.name}" th:value="${color.id}"></option>
+                    </select></td>
+                </tr>
+                <tr>
+                    <td>Quantity</td>
+                    <td><input type="text" id="createQuantity"></td>
+                </tr>
+                <tr>
+                    <td>Buy Price</td>
+                    <td><input type="text" id="createBuyPrice"></td>
+                </tr>
+                <tr>
+                    <td>Sell Price</td>
+                    <td><input type="text" id="createSellPrice"></td>
+                </tr>
+                <tr>
+                    <td>Brand</td>
+                    <td>
+                        <select id="createBrand">
+                            <option th:each="brand:${brands}" th:text="${brand.name}"
+                                    th:value="${brand.id}"></option>
+                        </select>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Image</td>
-                        <td>
-                            <form method="post" enctype="multipart/form-data" id="fileUploadForm">
-                                <input type="file" name="files"/><br/><br/>
-                                <input type="file" name="files"/><br/><br/>
-                            </form>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button onclick="addNewProduct()" id="createButton" type="button" class="btn btn-primary">Create
-                </button>
-            </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Image</td>
+                    <td>
+                        <form method="post" enctype="multipart/form-data" id="fileUploadForm">
+                            <input type="file" name="files"/><br/><br/>
+                            <input type="file" name="files"/><br/><br/>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button onclick="addNewProduct()" id="createButton" type="button" class="btn btn-primary">Create
+            </button>
         </div>
     </div>
+</div>
 </div>
 
 <!-- delete modal-->
@@ -420,52 +425,117 @@
     // edit
     function modalEdit(id) {
         let url = "/products/" + id;
+        let imageSet;
         $.ajax({
             type: "get",
             url: url,
             success: function (data) {
                 let modal = document.getElementById("modal");
-                $('#updateId').val(data.id);
-                $('#updateName').val(data.product);
-                $('#update').val(data.model);
-                $('#updatePrice').val(data.price);
+                $('#editId').val(data.id);
+                $('#editName').val(data.name);
+                $('#editType').val(data.type);
+                $('#editSeat').val(data.seat);
+                $('#editColor').val(data.color);
+                $('#editQuantity').val(data.quantity);
+                $('#editBuyPrice').val(data.buyPrice);
+                $('#editSellPrice').val(data.sellPrice);
+                $('#editBrand').val(data.brand);
+                $('#imgEdit').attr('src', '/../'+data.imageSet[0].image);
+                $('#imgEdit2').attr('src', '/../'+data.imageSet[1].image);
+                imageSet = data.imageSet;
             }
         })
-        $(document).ready(function () {
-            //sư kiện nào thực hiện Ajax
-            $('#updateButton').click(function (event) {
-                let id = $('#editId').val();
-                let name = $('#editName').val();
-                let type = $('#editType').val();
-                let seat = $('#editSeat').val();
-                let color = $('#editColor').val();
-                let buyPrice = $('#editBuyPrice').val();
-                let cellPrice = $('#editSellPrice').val();
-                let brand = $('#editBrand').val();
-                let imageSet = $('#editImage').val();
 
-                let smartPhoneUpdate = {
-                    id: smartPhoneId,
-                    product: product,
-                    model: model,
-                    price: price
+        $(document).ready(function () {
+                 $("#updateButton").click(function (event) {
+            let form = $('#editFileUploadForm')[0];
+
+            let data = new FormData(form);
+
+            data.append("ProductField", "This is some extra data, testing");
+
+           // $("#updateButton").prop("disabled", false);
+
+
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: "/api/upload/multi",
+                data: data,
+                //http://api.jquery.com/jQuery.ajax/
+                //https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
+                processData: false, //prevent jQuery from automatically transforming the data into a query string
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+                    let id = $('#editId').val();
+                    let name = $('#editName').val();
+                    let type = $('#editType').val();
+                    let seat = $('#editSeat').val();
+                    let color = $('#editColor').val();
+                    let buyPrice = $('#editBuyPrice').val();
+                    let sellPrice = $('#editSellPrice').val();
+                    let quantity = $('#editQuantity').val();
+                    let brand = $('#editBrand').val();
+                    if(data.length===0){
+                        data = imageSet;
+                    }
+                    console.log(data);
+                    let productEdit = {
+                        id:id,
+                        name: name,
+                        type: type,
+                        seat: seat,
+                        color: {
+                            id: color
+                        },
+                        buyPrice: buyPrice,
+                        sellPrice: sellPrice,
+                        quantity: quantity,
+                        brand: {
+                            id: brand
+                        },
+                        imageSet: data
+                    }
+
+                    //goi ajax
+
+                    $.ajax({
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        type: "PUT",
+                        data: JSON.stringify(productEdit),
+                        // API
+                        url: "/products/"+id,
+                        //su ly khi thanh cong
+                        success: successHandler
+                    });
+                    //chan su kien mac dinh cua the
+                    event.preventDefault();
+                    // $("#result").text(data);
+                    // console.log("SUCCESS : ", data);
+                    //$("#createButton").prop("disabled", false);
+
+                },
+                error: function (e) {
+
+                    $("#result").text(e.responseText);
+                    console.log("ERROR : ", e);
+                    //$("#updateButton").prop("disabled", false);
+
                 }
-                $.ajax({
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    type: "PUT",
-                    data: JSON.stringify(smartPhoneUpdate),
-                    // API
-                    url: "/smartphones/" + smartPhoneId,
-                    //su ly khi thanh cong
-                    success: successHandler
-                });
-                //chặn sự kiện mặc định của thẻ
-                event.preventDefault();
             });
-        })
+            // fire_ajax_submit();
+            //stop submit the form, we will post it manually.
+            event.preventDefault();
+
+
+            });
+
+            });
         event.preventDefault();
 
     }

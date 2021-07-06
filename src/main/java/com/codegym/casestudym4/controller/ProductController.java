@@ -58,6 +58,12 @@ public class ProductController {
         modelAndView.addObject("products",productService.findAll(pageable));
         return modelAndView;
     }
+    @GetMapping("/show-cars")
+    public ModelAndView showCars(Pageable pageable){
+        ModelAndView modelAndView = new ModelAndView("/allProduct");
+        modelAndView.addObject("products",productService.findAll(pageable));
+        return modelAndView;
+    }
 
     @GetMapping()
     public ResponseEntity<Page<Product>> getAllUsingPagination(Pageable pageable){

@@ -70,9 +70,10 @@ public class RestUploadController {
         // Get file name
         String uploadedFileName = Arrays.stream(uploadFiles).map(MultipartFile::getOriginalFilename)
                 .filter(x -> !StringUtils.isEmpty(x)).collect(Collectors.joining(" , "));
+        Set<Image> imageSet = new HashSet<>();
 
         if (StringUtils.isEmpty(uploadedFileName)) {
-            return new ResponseEntity("please select a file!", HttpStatus.OK);
+            return new ResponseEntity(imageSet, HttpStatus.OK);
         }
 
         try {
@@ -83,7 +84,6 @@ public class RestUploadController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         String[] strings = uploadedFileName.split(",");
-        Set<Image> imageSet = new HashSet<>();
         for(String string : strings){
             imageSet.add(imageService.save(new Image(string)));
         }
