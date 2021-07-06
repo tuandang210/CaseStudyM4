@@ -20,6 +20,11 @@ public class BrandController {
     @Autowired
     private IBrandService brandService;
 
+
+    @GetMapping("/index")
+    public ModelAndView ol(){
+        return new ModelAndView("/index");
+    }
     @GetMapping("/list")
     public ModelAndView showList(@PageableDefault(size = 1000) Pageable pageable) {
         Page<Brand> brands = brandService.findAllPageable(pageable);
