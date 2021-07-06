@@ -20,8 +20,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-@RestController
-@RequestMapping("/users")
+@RestController("/users")
+@RequestMapping("")
 public class UserController {
     @Autowired
     private IUserService userService;
@@ -29,14 +29,6 @@ public class UserController {
     @Autowired
     private IRoleService roleService;
 
-
-    @GetMapping
-    public ModelAndView showAllUsers(){
-        ModelAndView mav = new ModelAndView("/user/login");
-        mav.addObject("users", userService.findAll(0, 5));
-        mav.addObject("roles", roleService.findAll());
-        return mav;
-    }
 
 
     @GetMapping("/api")
@@ -60,28 +52,6 @@ public class UserController {
         return new ResponseEntity<>(userDto, HttpStatus.CREATED);
     }
 
-
-//    @PutMapping("/api/{id}")
-//    public ResponseEntity<UserDto> editUser(@Valid @RequestBody UserDto userDto,
-//                                            @PathVariable("id") Long id)  {
-//        User oldUser = userService.findById(id).get();
-//        if (oldUser == null){
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-////        //validate
-////        userDto.setId(oldUser.getId());
-////        new UsernameValidator(userService).validate(userDto, bindingResult);
-////        if (bindingResult.hasFieldErrors()){
-////            throw new MethodArgumentNotValidException(null, bindingResult);
-////        }
-//        userDto.setId(oldUser.getId());
-//        //reassign role
-//        if (userDto.getRoles() == null) {
-//            userDto.setRoles(oldUser.getRoles());
-//        }
-//        userService.save(UserDto.toPojo(userDto));
-//        return new ResponseEntity<>(userDto, HttpStatus.OK);
-//    }
 
 
     @DeleteMapping("/api/{id}")
