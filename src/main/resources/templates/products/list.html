@@ -46,7 +46,7 @@
             <td th:text="${product.sellPrice}"></td>
             <td th:text="${product.brand.name}"></td>
             <td >
-                  <img th:each="img:${product.imageSet}" th:src="@{'D:\\temp\\' + ${img.image}}" alt="photo">
+                  <img th:each="img:${product.imageSet}" th:src="@{ '/../'+${img.image}}" alt="photo">
             </td>
 
             <td>
@@ -78,22 +78,8 @@
             <div class="modal-body">
                 <table>
                     <tr>
-                        <td><input type="hidden" value="${data.id}" id="updateId"></td>
+                        <td><input type="hidden" value="${data.id}" id="editId"></td>
                     </tr>
-                    <tr>
-                        <td>Producer</td>
-                        <td><input type="text" id="updateProduct"></td>
-                    </tr>
-                    <tr>
-                        <td>Model</td>
-                        <td><input type="text" id="updateModel"></td>
-                    </tr>
-                    <tr>
-                        <td>Price</td>
-                        <td><input type="text" id="updatePrice"></td>
-                    </tr>
-                </table>
-                <table>
                     <tr>
                         <td>Name</td>
                         <td><input type="text" id="editName"></td>
@@ -122,7 +108,7 @@
                     <tr>
                         <td>Color</td>
                         <td><select id="editColor">
-                            <option th:each="color:${colors}" th:text="${color.name}" th:value="${color.id}"></option>
+                            <option th:each="color:${colors}" th:text="${color.name}" th:value="${color.id}" ></option>
                         </select></td>
                     </tr>
                     <tr>
@@ -362,15 +348,24 @@
 
     //--ve thong tin smartphone
     function getProduct(product) {
+        let str = "";
+        product.imageSet.forEach(value =>
+            str+=`<img src="/../${value.image}">`);
+       // <img th:each="img:${product.imageSet}" th:src="@{'/resources/static/image/' + ${img.image}}" alt="photo">
+
         return `<tr>
+                    <td >${product.name}</td>
                     <td >${product.name}</td>
                     <td >${product.type}</td>
                     <td >${product.seat}</td>
-                    <td >${product.color}</td>
+                    <td >${product.color.name}</td>
+                    <td >${product.quantity}</td>
                     <td >${product.buyPrice}</td>
                     <td >${product.sellPrice}</td>
-                    <td >${product.brand}</td>
-                    <td >${product.imageSet}</td>` +
+                    <td >${product.brand.name}</td>
+                    <td >`+
+                        `${str}`
+                    +`</td>` +
                     `<td>
                          <button onclick="modalEdit(this.id)" id="${product.id}"    type="button" class="btn btn-primary"
                               data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -396,17 +391,19 @@
             url: "/products",
             success: function (data) {
                 let content = `<tr>
+                                  <td>#</td>
                                   <td>Name</td>
-                                  <td>Sell Price</td>
-                                  <td>By Price</td>
-                                  <td>By Price</td>
                                   <td>Type</td>
-                                  <td>Color</td>
                                   <td>Seat</td>
+                                  <td>Color</td>
+                                  <td>Quantity</td>
+                                  <td>By Price</td>
+                                  <td>Sell Price</td>
                                   <td>Brand</td>
+                                  <td>Image</td>
                                   <td>Edit</td>
                                   <td>Delete</td>
-                                </tr>`;
+                               </tr>`;
                 for (let i = 0; i < data.content.length; i++) {
                     content += getProduct(data.content[i]);
                 }
@@ -419,55 +416,60 @@
     }
 
 
-    //
-    // // edit
-    // function modalEdit(id) {
-    //     let url = "/smartphones/" + id;
-    //     $.ajax({
-    //         type: "get",
-    //         url: url,
-    //         success: function (data) {
-    //             let modal = document.getElementById("modal");
-    //             $('#updateId').val(data.id);
-    //             $('#updateProduct').val(data.product);
-    //             $('#updateModel').val(data.model);
-    //             $('#updatePrice').val(data.price);
-    //         }
-    //     })
-    //     $(document).ready(function () {
-    //         //sư kiện nào thực hiện Ajax
-    //         $('#updateButton').click(function (event) {
-    //             let smartPhoneId = $('#updateId').val();
-    //             let product = $('#updateProduct').val();
-    //             let model = $('#updateModel').val();
-    //             let price = $('#updatePrice').val();
-    //
-    //             let smartPhoneUpdate = {
-    //                 id: smartPhoneId,
-    //                 product: product,
-    //                 model: model,
-    //                 price: price
-    //             }
-    //             $.ajax({
-    //                 headers: {
-    //                     'Accept': 'application/json',
-    //                     'Content-Type': 'application/json'
-    //                 },
-    //                 type: "PUT",
-    //                 data: JSON.stringify(smartPhoneUpdate),
-    //                 // API
-    //                 url: "/smartphones/" + smartPhoneId,
-    //                 //su ly khi thanh cong
-    //                 success: successHandler
-    //             });
-    //             //chặn sự kiện mặc định của thẻ
-    //             event.preventDefault();
-    //         });
-    //     })
-    //     event.preventDefault();
-    //
-    // }
-    //
+
+    // edit
+    function modalEdit(id) {
+        let url = "/products/" + id;
+        $.ajax({
+            type: "get",
+            url: url,
+            success: function (data) {
+                let modal = document.getElementById("modal");
+                $('#updateId').val(data.id);
+                $('#updateName').val(data.product);
+                $('#update').val(data.model);
+                $('#updatePrice').val(data.price);
+            }
+        })
+        $(document).ready(function () {
+            //sư kiện nào thực hiện Ajax
+            $('#updateButton').click(function (event) {
+                let id = $('#editId').val();
+                let name = $('#editName').val();
+                let type = $('#editType').val();
+                let seat = $('#editSeat').val();
+                let color = $('#editColor').val();
+                let buyPrice = $('#editBuyPrice').val();
+                let cellPrice = $('#editSellPrice').val();
+                let brand = $('#editBrand').val();
+                let imageSet = $('#editImage').val();
+
+                let smartPhoneUpdate = {
+                    id: smartPhoneId,
+                    product: product,
+                    model: model,
+                    price: price
+                }
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    type: "PUT",
+                    data: JSON.stringify(smartPhoneUpdate),
+                    // API
+                    url: "/smartphones/" + smartPhoneId,
+                    //su ly khi thanh cong
+                    success: successHandler
+                });
+                //chặn sự kiện mặc định của thẻ
+                event.preventDefault();
+            });
+        })
+        event.preventDefault();
+
+    }
+
     // //tim kiem
     // function searchByProduct() {
     //     let search = $('#search').val();
