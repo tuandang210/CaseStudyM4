@@ -22,9 +22,15 @@ public class BrandController {
 
 
     @GetMapping("/index")
-    public ModelAndView ol(){
+    public ModelAndView showIndex(){
         return new ModelAndView("/index");
     }
+
+    @GetMapping("/show-cars")
+    public ModelAndView showAllCars(){
+        return new ModelAndView("/allProduct");
+    }
+
     @GetMapping("/list")
     public ModelAndView showList(@PageableDefault(size = 1000) Pageable pageable) {
         Page<Brand> brands = brandService.findAllPageable(pageable);
