@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<h1>Product list</h1>
+
+
+<div>
+    <input id="search" type="text" placeholder="Search by product"/>
+    <input onclick="searchByProduct()" id="bt_search" type="submit" value="Search"/>
+</div>
+<button type="button" class="btn btn-primary"
+        data-bs-toggle="modal" data-bs-target="#createModal">
+    Create
+</button>
+<!--product list-->
+<table id="productList" border="1px">
+    <tr>
+        <td>#</td>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Seat</td>
+        <td>Color</td>
+        <td>Quantity</td>
+        <td>By Price</td>
+        <td>Sell Price</td>
+        <td>Brand</td>
+        <td>Image</td>
+        <td>Edit</td>
+        <td>Delete</td>
+    </tr>
+    <th:block th:each="product,row: ${products}">
+        <tr>
+            <td th:text="${row.count}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.type}"></td>
+            <td th:text="${product.seat}"></td>
+            <td th:text="${product.color.name}"></td>
+            <td th:text="${product.quantity}"></td>
+            <td th:text="${product.buyPrice}"></td>
+            <td th:text="${product.sellPrice}"></td>
+            <td th:text="${product.brand.name}"></td>
+            <td >
+                  <img th:each="img:${product.imageSet}" th:src="@{ '/../'+${img.image}}" alt="photo">
+            </td>
+
+            <td>
+                <button onclick="modalEdit(this.id)" th:id="${product.id}" type="button" class="btn btn-primary"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Edit
+                </button>
+            </td>
+            <td>
+                <button onclick="deleteProduct(this.id)" th:id="${product.id}" type="button" class="btn btn-primary"
+                        data-bs-toggle="modal" data-bs-target="#deleteModal">
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </th:block>
+</table>
+
+<!-- Modal -->
+<!-- Modal Edit-->
+<div id="modal"></div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <td><input type="hidden" id="editId"></td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td><input type="text" id="editName"></td>
+                    </tr>
+                    <tr>
+                        <td>Type</td>
+                        <td><input type="text" id="editType"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Seat</td>
+                        <td><input type="text" id="editSeat"></td>
+                    </tr>
+                    <tr>
+                        <td>Color</td>
+                        <td><select id="editColor">
+                            <option th:each="color:${colors}" th:text="${color.name}" th:value="${color.id}"  ></option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>Quantity</td>
+                        <td><input type="text" id="editQuantity"></td>
+                    </tr>
+                    <tr>
+                        <td>Buy Price</td>
+                        <td><input type="text" id="editBuyPrice"></td>
+                    </tr>
+                    <tr>
+                        <td>Sell Price</td>
+                        <td><input type="text" id="editSellPrice"></td>
+                    </tr>
+                    <tr>
+                        <td>Brand</td>
+                        <td>
+                            <select id="editBrand">
+                                <option th:each="brand:${brands}" th:text="${brand.name}"
+                                        th:value="${brand.id}"></option>
+                            </select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Image</td>
+                        <td>
+                            <form method="post" enctype="multipart/form-data" id="editFileUploadForm">
+                                <img id ="imgEdit">
+                                <input type="file" name="files" id="img1" placeholder="Edit image 1">
+                                <img id ="imgEdit2">
+                                <input type="file" name="files" id ="img2" placeholder="Edit image 2">
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="updateButton" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Create-->
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="createModalLabel">Create new</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td><input type="text" id="createName"></td>
+                </tr>
+                <tr>
+                    <td>Type</td>
+                    <td><input type="text" id="createType"></td>
+                </tr>
+
+                <tr>
+                    <td>Seat</td>
+                    <td><input type="text" id="createSeat"></td>
+                </tr>
+                <tr>
+                    <td>Color</td>
+                    <td><select id="createColor">
+                        <option th:each="color:${colors}" th:text="${color.name}" th:value="${color.id}"></option>
+                    </select></td>
+                </tr>
+                <tr>
+                    <td>Quantity</td>
+                    <td><input type="text" id="createQuantity"></td>
+                </tr>
+                <tr>
+                    <td>Buy Price</td>
+                    <td><input type="text" id="createBuyPrice"></td>
+                </tr>
+                <tr>
+                    <td>Sell Price</td>
+                    <td><input type="text" id="createSellPrice"></td>
+                </tr>
+                <tr>
+                    <td>Brand</td>
+                    <td>
+                        <select id="createBrand">
+                            <option th:each="brand:${brands}" th:text="${brand.name}"
+                                    th:value="${brand.id}"></option>
+                        </select>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>Image</td>
+                    <td>
+                        <form method="post" enctype="multipart/form-data" id="fileUploadForm">
+                            <input type="file" name="files"/><br/><br/>
+                            <input type="file" name="files"/><br/><br/>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button onclick="addNewProduct()" id="createButton" type="button" class="btn btn-primary">Create
+            </button>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- delete modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <td><input type="hidden" value="${data.id}" id="deleteId"></td>
+                    </tr>
+                    <tr>
+                        <td>Producer</td>
+                        <td><input id="deleteProduct" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>Model</td>
+                        <td><input id="deleteModel" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td><input id="deletePrice" readonly></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="deleteButton" type="button" class="btn btn-primary">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal scrip-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<!-- scrip -->
+<script type="text/javascript">
+    //--- them moi
+    function addNewProduct() {
+
+        //
+        // $(document).ready(function () {
+        //     $("#createButton").click(function (event) {
+                let form = $('#fileUploadForm')[0];
+
+                let data = new FormData(form);
+
+                data.append("CustomField", "This is some extra data, testing");
+
+                $("#createButton").prop("disabled", true);
+
+
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: "/api/upload/multi",
+                    data: data,
+                    //http://api.jquery.com/jQuery.ajax/
+                    //https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
+                    processData: false, //prevent jQuery from automatically transforming the data into a query string
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function (data) {
+                        let name = $('#createName').val();
+                        let type = $('#createType').val();
+                        let seat = $('#createSeat').val();
+                        let color = $('#createColor').val();
+                        let buyPrice = $('#createBuyPrice').val();
+                        let sellPrice = $('#createSellPrice').val();
+                        let quantity = $('#createQuantity').val();
+                        let brand = $('#createBrand').val();
+                        let newProduct = {
+                            name: name,
+                            type: type,
+                            seat: seat,
+                            color: {
+                                id: color
+                            },
+                            buyPrice: buyPrice,
+                            sellPrice: sellPrice,
+                            quantity: quantity,
+                            brand: {
+                                id: brand
+                            },
+                            imageSet: data
+                        }
+
+                        //goi ajax
+
+                        $.ajax({
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            type: "POST",
+                            data: JSON.stringify(newProduct),
+                            // API
+                            url: "/products",
+                            //su ly khi thanh cong
+                            success: successHandler
+                        });
+                        //chan su kien mac dinh cua the
+                        event.preventDefault();
+                        // $("#result").text(data);
+                        // console.log("SUCCESS : ", data);
+                        // $("#createButton").prop("disabled", false);
+
+                    },
+                    error: function (e) {
+
+                        $("#result").text(e.responseText);
+                        console.log("ERROR : ", e);
+                        $("#createButton").prop("disabled", false);
+
+                    }
+                });
+                // fire_ajax_submit();
+                //stop submit the form, we will post it manually.
+                event.preventDefault();
+
+
+           // });
+
+       // });
+
+
+
+    }
+
+    //--ve thong tin smartphone
+    function getProduct(product) {
+        let str = "";
+        product.imageSet.forEach(value =>
+            str+=`<img src="/../${value.image}">`);
+       // <img th:each="img:${product.imageSet}" th:src="@{'/resources/static/image/' + ${img.image}}" alt="photo">
+
+        return `<tr>
+                    <td >${product.name}</td>
+                    <td >${product.name}</td>
+                    <td >${product.type}</td>
+                    <td >${product.seat}</td>
+                    <td >${product.color.name}</td>
+                    <td >${product.quantity}</td>
+                    <td >${product.buyPrice}</td>
+                    <td >${product.sellPrice}</td>
+                    <td >${product.brand.name}</td>
+                    <td >`+
+                        `${str}`
+                    +`</td>` +
+                    `<td>
+                         <button onclick="modalEdit(this.id)" id="${product.id}"    type="button" class="btn btn-primary"
+                              data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                 Edit
+                         </button>
+                    </td>
+                    <td>
+                         <button onclick="deleteProduct(this.id)" id="${product.id}" type="button" class="btn btn-primary"
+                            data-bs-toggle="modal" data-bs-target="#deleteModal">
+                             Delete
+                         </button>
+                    </td>
+                 </tr>`;
+    }
+
+    //--succcessHandler
+    function successHandler() {
+        $('#exampleModal').modal('hide');
+        $('#createModal').modal('hide');
+        $('#deleteModal').modal('hide');
+        $.ajax({
+            type: "get",
+            url: "/products",
+            success: function (data) {
+                let content = `<tr>
+                                  <td>#</td>
+                                  <td>Name</td>
+                                  <td>Type</td>
+                                  <td>Seat</td>
+                                  <td>Color</td>
+                                  <td>Quantity</td>
+                                  <td>By Price</td>
+                                  <td>Sell Price</td>
+                                  <td>Brand</td>
+                                  <td>Image</td>
+                                  <td>Edit</td>
+                                  <td>Delete</td>
+                               </tr>`;
+                for (let i = 0; i < data.content.length; i++) {
+                    content += getProduct(data.content[i]);
+                }
+                document.getElementById('productList').innerHTML = content;
+
+            }
+
+        });
+
+    }
+
+
+
+    // edit
+    function modalEdit(id) {
+        let url = "/products/" + id;
+        let imageSet;
+        $.ajax({
+            type: "get",
+            url: url,
+            success: function (data) {
+                let modal = document.getElementById("modal");
+                $('#editId').val(data.id);
+                $('#editName').val(data.name);
+                $('#editType').val(data.type);
+                $('#editSeat').val(data.seat);
+                $('#editColor').val(data.color);
+                $('#editQuantity').val(data.quantity);
+                $('#editBuyPrice').val(data.buyPrice);
+                $('#editSellPrice').val(data.sellPrice);
+                $('#editBrand').val(data.brand);
+                $('#imgEdit').attr('src', '/../'+data.imageSet[0].image);
+                $('#imgEdit2').attr('src', '/../'+data.imageSet[1].image);
+                imageSet = data.imageSet;
+            }
+        })
+
+        $(document).ready(function () {
+                 $("#updateButton").click(function (event) {
+            let form = $('#editFileUploadForm')[0];
+
+            let data = new FormData(form);
+
+            data.append("ProductField", "This is some extra data, testing");
+
+           // $("#updateButton").prop("disabled", false);
+
+
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: "/api/upload/multi",
+                data: data,
+                //http://api.jquery.com/jQuery.ajax/
+                //https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
+                processData: false, //prevent jQuery from automatically transforming the data into a query string
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+                    let id = $('#editId').val();
+                    let name = $('#editName').val();
+                    let type = $('#editType').val();
+                    let seat = $('#editSeat').val();
+                    let color = $('#editColor').val();
+                    let buyPrice = $('#editBuyPrice').val();
+                    let sellPrice = $('#editSellPrice').val();
+                    let quantity = $('#editQuantity').val();
+                    let brand = $('#editBrand').val();
+                    if(data.length===0){
+                        data = imageSet;
+                    }
+                    console.log(data);
+                    let productEdit = {
+                        id:id,
+                        name: name,
+                        type: type,
+                        seat: seat,
+                        color: {
+                            id: color
+                        },
+                        buyPrice: buyPrice,
+                        sellPrice: sellPrice,
+                        quantity: quantity,
+                        brand: {
+                            id: brand
+                        },
+                        imageSet: data
+                    }
+
+                    //goi ajax
+
+                    $.ajax({
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        type: "PUT",
+                        data: JSON.stringify(productEdit),
+                        // API
+                        url: "/products/"+id,
+                        //su ly khi thanh cong
+                        success: successHandler
+                    });
+                    //chan su kien mac dinh cua the
+                    event.preventDefault();
+                    // $("#result").text(data);
+                    // console.log("SUCCESS : ", data);
+                    //$("#createButton").prop("disabled", false);
+
+                },
+                error: function (e) {
+
+                    $("#result").text(e.responseText);
+                    console.log("ERROR : ", e);
+                    //$("#updateButton").prop("disabled", false);
+
+                }
+            });
+            // fire_ajax_submit();
+            //stop submit the form, we will post it manually.
+            event.preventDefault();
+
+
+            });
+
+            });
+        event.preventDefault();
+
+    }
+
+    // //tim kiem
+    // function searchByProduct() {
+    //     let search = $('#search').val();
+    //     $.ajax({
+    //         type: "get",
+    //         url: `/products/search?search=${search}`,
+    //         success: function (data) {
+    //             let content = `<tr>
+    //                               <td>Name</td>
+    //                               <td>Sell Price</td>
+    //                               <td>By Price</td>
+    //                               <td>By Price</td>
+    //                               <td>Type</td>
+    //                               <td>Color</td>
+    //                               <td>Seat</td>
+    //                               <td>Brand</td>
+    //                               <td>Edit</td>
+    //                               <td>Delete</td>
+    //                             </tr>`;
+    //             for (let i = 0; i < data.content.length; i++) {
+    //                 content += getProduct(data.content[i]);
+    //             }
+    //             document.getElementById('smartPhoneList').innerHTML = content;
+    //
+    //         }
+    //
+    //     });
+    //     event.preventDefault();
+    // }
+    //
+    // <!-- delete funcition-->
+    // function deleteProduct(id) {
+    //     let url = "/smartphones/" + id;
+    //     $.ajax({
+    //         type: "get",
+    //         url: url,
+    //         success: function (data) {
+    //             let modal = document.getElementById("modal");
+    //             $('#deleteId').val(data.id);
+    //             $('#deleteProduct').val(data.product);
+    //             $('#deleteModel').val(data.model);
+    //             $('#deletePrice').val(data.price);
+    //         }
+    //     })
+    //     $(document).ready(function () {
+    //         $('#deleteButton').click(function (event) {
+    //             //lay du lieu
+    //
+    //             let smartphoneId = $('#deleteId').val()
+    //             // goi ajax
+    //             $.ajax({
+    //                 type: "DELETE",
+    //                 //tên API
+    //                 url: `/smartphones/${smartphoneId}`,
+    //                 //xử lý khi thành công
+    //                 success: successHandler
+    //
+    //             });
+    //             //chặn sự kiện mặc định của thẻ
+    //             event.preventDefault();
+    //         });
+    //     })
+    // }
+    //
+    // //upload file
+
+</script>
+</body>
+</html>
