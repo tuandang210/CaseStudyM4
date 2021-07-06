@@ -1,9 +1,12 @@
 package com.codegym.casestudym4.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "orderdetails")
+@Data
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

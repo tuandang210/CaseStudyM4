@@ -68,9 +68,6 @@ public class CommentController {
     public ResponseEntity<Comment> findById(@PathVariable Long id) {
         try {
             Comment commentOptional = commentService.findById(id).get();
-            if (commentOptional==null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
             commentOptional.setLikes(commentOptional.getLikes()+1);
             commentService.save(commentOptional);
             return new ResponseEntity<>(commentOptional, HttpStatus.OK);

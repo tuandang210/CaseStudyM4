@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <style>
+        table {
+            text-align: center;
+        }
+
+    </style>
     <meta charset="UTF-8">
     <title>Order</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -11,10 +17,10 @@
     <h1>Brand List</h1>
     <p><a class="btn btn-info" data-bs-toggle="modal" data-bs-target="#createNew">Create New Order</a></p>
     <hr>
-<!--    <input type="text" id="search" name="search" placeholder="Search By name">-->
-<!--    <input onclick="findBrand()" type="submit" value="Search">-->
+    <!--    <input type="text" id="search" name="search" placeholder="Search By name">-->
+    <!--    <input onclick="findBrand()" type="submit" value="Search">-->
     <hr>
-    <table id="orderList" border="1px">
+    <table id="orderList" class="table table-striped table-hover">
         <tr>
             <th>Id</th>
             <th>User</th>
@@ -25,7 +31,7 @@
             <td th:text="${x.id}"></td>
             <td th:text="${x.user.fullName}"></td>
             <td th:text="${x.date}"></td>
-            <td><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal"
+            <td><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show_Form_Order_Detail"
                    th:attr="data-brands-id=''+${x.id}+''">view</a></td>
         </tr>
     </table>
@@ -40,27 +46,72 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <script>
-    // //hàm create
-    // $(document).ready(function () {
-    //     $("#createOrders").click(function (e) {
-    //         let name = $('#brand_name').val()
-    //         $('#brand_name').val("");
-    //         let newBrand = {
-    //             name: name
-    //         }
-    //         $.ajax({
-    //             headers: {
-    //                 'Accept': 'application/json',
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             type: "POST",
-    //             url: `/brands`,
-    //             data: JSON.stringify(newBrand),
-    //             success: successHandler
-    //         })
-    //         event.preventDefault();
-    //     })
-    // })
+    $(document).ready(function () {
+        $('#show_Form_Order_Detail').on('show.bs.modal', function (e) {
+            let brandId = $(e.relatedTarget).data('brands-id')
+            $.ajax({
+                type: "GET",
+                url: `/orderdetails/${brandId}`,
+                success: function (data) {
+                    $('#order_Detail_Id').val(data.id)
+                    let content = `<tr>\n
+                                <th>Product Name</th>\n
+                                <th>Price</th>\n
+                                <th>Quantity</th>\n
+                                <th></th>\n
+                            </tr>\n`;
+                    for (let i = 0; i < data.content.length; i++) {
+                        content += getContent(data.content[i])
+                    }
+                    let total = 0;
+                    for (let i = 0; i < data.content.length; i++) {
+                        total += data.content[i].product.sellPrice * data.content[i].quantity;
+                    }
+                    content += `<tr><td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td colspan="4">Total: ${total}</td>
+        </tr>`;
+                    document.getElementById("list_product").innerHTML = content;
+                }
+            })
+        });
+    })
+
+    function getContent(data) {
+        return `<tr><td>${data.product.name}</td>
+        <td>${data.product.sellPrice}</td>
+        <td>${data.quantity}</td>
+        <td>${data.product.sellPrice * data.quantity}</td></tr>`;
+    }
 </script>
+<div class="modal fade" id="show_Form_Order_Detail" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="showCate">Category Detail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="order_Detail_Id" class="col-form-label">Id:</label>
+                        <input readonly type="text" class="form-control" id="order_Detail_Id">
+                    </div>
+                    <div class="mb-3">
+                        <table class="table table-striped table-hover" id="list_product">
+
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
