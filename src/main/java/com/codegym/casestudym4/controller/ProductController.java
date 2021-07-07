@@ -12,14 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 @RestController
 @RequestMapping("/products")
@@ -66,11 +69,8 @@ public class ProductController {
     }
 
     @GetMapping()
-    public ResponseEntity<Page<Product>> getAllUsingPagination(Pageable pageable){
+    public ResponseEntity<?> getAllUsingPagination(Pageable pageable){
         Page<Product> products = productService.findAll(pageable);
-        if (products.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
@@ -89,14 +89,15 @@ public class ProductController {
     public ResponseEntity<Product> createNew(@RequestBody Product product){
         return new ResponseEntity<>(productService.save(product),HttpStatus.OK);
     }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         Optional<Product> productOptional = productService.findById(id);
         if (!productOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        productService.delete(id);
-        return new ResponseEntity<>(productOptional.get(), HttpStatus.NO_CONTENT);
+        productService.deleteProductsByIdUseProceduce(id);
+        return new ResponseEntity<>(productOptional,HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

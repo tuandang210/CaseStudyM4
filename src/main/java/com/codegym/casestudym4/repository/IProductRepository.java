@@ -14,4 +14,7 @@ public interface IProductRepository extends JpaRepository<Product,Long> {
     Page<Product> findAllByNameContaining(String name, Pageable pageable);
     @Query(value = "select * from products limit ?1 offset ?2", nativeQuery = true)
     List<Product> findAllUsingQueryForPagination(Integer limit, Integer offset);
+
+    @Query(value = "Call Delete_Product(?1) ",nativeQuery = true)
+    void deleteProductsByIdUseProceduce(Long id);
 }
