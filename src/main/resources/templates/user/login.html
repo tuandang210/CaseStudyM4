@@ -9,6 +9,10 @@
             color: red;
             font-weight: 500;
         }
+        .success{
+            color: green;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
@@ -25,8 +29,8 @@
 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
         data-bs-target="#loginModal" > Login
 </button>
-<br/>
-<p th:if="${logoutMsg}" th:text="${logoutMsg}"></p>
+<br/><br/>
+<p th:if="${logoutMsg}" th:text="${logoutMsg}" class="success"></p>
 
 
 <!--Create Modal-->
@@ -41,6 +45,11 @@
                 <form>
                     <table cellpadding="10">
                         <tr>
+                            <td>Email</td>
+                            <td><input type="text" id="email" placeholder="email"></td>
+                        </tr>
+                        <tr><td colspan="2"><p class = "error" id="email_error"></p></td></tr>
+                        <tr>
                             <td>Username</td>
                             <td><input type="text" id="username" placeholder="username"></td>
                         </tr>
@@ -50,11 +59,8 @@
                             <td><input type="password" id="password" placeholder="password"></td>
                         </tr>
                         <tr><td colspan="2"><p class = "error" id="password_error"></p></td></tr>
-                        <tr>
-                            <td>Nickname</td>
-                            <td><input type="text" id="fullName" placeholder="nickname"></td>
-                        </tr>
-                        <tr><td colspan="2"><p class = "error" id="fullName_error"></p></td></tr>
+                        <tr><td colspan="2"><p class="error" id="message_error"></p></td></tr>
+                        <tr><td colspan="2"><p class = "success" id="register_success"></p></td></tr>
                     </table>
                 </form>
             </div>
@@ -121,14 +127,20 @@
                     type: "POST",
                     data: JSON.stringify(loginInfo),
 
-                    url: "/api/auth",
+                    url: "/api/auth/signin",
                     success: function(data){
+                        localStorage.setItem("id", data.id);
                         localStorage.setItem("token", data.accessToken);
-                        window.location.href="http://localhost:8080/user";
+                        let roles = data.roles;
+                        if (roles.indexOf("ROLE_USER") != -1){
+                            window.location.href="http://localhost:8080/api/test/user";
+                        } else if (roles.indexOf("ROLE_ADMIN") != -1){
+                            window.location.href="http://localhost:8080/api/test/admin";
+                        };
                     },
 
-                    error: function(){
-                        document.getElementById("login_error").innerHTML = "Your username or password is invalid!";
+                    error: function(data){
+                        document.getElementById("login_error").innerHTML = "Your username or password is invalid!"
                     }
                 });
             });
@@ -143,22 +155,23 @@
         $('#createModal').on('show.bs.modal', function () {
             $('#username').val("");
             $('#password').val("");
-            $('#fullName').val("");
+            $('#email').val("");
             document.getElementById("username_error").innerHTML = "";
             document.getElementById("password_error").innerHTML = "";
-            document.getElementById("fullName_error").innerHTML = "";
-
+            document.getElementById("email_error").innerHTML = "";
+            document.getElementById("message_error").innerHTML = "";
             $('#create_button').click(function (event) {
                 document.getElementById("username_error").innerHTML = "";
                 document.getElementById("password_error").innerHTML = "";
-                document.getElementById("fullName_error").innerHTML = "";
+                document.getElementById("email_error").innerHTML = "";
+                document.getElementById("message_error").innerHTML = "";
                 let username = $('#username').val();
                 let password = $('#password').val();
-                let fullname = $('#fullName').val();
-                let newCategory = {
+                let email = $('#email').val();
+                let newUser = {
                     username: username,
                     password: password,
-                    fullName: fullname
+                    email: email
                 }
                 $.ajax({
                     headers: {
@@ -166,19 +179,17 @@
                         'Content-Type': 'application/json'
                     },
                     type: "POST",
-                    data: JSON.stringify(newCategory),
-                    url: "/register/api",
+                    data: JSON.stringify(newUser),
+                    url: "/api/auth/signup",
 
-                    success: function(){
-                        $('#username_login').val(username);
-                        $('#password_login').val(password);
-                        $('#createModal').modal('hide');
-                        alert("Register successfully");
+                    success: function(data){
+                        document.getElementById("register_success").innerHTML = data.message;
+                        // $('#createModal').modal('hide');
                     },
 
-                    error: function(data){
-                        let errors = $.parseJSON(data.responseText);
-                        printFieldErrors(errors);
+                    error: function(errors){
+                        let error = $.parseJSON(errors.responseText);
+                        printFieldErrors(error);
                     }
                 });
                 event.preventDefault();
