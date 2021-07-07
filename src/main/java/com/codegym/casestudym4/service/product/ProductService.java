@@ -37,6 +37,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public void deleteProductsByIdUseProceduce(Long id) {
+        productRepository.deleteProductsByIdUseProceduce(id);
+    }
+
+    @Override
     public Page<Product> findAllByNameContaining(String name,Pageable pageable) {
         return productRepository.findAllByNameContaining(name,pageable);
     }
@@ -53,8 +58,7 @@ public class ProductService implements IProductService {
 
     @Override
     public void delete(Long id) {
-        Optional<Product> productOptional = productRepository.findById(id);
-        productOptional.ifPresent(product -> productRepository.delete(product));
+        productRepository.deleteById(id);
     }
 
 
