@@ -31,10 +31,10 @@ public class RestUploadController {
 
     private final Logger logger = LoggerFactory.getLogger(RestUploadController.class);
 
-    @GetMapping("/")
-    public ModelAndView show() {
-        return new ModelAndView("/image/image");
-    }
+//    @GetMapping("/")
+//    public ModelAndView show() {
+//        return new ModelAndView("/image/image");
+//    }
 
     // 3.1.1 Single file upload
     @PostMapping("/api/upload")
