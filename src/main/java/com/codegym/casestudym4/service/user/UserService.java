@@ -1,11 +1,15 @@
 package com.codegym.casestudym4.service.user;
 
 import com.codegym.casestudym4.model.User;
+import com.codegym.casestudym4.model.dto.UserPrincipal;
 import com.codegym.casestudym4.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,6 +18,9 @@ import java.util.Optional;
 public class UserService implements IUserService{
     @Autowired
     private IUserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Iterable<User> findAll() {
@@ -27,6 +34,7 @@ public class UserService implements IUserService{
 
     @Override
     public User save(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -56,5 +64,14 @@ public class UserService implements IUserService{
     public Page<User> findAllByRoleName(String roleName, Integer page, Integer size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         return userRepository.findAllByRoleName(roleName, pageRequest);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if (!userOptional.isPresent()) {
+            throw new UsernameNotFoundException(username);
+        }
+        return UserPrincipal.build(userOptional.get());
     }
 }
