@@ -28,11 +28,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.codegym.casestudym4.model.enumeration.ERole;
+import org.springframework.web.servlet.ModelAndView;
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api")
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -50,25 +50,38 @@ public class AuthController {
     private JwtService jwtService;
 
 
-    @GetMapping("/test/all")
+    @GetMapping("/login")
+    public ModelAndView loginForm(@RequestParam(required = false) String logout){
+        ModelAndView mav = new ModelAndView("/user/login");
+        if (logout != null){
+            mav.addObject("logoutMsg", "You have been logged out successfully!");
+        }
+        return mav;
+    }
+
+
+    @GetMapping("/api/test/all")
     public String allAccess() {
         return "Public Content.";
     }
 
-    @GetMapping("/test/user")
+
+    @GetMapping("/api/test/user")
     @PreAuthorize("hasRole('USER')")
-    public String userAccess() {
-        return "User Content.";
+    public ModelAndView userAccess() {
+        ModelAndView mav = new ModelAndView("/user/testUser");
+        return mav;
     }
 
-    @GetMapping("/test/admin")
+    @GetMapping("/api/test/admin")
     @PreAuthorize("hasRole('ADMIN')")
-    public String adminAccess() {
-        return "Admin Board.";
+    public ModelAndView adminAccess() {
+        ModelAndView mav = new ModelAndView("/user/testAdmin");
+        return mav;
     }
 
 
-    @PostMapping("/auth/signin")
+    @PostMapping("/api/auth/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -89,18 +102,19 @@ public class AuthController {
                 roles));
     }
 
-    @PostMapping("/auth/signup")
+
+    @PostMapping("/api/auth/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userService.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+                    .body(new MessageResponse("Username is already taken!"));
         }
 
         if (userService.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
+                    .body(new MessageResponse("Email is already in use!"));
         }
 
         // Create new user's account
@@ -113,19 +127,19 @@ public class AuthController {
 
         if (strRoles == null) {
             Role userRole = roleService.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    .orElseThrow(() -> new RuntimeException("Role is not found."));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
                         Role adminRole = roleService.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                .orElseThrow(() -> new RuntimeException("Role is not found."));
                         roles.add(adminRole);
                         break;
                     default:
                         Role userRole = roleService.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                .orElseThrow(() -> new RuntimeException("Role is not found."));
                         roles.add(userRole);
                 }
             });
@@ -134,6 +148,6 @@ public class AuthController {
         user.setRoles(roles);
         userService.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("Registered successfully!"));
     }
 }
