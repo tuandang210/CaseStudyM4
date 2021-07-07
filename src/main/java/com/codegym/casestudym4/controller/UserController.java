@@ -1,6 +1,14 @@
 package com.codegym.casestudym4.controller;
 
+<<<<<<< HEAD
 import com.codegym.casestudym4.model.User;
+=======
+import com.codegym.casestudym4.model.*;
+import com.codegym.casestudym4.model.dto.UserDto;
+import com.codegym.casestudym4.service.Image.IImageService;
+import com.codegym.casestudym4.service.brand.IBrandService;
+import com.codegym.casestudym4.service.color.IColorService;
+>>>>>>> thanh0
 import com.codegym.casestudym4.service.role.IRoleService;
 import com.codegym.casestudym4.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@RestController("/users")
-@RequestMapping("")
+@RestController
+@RequestMapping("/api/users")
 public class UserController {
     @Autowired
     private IUserService userService;
@@ -20,9 +28,41 @@ public class UserController {
     @Autowired
     private IRoleService roleService;
 
+    @Autowired
+    private IBrandService brandService;
 
+    @Autowired
+    private IImageService imageService;
 
-    @GetMapping("/api")
+    @Autowired
+    private IColorService colorService;
+
+    @ModelAttribute("brands")
+    public Iterable<Brand>brands(){
+        return brandService.findAll();
+    }
+
+    @ModelAttribute("images")
+    public Iterable<Image>images(){
+        return imageService.findAll();
+    }
+
+    @ModelAttribute("colors")
+    public Iterable<Color>colors(){
+        return colorService.findAll();
+    }
+
+    @GetMapping("/user")
+    public ModelAndView userPage(){
+        return new ModelAndView("/user/user");
+    }
+
+    @GetMapping("/admin")
+    public ModelAndView adminPage(){
+        return new ModelAndView("/admins/adminPag");
+    }
+
+    @GetMapping
     public ResponseEntity<Page<User>> showAllUsers(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "5") Integer size){
         Page<User> users = userService.findAll(page, size);
         if (users.isEmpty()){
@@ -32,7 +72,23 @@ public class UserController {
     }
 
 
+<<<<<<< HEAD
     @DeleteMapping("/api/{id}")
+=======
+    @PostMapping
+    public ResponseEntity<UserDto> addUser(@Valid @RequestBody UserDto userDto){
+
+        if (userDto.getRoles() == null) {
+            userDto.setRoles(defaultRole());
+        }
+        userService.save(UserDto.toPojo(userDto));
+        return new ResponseEntity<>(userDto, HttpStatus.CREATED);
+    }
+
+
+
+    @DeleteMapping("/{id}")
+>>>>>>> thanh0
     public ResponseEntity<User> deleteUser(@PathVariable("id") Long id){
         Optional<User> userOptional = userService.findById(id);
         if (!userOptional.isPresent()){
@@ -41,4 +97,18 @@ public class UserController {
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+<<<<<<< HEAD
+=======
+
+
+    public Set<Role> defaultRole(){
+        Role role_user = roleService.findByRoleName("ROLE_USER").get();
+        Set<Role> defaultRole = new HashSet<>();
+        defaultRole.add(role_user);
+        return defaultRole;
+    }
+
+
+
+>>>>>>> thanh0
 }

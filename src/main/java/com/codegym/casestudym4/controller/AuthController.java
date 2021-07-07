@@ -32,7 +32,10 @@ import com.codegym.casestudym4.model.enumeration.ERole;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+<<<<<<< HEAD
 @RequestMapping("/api")
+=======
+>>>>>>> thanh0
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -55,10 +58,17 @@ public class AuthController {
         return "Public Content.";
     }
 
+<<<<<<< HEAD
     @GetMapping("/test/user")
     @PreAuthorize("hasRole('USER')")
     public String userAccess() {
         return "User Content.";
+=======
+    @GetMapping("/admin")
+    public ModelAndView adminPage(){
+        ModelAndView mav = new ModelAndView("adminPag");
+        return mav;
+>>>>>>> thanh0
     }
 
     @GetMapping("/test/admin")
