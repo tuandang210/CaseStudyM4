@@ -1,14 +1,10 @@
 package com.codegym.casestudym4.controller;
 
-<<<<<<< HEAD
 import com.codegym.casestudym4.model.User;
-=======
 import com.codegym.casestudym4.model.*;
-import com.codegym.casestudym4.model.dto.UserDto;
 import com.codegym.casestudym4.service.Image.IImageService;
 import com.codegym.casestudym4.service.brand.IBrandService;
 import com.codegym.casestudym4.service.color.IColorService;
->>>>>>> thanh0
 import com.codegym.casestudym4.service.role.IRoleService;
 import com.codegym.casestudym4.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
 
@@ -71,24 +68,7 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-
-<<<<<<< HEAD
-    @DeleteMapping("/api/{id}")
-=======
-    @PostMapping
-    public ResponseEntity<UserDto> addUser(@Valid @RequestBody UserDto userDto){
-
-        if (userDto.getRoles() == null) {
-            userDto.setRoles(defaultRole());
-        }
-        userService.save(UserDto.toPojo(userDto));
-        return new ResponseEntity<>(userDto, HttpStatus.CREATED);
-    }
-
-
-
     @DeleteMapping("/{id}")
->>>>>>> thanh0
     public ResponseEntity<User> deleteUser(@PathVariable("id") Long id){
         Optional<User> userOptional = userService.findById(id);
         if (!userOptional.isPresent()){
@@ -97,18 +77,4 @@ public class UserController {
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-<<<<<<< HEAD
-=======
-
-
-    public Set<Role> defaultRole(){
-        Role role_user = roleService.findByRoleName("ROLE_USER").get();
-        Set<Role> defaultRole = new HashSet<>();
-        defaultRole.add(role_user);
-        return defaultRole;
-    }
-
-
-
->>>>>>> thanh0
 }
