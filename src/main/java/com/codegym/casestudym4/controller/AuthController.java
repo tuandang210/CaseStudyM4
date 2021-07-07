@@ -23,7 +23,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @RestController
-@RequestMapping
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -55,7 +54,7 @@ public class AuthController {
 
     @GetMapping("/admin")
     public ModelAndView adminPage(){
-        ModelAndView mav = new ModelAndView("/user/admin");
+        ModelAndView mav = new ModelAndView("adminPag");
         return mav;
     }
 
