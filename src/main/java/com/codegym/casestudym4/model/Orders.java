@@ -14,7 +14,7 @@ public class Orders {
     private Long id;
     @ManyToOne
     private User user;
-    private Date date;
+    private Date date = new Date();
 
     public Orders() {
     }

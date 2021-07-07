@@ -1,35 +1,41 @@
 package com.codegym.casestudym4.controller;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
+
 import com.codegym.casestudym4.model.Role;
-import com.codegym.casestudym4.model.dto.UserDto;
-import com.codegym.casestudym4.model.jwt.JwtResponse;
 import com.codegym.casestudym4.model.User;
+import com.codegym.casestudym4.model.dto.UserPrincipal;
+import com.codegym.casestudym4.payload.request.LoginRequest;
+import com.codegym.casestudym4.payload.request.SignupRequest;
+import com.codegym.casestudym4.payload.response.JwtResponse;
+import com.codegym.casestudym4.payload.response.MessageResponse;
 import com.codegym.casestudym4.service.jwt.JwtService;
 import com.codegym.casestudym4.service.role.IRoleService;
 import com.codegym.casestudym4.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import com.codegym.casestudym4.model.enumeration.ERole;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.Set;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtService jwtService;
 
     @Autowired
     private IUserService userService;
@@ -37,70 +43,108 @@ public class AuthController {
     @Autowired
     private IRoleService roleService;
 
+    @Autowired
+    private PasswordEncoder encoder;
 
-    @GetMapping("/login")
-    public ModelAndView login(@RequestParam(required = false) String logout) {
-        ModelAndView mav = new ModelAndView("/user/login");
-        if (logout != null){
-            mav.addObject("logoutMsg", "You have been logged out successfully");
-        }
-        return mav;
+    @Autowired
+    private JwtService jwtService;
+
+
+//    @GetMapping("api/test/login")
+//    public ModelAndView loginForm(@RequestParam String logout){
+//        ModelAndView mav = new ModelAndView("/user/login");
+//        if (logout != null){
+//            mav.addObject("logoutMsg", "You have been logged out successfully!");
+//        }
+//        return mav;
+//    }
+
+
+
+    @GetMapping("/api/test/all")
+    public String allAccess() {
+        return "Public Content.";
     }
 
-    @GetMapping("/user")
-    public ModelAndView userPage(){
-        ModelAndView mav = new ModelAndView("/user/user");
-        return mav;
+    @GetMapping("/api/test/user")
+    @PreAuthorize("hasRole('USER')")
+    public String userAccess() {
+        return "User Content.";
     }
 
-    @GetMapping("/admin")
-    public ModelAndView adminPage(){
-        ModelAndView mav = new ModelAndView("/user/admin");
-        return mav;
+    @GetMapping("/api/test/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String adminAccess() {
+        return "Admin Board.";
     }
 
-    @GetMapping("/forbidden")
-    public ModelAndView accessDenied(){
-        ModelAndView mav = new ModelAndView("/user/access-denied");
-        return mav;
-    }
+    @PostMapping("/api/auth/signin")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-
-
-    @PostMapping("/login/api")
-    public ResponseEntity<?> login(@RequestBody User user) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtService.generateJwtToken(authentication);
 
-        String jwt = jwtService.generateTokenLogin(authentication);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User currentUser = userService.findByUsername(user.getUsername()).get();
-        return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), currentUser.getFullName(), userDetails.getAuthorities()));
+        UserPrincipal userDetails = (UserPrincipal) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getEmail(),
+                roles));
     }
 
 
-    @PostMapping("/register/api")
-    public ResponseEntity<UserDto> addUser(@Valid @RequestBody UserDto userDto){
-
-        //assign role
-        if (userDto.getRoles() == null) {
-            userDto.setRoles(defaultRole());
+    @PostMapping("/api/auth/signup")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+        if (userService.existsByUsername(signUpRequest.getUsername())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Username is already taken!"));
         }
-        userService.save(UserDto.toPojo(userDto));
 
-        UserDto result = UserDto.build(userService.findByUsername(userDto.getUsername()).get());
+        if (userService.existsByEmail(signUpRequest.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Email is already in use!"));
+        }
 
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+        // Create new user's account
+        User user = new User(signUpRequest.getUsername(),
+                signUpRequest.getEmail(),
+                encoder.encode(signUpRequest.getPassword()));
+
+        Set<String> strRoles = signUpRequest.getRole();
+        Set<Role> roles = new HashSet<>();
+
+        if (strRoles == null) {
+            Role userRole = roleService.findByName(ERole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Role is not found."));
+            roles.add(userRole);
+        } else {
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "admin":
+                        Role adminRole = roleService.findByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Role is not found."));
+                        roles.add(adminRole);
+                        break;
+                    default:
+                        Role userRole = roleService.findByName(ERole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Role is not found."));
+                        roles.add(userRole);
+                }
+            });
+        }
+
+        user.setRoles(roles);
+        userService.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("Registered successfully!"));
     }
-
-
-    public Set<Role> defaultRole(){
-        Role role_user = roleService.findByRoleName("ROLE_USER").get();
-        Set<Role> defaultRole = new HashSet<>();
-        defaultRole.add(role_user);
-        return defaultRole;
-    }
-
 }

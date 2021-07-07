@@ -1,6 +1,7 @@
 package com.codegym.casestudym4.service.role;
 
 import com.codegym.casestudym4.model.Role;
+import com.codegym.casestudym4.model.enumeration.ERole;
 import com.codegym.casestudym4.repository.IRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,8 +34,9 @@ public class RoleService implements IRoleService{
         roleRepository.deleteById(id);
     }
 
+
     @Override
-    public Optional<Role> findByRoleName(String roleName) {
-        return roleRepository.findByRoleName(roleName);
+    public Optional<Role> findByName(ERole name) {
+        return roleRepository.findByName(name);
     }
 }
