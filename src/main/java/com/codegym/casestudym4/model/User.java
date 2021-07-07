@@ -18,7 +18,7 @@ public class User {
     private String username;
 
 
-    @Column(nullable = false, columnDefinition = "varchar(20)")
+    @Column(nullable = false)
     private String password;
 
 
