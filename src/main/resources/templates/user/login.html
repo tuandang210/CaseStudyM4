@@ -105,8 +105,8 @@
     //login
     $(document).ready(function(){
         $('#loginModal').on('show.bs.modal', function () {
-
-            $('#login_button').click(function (event) {
+            document.getElementById("login_error").innerHTML = ""
+            $('#login_button').click(function () {
                 let username = $('#username_login').val();
                 let password = $('#password_login').val();
                 let loginInfo = {
@@ -121,15 +121,14 @@
                     type: "POST",
                     data: JSON.stringify(loginInfo),
 
-                    url: "/login/api",
+                    url: "/api/auth",
                     success: function(data){
-                        console.log(data.accessToken);
                         localStorage.setItem("token", data.accessToken);
                         window.location.href="http://localhost:8080/user";
                     },
 
-                    error: function(data){
-                        $('#login_error').val("Your user name or password are invalid!")
+                    error: function(){
+                        document.getElementById("login_error").innerHTML = "Your username or password is invalid!";
                     }
                 });
             });
@@ -170,7 +169,7 @@
                     data: JSON.stringify(newCategory),
                     url: "/register/api",
 
-                    success: function(data){
+                    success: function(){
                         $('#username_login').val(username);
                         $('#password_login').val(password);
                         $('#createModal').modal('hide');
@@ -187,10 +186,10 @@
         });
     });
 
+
     function printFieldErrors(errors){
         for (const key in errors){
             document.getElementById(`${key}_error`).innerHTML = `${errors[key]}`;
-            console.log(`${key} : ${errors[key]}`);
         }
     }
 

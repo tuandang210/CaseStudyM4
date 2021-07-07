@@ -1,12 +1,16 @@
 package com.codegym.casestudym4.model.dto;
 
-import com.codegym.casestudym4.model.Role;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 import com.codegym.casestudym4.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserPrincipal implements UserDetails {
     private static final long serialVersionUID = 1L;
@@ -15,33 +19,48 @@ public class UserPrincipal implements UserDetails {
 
     private String username;
 
+    private String email;
+
+    @JsonIgnore
     private String password;
 
-    private Collection<? extends GrantedAuthority> roles;
+    private Double totalSpent;
 
-    public UserPrincipal() {
-    }
+    private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(Long id, String username, String password, Collection<? extends GrantedAuthority> roles) {
+    public UserPrincipal(Long id, String username, String email, String password,
+                         Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
+        this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.authorities = authorities;
     }
 
-    public UserPrincipal(String username, String password, Collection<? extends GrantedAuthority> roles) {
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
+    public static UserPrincipal build(User user) {
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .collect(Collectors.toList());
+
+        return new UserPrincipal(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getPassword(),
+                authorities);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
     }
 
     public Long getId() {
         return id;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+    public String getEmail() {
+        return email;
     }
 
     @Override
@@ -76,32 +95,11 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         UserPrincipal user = (UserPrincipal) o;
         return Objects.equals(id, user.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    //convert a UserPrincipal from a User
-    public static UserPrincipal build(User user){
-
-        Set<Role> roles = user.getRoles();
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Role role: roles){
-            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
-        }
-
-        return new UserPrincipal(
-                user.getId(),
-                user.getUsername(),
-                user.getPassword(),
-                authorities
-        );
     }
 }
