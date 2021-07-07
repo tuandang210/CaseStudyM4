@@ -31,7 +31,7 @@ import com.codegym.casestudym4.model.enumeration.ERole;
 import org.springframework.web.servlet.ModelAndView;
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class AuthController {
     @Autowired
@@ -50,15 +50,14 @@ public class AuthController {
     private JwtService jwtService;
 
 
-//    @GetMapping("api/test/login")
-//    public ModelAndView loginForm(@RequestParam String logout){
-//        ModelAndView mav = new ModelAndView("/user/login");
-//        if (logout != null){
-//            mav.addObject("logoutMsg", "You have been logged out successfully!");
-//        }
-//        return mav;
-//    }
-
+    @GetMapping("/login")
+    public ModelAndView loginForm(@RequestParam(required = false) String logout){
+        ModelAndView mav = new ModelAndView("/user/login");
+        if (logout != null){
+            mav.addObject("logoutMsg", "You have been logged out successfully!");
+        }
+        return mav;
+    }
 
 
     @GetMapping("/api/test/all")
@@ -66,17 +65,21 @@ public class AuthController {
         return "Public Content.";
     }
 
+
     @GetMapping("/api/test/user")
     @PreAuthorize("hasRole('USER')")
-    public String userAccess() {
-        return "User Content.";
+    public ModelAndView userAccess() {
+        ModelAndView mav = new ModelAndView("/user/testUser");
+        return mav;
     }
 
     @GetMapping("/api/test/admin")
     @PreAuthorize("hasRole('ADMIN')")
-    public String adminAccess() {
-        return "Admin Board.";
+    public ModelAndView adminAccess() {
+        ModelAndView mav = new ModelAndView("/user/testAdmin");
+        return mav;
     }
+
 
     @PostMapping("/api/auth/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
