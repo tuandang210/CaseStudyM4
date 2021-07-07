@@ -20,16 +20,10 @@ public class BrandController {
     @Autowired
     private IBrandService brandService;
 
-
-    @GetMapping("/index")
-    public ModelAndView showIndex(){
-        return new ModelAndView("/index");
-    }
-
-    @GetMapping("/show-cars")
-    public ModelAndView showAllCars(){
-        return new ModelAndView("/allProduct");
-    }
+//    @GetMapping("/show-cars")
+//    public ModelAndView showAllCars(){
+//        return new ModelAndView("/allProduct");
+//    }
 
     @GetMapping("/list")
     public ModelAndView showList(@PageableDefault(size = 1000) Pageable pageable) {

@@ -14,6 +14,7 @@
         .card {
             margin-bottom: 20px;
         }
+
         .card-img-top {
             width: 200px;
             height: 200px;
@@ -37,8 +38,12 @@
             <nav style="float:right">
                 <div class="row">
                     <div style="float: right; margin-top: 8px" class="col">
-                        <button style="width: 100px; font-size: 10px; background-color: white" type="button" data-toggle="modal" data-target="#cart">Cart (<span class="total-count"></span>)</button>
-                        <button style="width: 100px; font-size: 10px; background-color: white" class="clear-cart">Clear</button>
+                        <button style="width: 100px; font-size: 10px; background-color: white" type="button"
+                                data-toggle="modal" data-target="#cart">Cart (<span class="total-count"></span>)
+                        </button>
+                        <button style="width: 100px; font-size: 10px; background-color: white" class="clear-cart">
+                            Clear
+                        </button>
                     </div>
                     <div style="float:right">
                         <ul>
@@ -53,7 +58,7 @@
     <nav id="menu">
         <h2>Menu</h2>
         <ul>
-            <li><a href="http://localhost:8080/brands/index">Home</a></li>
+            <li><a href="/">Home</a></li>
 
             <li><a href="cars.html" class="active">Cars</a></li>
 
@@ -78,19 +83,19 @@
         <div class="inner">
             <h1>Cars</h1>
             <div class="image main">
-                <img style="height: 370px; object-fit: cover" src="../../users/newImage/j8RQ7b.jpg" class="img-fluid" alt="" />
+                <img style="height: 370px; object-fit: cover" src="../../users/newImage/j8RQ7b.jpg" class="img-fluid"
+                     alt=""/>
             </div>
 
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <label class="m-n">Used/New:</label>
+                            <label class="m-n">Producer:</label>
 
-                            <select>
-                                <option value="">All</option>
-                                <option value="new">New vehicle</option>
-                                <option value="used">Used vehicle</option>
+                            <select id="producer" >
+                                <option value="">-- All --</option>
+                                <option th:each="x:${brands}" th:value="${x.name}" th:text="${x.name}"></option>
                             </select>
                         </div>
 
@@ -99,14 +104,11 @@
 
                     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <label class="m-n">Vehicle Type:</label>
+                            <label class="m-n">Color:</label>
 
-                            <select>
-                                <option value="">--All --</option>
-                                <option value="">--All --</option>
-                                <option value="">--All --</option>
-                                <option value="">--All --</option>
-                                <option value="">--All --</option>
+                            <select id="colors">
+                                <option value="">-- All --</option>
+                                <option th:each="x:${colors}" th:value="${x.name}" th:text="${x.name}"></option>
                             </select>
                         </div>
 
@@ -115,16 +117,14 @@
 
                     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <label class="m-n">Make:</label>
+                            <label class="m-n">Number of seats:</label>
 
-                            <select>
+                            <select id="seatss">
                                 <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="7">7</option>
+
                             </select>
                         </div>
 
@@ -133,105 +133,303 @@
 
                     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <label class="m-n">Model:</label>
+                            <label class="m-n">Type:</label>
 
-                            <select>
+                            <select id="typess">
                                 <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
+                                <option value="Sedan">Sedan</option>
+                                <option value="SUV">SUV</option>
                             </select>
                         </div>
 
                         <br>
                     </div>
 
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                        <div class="form-group">
-                            <label class="m-n">Price:</label>
-
-                            <select>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                            </select>
-                        </div>
-
-                        <br>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                        <div class="form-group">
-                            <label class="m-n">Mileage:</label>
-
-                            <select>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                            </select>
-                        </div>
-
-                        <br>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                        <div class="form-group">
-                            <label class="m-n">Engine size:</label>
-
-                            <select>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                            </select>
-                        </div>
-
-                        <br>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                        <div class="form-group">
-                            <label class="m-n">Power:</label>
-
-                            <select>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                                <option value="">-- All --</option>
-                            </select>
-                        </div>
-
-                        <br>
-                    </div>
                 </div>
             </div>
 
             <br>
 
+
             <!-- Cars -->
-            <section class="tiles">
-                <article class="style1">
-									<span class="image">
-										<img src="images/product-1-720x480.jpg" alt="" />
-									</span>
-                    <a href="car-details.html">
-                        <h2>Lorem ipsum dolor sit amet, consectetur</h2>
+            <section class="tiles" id="okla">
 
-                        <p><del>$11 999</del> <strong>$11 779</strong></p>
-
-                        <p>
-                            <i class="fa fa-dashboard"></i> 130 000km &nbsp;&nbsp;&nbsp;&nbsp;
-                            <i class="fa fa-cube"></i> 1800 cc&nbsp;&nbsp;&nbsp;&nbsp;
-                            <i class="fa fa-cog"></i> Manual
-                        </p>
-                    </a>
-                </article>
             </section>
         </div>
-    </div>
 
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function (e) {
+            $.ajax({
+                type: "GET",
+                url: "/user-product",
+                success: function (data) {
+                    let content = "";
+
+                    for (let i = 0; i < data.content.length; i++) {
+                        let str = "";
+
+                        str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                        content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                    }
+                    document.getElementById("okla").innerHTML = content;
+
+                    $('.add-to-cart').click(function (e) {
+                        event.preventDefault();
+                        var name = $(this).data('name');
+                        var price = Number($(this).data('price'));
+                        shoppingCart.addItemToCart(name, price, 1);
+                        displayCart();
+                    });
+
+                    $('#producer').change(function (e) {
+                        let brand = document.getElementById("producer");
+                        let ab = brand.value;
+                        let content = "";
+                        for (let i = 0; i < data.content.length; i++) {
+                            if (ab === data.content[i].brand.name) {
+                                let str = "";
+                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                            }else if(ab === ""){
+                                let str = "";
+                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                            }
+                        }
+                        document.getElementById("okla").innerHTML = content;
+
+                        $('.add-to-cart').click(function (e) {
+                            event.preventDefault();
+                            var name = $(this).data('name');
+                            var price = Number($(this).data('price'));
+                            shoppingCart.addItemToCart(name, price, 1);
+                            displayCart();
+                        });
+                    })
+
+                    //find by color
+                    $('#colors').change(function (e){
+                        let cl = document.getElementById("colors");
+                        let ab = cl.value;
+                        let content = "";
+                        for (let i = 0; i < data.content.length; i++) {
+                            if (ab === data.content[i].color.name) {
+                                let str = "";
+                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                            }else if(ab === ""){
+                                let str = "";
+                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                            }
+                        }
+                        document.getElementById("okla").innerHTML = content;
+
+                        $('.add-to-cart').click(function (e) {
+                            event.preventDefault();
+                            var name = $(this).data('name');
+                            var price = Number($(this).data('price'));
+                            shoppingCart.addItemToCart(name, price, 1);
+                            displayCart();
+                        });
+                    })
+
+                    //find by seats
+                    $('#seatss').change(function (e){
+                        let col = document.getElementById("seatss");
+                        let ab = col.value;
+                        let content = "";
+                        for (let i = 0; i < data.content.length; i++) {
+                            if (ab == data.content[i].seat) {
+                                let str = "";
+                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                            }else if(ab === ""){
+                                let str = "";
+                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                            }
+                        }
+                        document.getElementById("okla").innerHTML = content;
+
+                        $('.add-to-cart').click(function (e) {
+                            event.preventDefault();
+                            var name = $(this).data('name');
+                            var price = Number($(this).data('price'));
+                            shoppingCart.addItemToCart(name, price, 1);
+                            displayCart();
+                        });
+                    })
+
+                    //find by type
+                    $('#typess').change(function (e){
+                        let okokok = document.getElementById("typess");
+                        let ab = okokok.value;
+                        let content = "";
+                        for (let i = 0; i < data.content.length; i++) {
+                            if (ab === data.content[i].type) {
+                                let str = "";
+                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                            }else if(ab === ""){
+                                let str = "";
+                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                            }
+                        }
+                        document.getElementById("okla").innerHTML = content;
+
+                        $('.add-to-cart').click(function (e) {
+                            event.preventDefault();
+                            var name = $(this).data('name');
+                            var price = Number($(this).data('price'));
+                            shoppingCart.addItemToCart(name, price, 1);
+                            displayCart();
+                        });
+                    })
+                }
+            })
+            event.preventDefault();
+        })
+
+    </script>
     <!-- Footer -->
     <footer id="footer">
         <div class="inner">
@@ -247,27 +445,12 @@
             </section>
 
             <ul class="copyright">
-                <li>Copyright © 2020 Company Name </li>
+                <li>Copyright © 2020 Company Name</li>
                 <li>Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></li>
             </ul>
         </div>
     </footer>
 
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <div class="card" style="width: 20rem;">
-                <img class="card-img-top" src="http://www.azspagirls.com/files/2010/09/orange.jpg" alt="Card image cap">
-                <div class="card-block">
-                    <h4 class="card-title">Orange</h4>
-                    <p class="card-text">Price: $0.5</p>
-                    <a href="#" data-name="Orange" data-price="0.5" class="add-to-cart btn btn-primary">Add to cart</a>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <!-- Modal -->
@@ -304,7 +487,7 @@
     // Shopping Cart API
     // ************************************************
 
-    var shoppingCart = (function() {
+    var shoppingCart = (function () {
         // =============================
         // Private methods and propeties
         // =============================
@@ -326,6 +509,7 @@
         function loadCart() {
             cart = JSON.parse(sessionStorage.getItem('shoppingCart'));
         }
+
         if (sessionStorage.getItem("shoppingCart") != null) {
             loadCart();
         }
@@ -337,10 +521,10 @@
         var obj = {};
 
         // Add to cart
-        obj.addItemToCart = function(name, price, count) {
-            for(var item in cart) {
-                if(cart[item].name === name) {
-                    cart[item].count ++;
+        obj.addItemToCart = function (name, price, count) {
+            for (var item in cart) {
+                if (cart[item].name === name) {
+                    cart[item].count++;
                     saveCart();
                     return;
                 }
@@ -350,8 +534,8 @@
             saveCart();
         }
         // Set count from item
-        obj.setCountForItem = function(name, count) {
-            for(var i in cart) {
+        obj.setCountForItem = function (name, count) {
+            for (var i in cart) {
                 if (cart[i].name === name) {
                     cart[i].count = count;
                     break;
@@ -359,11 +543,11 @@
             }
         };
         // Remove item from cart
-        obj.removeItemFromCart = function(name) {
-            for(var item in cart) {
-                if(cart[item].name === name) {
-                    cart[item].count --;
-                    if(cart[item].count === 0) {
+        obj.removeItemFromCart = function (name) {
+            for (var item in cart) {
+                if (cart[item].name === name) {
+                    cart[item].count--;
+                    if (cart[item].count === 0) {
                         cart.splice(item, 1);
                     }
                     break;
@@ -373,9 +557,9 @@
         }
 
         // Remove all items from cart
-        obj.removeItemFromCartAll = function(name) {
-            for(var item in cart) {
-                if(cart[item].name === name) {
+        obj.removeItemFromCartAll = function (name) {
+            for (var item in cart) {
+                if (cart[item].name === name) {
                     cart.splice(item, 1);
                     break;
                 }
@@ -384,36 +568,44 @@
         }
 
         // Clear cart
-        obj.clearCart = function() {
+        obj.clearCart = function () {
             cart = [];
             saveCart();
         }
 
+        window.onload = function () {
+            cart = [];
+            saveCart();
+            displayCart();
+        }
+
         // Count cart
-        obj.totalCount = function() {
+        obj.totalCount = function () {
             var totalCount = 0;
-            for(var item in cart) {
+            for (var item in cart) {
                 totalCount += cart[item].count;
             }
             return totalCount;
         }
 
         // Total cart
-        obj.totalCart = function() {
+        obj.totalCart = function () {
             var totalCart = 0;
-            for(var item in cart) {
+            for (var item in cart) {
                 totalCart += cart[item].price * cart[item].count;
             }
             return Number(totalCart.toFixed(2));
         }
 
         // List cart
-        obj.listCart = function() {
+        obj.listCart = function () {
             var cartCopy = [];
-            for(i in cart) {
+            var item;
+            var itemCopy;
+            for (i in cart) {
                 item = cart[i];
                 itemCopy = {};
-                for(p in item) {
+                for (p in item) {
                     itemCopy[p] = item[p];
 
                 }
@@ -442,16 +634,18 @@
     // Triggers / Events
     // *****************************************
     // Add item
-    $('.add-to-cart').click(function(event) {
-        event.preventDefault();
-        var name = $(this).data('name');
-        var price = Number($(this).data('price'));
-        shoppingCart.addItemToCart(name, price, 1);
-        displayCart();
-    });
+
+
+    // $('.add-to-cart').onmouseover(function(e) {
+    //     event.preventDefault();
+    //     var name = $(this).data('name');
+    //     var price = Number($(this).data('price'));
+    //     shoppingCart.addItemToCart(name, price, 1);
+    //     displayCart();
+    // });
 
     // Clear items
-    $('.clear-cart').click(function() {
+    $('.clear-cart').click(function () {
         shoppingCart.clearCart();
         displayCart();
     });
@@ -460,7 +654,7 @@
     function displayCart() {
         var cartArray = shoppingCart.listCart();
         var output = "";
-        for(var i in cartArray) {
+        for (var i in cartArray) {
             output += "<tr>"
                 + "<td>" + cartArray[i].name + "</td>"
                 + "<td>(" + cartArray[i].price + ")</td>"
@@ -470,7 +664,7 @@
                 + "<td><button class='delete-item btn btn-danger' data-name=" + cartArray[i].name + ">X</button></td>"
                 + " = "
                 + "<td>" + cartArray[i].total + "</td>"
-                +  "</tr>";
+                + "</tr>";
         }
         $('.show-cart').html(output);
         $('.total-cart').html(shoppingCart.totalCart());
@@ -479,7 +673,7 @@
 
     // Delete item button
 
-    $('.show-cart').on("click", ".delete-item", function(event) {
+    $('.show-cart').on("click", ".delete-item", function (event) {
         var name = $(this).data('name')
         shoppingCart.removeItemFromCartAll(name);
         displayCart();
@@ -487,20 +681,20 @@
 
 
     // -1
-    $('.show-cart').on("click", ".minus-item", function(event) {
+    $('.show-cart').on("click", ".minus-item", function (event) {
         var name = $(this).data('name')
         shoppingCart.removeItemFromCart(name);
         displayCart();
     })
     // +1
-    $('.show-cart').on("click", ".plus-item", function(event) {
+    $('.show-cart').on("click", ".plus-item", function (event) {
         var name = $(this).data('name')
         shoppingCart.addItemToCart(name);
         displayCart();
     })
 
     // Item count input
-    $('.show-cart').on("change", ".item-count", function(event) {
+    $('.show-cart').on("change", ".item-count", function (event) {
         var name = $(this).data('name');
         var count = Number($(this).val());
         shoppingCart.setCountForItem(name, count);
