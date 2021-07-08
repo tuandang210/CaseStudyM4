@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -73,4 +72,25 @@ public class UserController {
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/about")
+    public ModelAndView showFormAbout(){
+        return new ModelAndView("/views/about");
+    }
+
+    @GetMapping("/blog")
+    public ModelAndView showFormBlog(){return new ModelAndView("/views/blog");}
+
+    @GetMapping("/team")
+    public ModelAndView showFormTeam(){return new ModelAndView("/views/team");}
+
+    @GetMapping("/faq")
+    public ModelAndView showFormFag(){return new ModelAndView("/views/faq");}
+
+    @GetMapping("/terms")
+    public ModelAndView showFormTerms(){return new ModelAndView("/views/terms");}
+
+    @GetMapping("/testimonials")
+    public ModelAndView showFormTestimonials(){return new ModelAndView("/views/testimonials");}
+
 }
