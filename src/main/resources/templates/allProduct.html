@@ -90,7 +90,7 @@
                         <div class="form-group">
                             <label class="m-n">Producer:</label>
 
-                            <select id="producer" >
+                            <select id="producer">
                                 <option value="">-- All --</option>
                                 <option th:each="x:${brands}" th:value="${x.name}" th:text="${x.name}"></option>
                             </select>
@@ -178,7 +178,7 @@
 
                                            <h3>${data.content[i].name}</h3>
                                            <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
 
                                         </a>
                                   </article>
@@ -191,7 +191,8 @@
                         event.preventDefault();
                         var name = $(this).data('name');
                         var price = Number($(this).data('price'));
-                        shoppingCart.addItemToCart(name, price, 1);
+                        var id = Number($(this).data('id'));
+                        shoppingCart.addItemToCart(name, price, id, 1);
                         displayCart();
                     });
 
@@ -213,13 +214,13 @@
 
                                            <h3>${data.content[i].name}</h3>
                                            <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
 
                                         </a>
                                   </article>
 
                                `
-                            }else if(ab === ""){
+                            } else if (ab === "") {
                                 let str = "";
                                 str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
                                 content += `
@@ -232,7 +233,7 @@
 
                                            <h3>${data.content[i].name}</h3>
                                            <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
 
                                         </a>
                                   </article>
@@ -246,13 +247,14 @@
                             event.preventDefault();
                             var name = $(this).data('name');
                             var price = Number($(this).data('price'));
-                            shoppingCart.addItemToCart(name, price, 1);
+                            var id = Number($(this).data('id'));
+                            shoppingCart.addItemToCart(name, price, id, 1);
                             displayCart();
                         });
                     })
 
                     //find by color
-                    $('#colors').change(function (e){
+                    $('#colors').change(function (e) {
                         let cl = document.getElementById("colors");
                         let ab = cl.value;
                         let content = "";
@@ -270,13 +272,13 @@
 
                                            <h3>${data.content[i].name}</h3>
                                            <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
 
                                         </a>
                                   </article>
 
                                `
-                            }else if(ab === ""){
+                            } else if (ab === "") {
                                 let str = "";
                                 str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
                                 content += `
@@ -289,7 +291,7 @@
 
                                            <h3>${data.content[i].name}</h3>
                                            <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
 
                                         </a>
                                   </article>
@@ -303,13 +305,14 @@
                             event.preventDefault();
                             var name = $(this).data('name');
                             var price = Number($(this).data('price'));
-                            shoppingCart.addItemToCart(name, price, 1);
+                            var id = Number($(this).data('id'));
+                            shoppingCart.addItemToCart(name, price, id, 1);
                             displayCart();
                         });
                     })
 
                     //find by seats
-                    $('#seatss').change(function (e){
+                    $('#seatss').change(function (e) {
                         let col = document.getElementById("seatss");
                         let ab = col.value;
                         let content = "";
@@ -327,13 +330,13 @@
 
                                            <h3>${data.content[i].name}</h3>
                                            <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
 
                                         </a>
                                   </article>
 
                                `
-                            }else if(ab === ""){
+                            } else if (ab === "") {
                                 let str = "";
                                 str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
                                 content += `
@@ -346,7 +349,7 @@
 
                                            <h3>${data.content[i].name}</h3>
                                            <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
 
                                         </a>
                                   </article>
@@ -360,13 +363,14 @@
                             event.preventDefault();
                             var name = $(this).data('name');
                             var price = Number($(this).data('price'));
-                            shoppingCart.addItemToCart(name, price, 1);
+                            var id = Number($(this).data('id'));
+                            shoppingCart.addItemToCart(name, price, id, 1);
                             displayCart();
                         });
                     })
 
                     //find by type
-                    $('#typess').change(function (e){
+                    $('#typess').change(function (e) {
                         let okokok = document.getElementById("typess");
                         let ab = okokok.value;
                         let content = "";
@@ -384,13 +388,13 @@
 
                                            <h3>${data.content[i].name}</h3>
                                            <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
 
                                         </a>
                                   </article>
 
                                `
-                            }else if(ab === ""){
+                            } else if (ab === "") {
                                 let str = "";
                                 str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
                                 content += `
@@ -403,7 +407,7 @@
 
                                            <h3>${data.content[i].name}</h3>
                                            <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
 
                                         </a>
                                   </article>
@@ -417,7 +421,8 @@
                             event.preventDefault();
                             var name = $(this).data('name');
                             var price = Number($(this).data('price'));
-                            shoppingCart.addItemToCart(name, price, 1);
+                            var id = Number($(this).data('id'));
+                            shoppingCart.addItemToCart(name, price, id, 1);
                             displayCart();
                         });
                     })
@@ -451,7 +456,7 @@
 </div>
 
 <!-- Modal -->
-<div  class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -464,10 +469,10 @@
                 <div><h3>Total price: $<span class="total-cart"></span></h3></div>
             </div>
             <div class="modal-footer">
-                <button type="button"  data-dismiss="modal">Close</button>
-                <button type="button" >Order</button>
+                <button type="button" data-dismiss="modal">Close</button>
+                <button type="button" id="submit">Order</button>
             </div>
-        </div>
+        </div>9
     </div>
 </div>
 
@@ -488,9 +493,10 @@
         cart = [];
 
         // Constructor
-        function Item(name, price, count) {
+        function Item(name, price, id, count) {
             this.name = name;
             this.price = price;
+            this.id = id;
             this.count = count;
         }
 
@@ -515,15 +521,16 @@
         var obj = {};
 
         // Add to cart
-        obj.addItemToCart = function (name, price, count) {
+        obj.addItemToCart = function (name, price, id, count) {
             for (var item in cart) {
                 if (cart[item].name === name) {
+                    // cart[item].id = id;
                     cart[item].count++;
                     saveCart();
                     return;
                 }
             }
-            var item = new Item(name, price, count);
+            var item = new Item(name, price, id, count);
             cart.push(item);
             saveCart();
         }
@@ -653,17 +660,90 @@
                 + "<td>" + cartArray[i].name + "</td>"
                 + "<td>(" + cartArray[i].price + ")</td>"
                 + "<td><div class='input-group'><button class='minus-item input-group-addon' data-name=" + cartArray[i].name + ">-</button>"
-                + "<input style='margin-top: 3px' type='number' class='item-count form-control' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
+                + "<input onchange='checkQuantity("+cartArray[i].id+", "+cartArray[i].count+")' style='margin-top: 3px' type='number' class='alool item-count form-control' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
                 + "<button class='plus-item input-group-addon' data-name=" + cartArray[i].name + ">+</button></div></td>"
                 + "<td><button class='delete-item' data-name=" + cartArray[i].name + ">X</button></td>"
                 + " = "
                 + "<td>" + cartArray[i].total + "</td>"
+                + "<td class='okokok'>" + cartArray[i].id + "<td/>"
                 + "</tr>";
+
         }
+
         $('.show-cart').html(output);
         $('.total-cart').html(shoppingCart.totalCart());
         $('.total-count').html(shoppingCart.totalCount());
+
     }
+
+    function checkQuantity(id, count){
+        displayCart();
+        let cartArray = shoppingCart.listCart();
+        for (let i=0;i<cartArray.length;i++){
+
+        }
+        let product_id = parseInt(id);
+        let buy_quantity = parseInt(count);
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+            },
+            type: "GET",
+            url: `/checkQuantity/${product_id}/${buy_quantity}`,
+            success: function (data) {
+                let isLeft = data;
+                if (isLeft === false){
+                    document.getElementById(product_id).value = count;
+                }
+            }
+
+    })
+    }
+
+    $(document).ready(function (){
+        $('#submit').click(function (e) {
+            let tokenData = JSON.parse(localStorage.getItem('id'));
+
+
+            let cartArray = shoppingCart.listCart();
+            let namePr = [];
+            let numberPr = [];
+            let idPr= [];
+            let orderDetails = [];
+            for (let i = 0; i < cartArray.length; i++) {
+                namePr.push(cartArray[i].name)
+                numberPr.push(cartArray[i].count)
+                idPr.push(cartArray[i].id)
+                let orderDetail = {
+                    product_id: cartArray[i].id,
+                    quantity: cartArray[i].count
+                }
+                orderDetails.push(orderDetail);
+            }
+
+            let newOrder = {
+                user_id: tokenData,
+                products: orderDetails
+            };
+
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    type: "POST",
+                    url: `/createOrder`,
+                    data: JSON.stringify(newOrder),
+                    success: function (data) {
+                        console.log(data);
+                    }
+                })
+
+
+            event.preventDefault()
+        })
+    })
 
     // Delete item button
 
@@ -682,7 +762,8 @@
     })
     // +1
     $('.show-cart').on("click", ".plus-item", function (event) {
-        var name = $(this).data('name')
+        let name = $(this).data('name');
+        let id = $(this).data('id');
         shoppingCart.addItemToCart(name);
         displayCart();
     })
