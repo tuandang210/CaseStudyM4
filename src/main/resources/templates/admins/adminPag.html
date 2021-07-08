@@ -115,7 +115,7 @@
                             <i class="ti-settings text-primary"></i>
                             Settings
                         </a>
-                        <a class="dropdown-item">
+                        <a id="logout" class="dropdown-item">
                             <i class="ti-power-off text-primary"></i>
                             Logout
                         </a>
@@ -1731,6 +1731,16 @@
         });
         event.preventDefault();
     }
+
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type = "text/javascript">
+    $(document).ready(function(){
+        $('#logout').click(function (){
+            localStorage.clear();
+            window.location.href="/logout";
+        });
+    });
 
 </script>
 </body>

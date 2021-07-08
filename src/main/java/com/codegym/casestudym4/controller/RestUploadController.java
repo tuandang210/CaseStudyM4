@@ -29,7 +29,6 @@ public class RestUploadController {
     @Autowired
     private IImageService imageService;
 
-
     private final Logger logger = LoggerFactory.getLogger(RestUploadController.class);
 
 //    @GetMapping("/")

@@ -1,6 +1,8 @@
 package com.codegym.casestudym4.service.comment;
 
 import com.codegym.casestudym4.model.Comment;
+import com.codegym.casestudym4.model.Product;
+import com.codegym.casestudym4.model.User;
 import com.codegym.casestudym4.repository.ICommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,7 +42,14 @@ public class CommentService implements ICommentService {
     }
 
     @Override
-    public Page<Comment> findAllByAuthor(Pageable pageable, String author) {
-        return commentRepository.findAllByAuthor(pageable, author);
+    public Page<Comment> findAllByUser(Pageable pageable, User user) {
+        return commentRepository.findAllByUser(pageable, user);
     }
+
+    @Override
+    public Iterable<Comment> findAllByProduct(Product product) {
+        return commentRepository.findAllByProduct(product);
+    }
+
+
 }

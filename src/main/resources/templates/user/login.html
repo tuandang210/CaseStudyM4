@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../loginPage/css/style.css">
     <style>
         .error{
             color: red;
@@ -13,24 +15,78 @@
             color: green;
             font-weight: 500;
         }
-    </style>
+        .okllll:hover{
+            cursor: pointer;
+        }
+        </style>
+
 </head>
-<body>
+<body class="img js-fullheight" style="background-image: url(../../../loginPage/images/supercar-wallpapers-lamborghini-background.jpg);">
 
-<h3>Welcome !</h3>
-<br/>
 
-<!-- Button trigger create modal -->
-<button type="button" class="btn btn-success" data-bs-toggle="modal"
-        data-bs-target="#createModal" > Register New Account
-</button>
+<!--new form-->
+<section class="ftco-section">
+    <div class="container">
+<!--        <div class="row justify-content-center">-->
+<!--            <div class="col-md-6 text-center mb-5">-->
+<!--                <h2 class="heading-section"></h2>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="login-wrap p-0">
+                    <h3 class="mb-4 text-center">Have an account?</h3>
+                    <form class="signin-form">
+                        <div class="form-group">
+                            <input type="text" id="username_login" class="form-control" placeholder="Username" required>
+                        </div>
+                        <div class="form-group">
+                            <input id="password_login" type="password" class="form-control" placeholder="Password" required>
+<!--                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>-->
+                        </div>
+                        <div class="form-group">
+                            <p class = "error" id="login_error"></p>
+                        </div>
+                        <div class="form-group">
+<!--                            <button type="button" class="btn btn-success" id="login_button1">Login</button>-->
+                            <button id="login_button" type="button" class="form-control btn btn-primary submit px-3">Sign In</button>
+                        </div>
+                       <div class="form-group d-md-flex">
+                           <div class="w-50">
+                               <a class="okllll" href="/" style="color: #fff">Back</a>
+                           </div>
+                           <div class="w-50 text-md-right">
+                               <a class="okllll" data-bs-toggle="modal"
+                                  data-bs-target="#createModal" style="color: #fff">Register New Account</a>
+                           </div>
+                       </div>
 
-<!--Button trigger login modal-->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-        data-bs-target="#loginModal" > Login
-</button>
-<br/><br/>
-<p th:if="${logoutMsg}" th:text="${logoutMsg}" class="success"></p>
+                    </form>
+                    <p class="w-100 text-center">&mdash; Or Sign In With &mdash;</p>
+                    <div class="social d-flex text-center">
+                        <a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Facebook</a>
+<!--                        <a href="#" class="px-2 py-2 ml-md-1 rounded"><span class="ion-logo-twitter mr-2"></span> Twitter</a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!--<h3>Welcome !</h3>-->
+<!--<br/>-->
+
+<!--&lt;!&ndash; Button trigger create modal &ndash;&gt;-->
+<!--<button type="button" class="btn btn-success" data-bs-toggle="modal"-->
+<!--        data-bs-target="#createModal" > Register New Account-->
+<!--</button>-->
+
+<!--<br/><br/>-->
+<!--<p th:if="${logoutMsg}" th:text="${logoutMsg}" class="success"></p>-->
 
 
 <!--Create Modal-->
@@ -73,44 +129,40 @@
 </div>
 
 
-<!--Login Modal-->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Login Form</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <table cellpadding="10">
-                        <tr>
-                            <td>Username</td>
-                            <td><input type="text" id="username_login" placeholder="username"></td>
-                        </tr>
-                        <tr>
-                            <td>Password</td>
-                            <td><input type="password" id="password_login" placeholder="password"></td>
-                        </tr>
-                        <tr><td colspan="2"><p class = "error" id="login_error"></p></td></tr>
-                    </table>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" id="login_button">Login</button>
-            </div>
-        </div>
-    </div>
-</div>
 
+
+<!--form login-->
+
+<!--<div class="modal-body">-->
+<!--    <form>-->
+<!--        <table cellpadding="10">-->
+<!--            <tr>-->
+<!--                <td>Username</td>-->
+<!--                <td><input type="text" id="username_login1" placeholder="username"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>Password</td>-->
+<!--                <td><input type="password" id="password_logi1n" placeholder="password"></td>-->
+<!--            </tr>-->
+<!--            <tr><td colspan="2"><p class = "error" id="login_error1"></p></td></tr>-->
+<!--        </table>-->
+<!--    </form>-->
+<!--</div>-->
+<!--<div class="modal-footer">-->
+<!--    <a href="/" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</a>-->
+<!--    <button type="button" class="btn btn-success" id="login_button1">Login</button>-->
+<!--</div>-->
+
+<script src="../../../loginPage/js/jquery.min.js"></script>
+<script src="../../../loginPage/js/popper.js"></script>
+<script src="../../../loginPage/js/bootstrap.min.js"></script>
+<script src="../../../loginPage/js/main.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type = "text/javascript">
     //login
     $(document).ready(function(){
-        $('#loginModal').on('show.bs.modal', function () {
             document.getElementById("login_error").innerHTML = ""
             $('#login_button').click(function () {
                 let username = $('#username_login').val();
@@ -133,9 +185,9 @@
                         localStorage.setItem("token", data.accessToken);
                         let roles = data.roles;
                         if (roles.indexOf("ROLE_USER") != -1){
-                            window.location.href="http://localhost:8080/api/test/user";
+                            window.location.href="http://localhost:8080/user";
                         } else if (roles.indexOf("ROLE_ADMIN") != -1){
-                            window.location.href="http://localhost:8080/api/test/admin";
+                            window.location.href="http://localhost:8080/admin";
                         };
                     },
 
@@ -144,7 +196,6 @@
                     }
                 });
             });
-        });
     });
 
 
