@@ -18,10 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 
 @RestController
@@ -74,17 +71,6 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<Page<Product>> searchByProduct(@RequestParam Optional<String> search, Pageable pageable){
-        if(search.isPresent()){
-            Page<Product> productPage = productService.findAllByNameContaining(search.get(),pageable);
-            return new ResponseEntity<>(productPage,HttpStatus.OK);
-        }else {
-            Page<Product> productPage = productService.findAll(pageable);
-            return new ResponseEntity<>(productPage,HttpStatus.NO_CONTENT);
-        }
-    }
-
     @PostMapping()
     public ResponseEntity<Product> createNew(@RequestBody Product product){
         return new ResponseEntity<>(productService.save(product),HttpStatus.OK);
@@ -110,13 +96,26 @@ public class ProductController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<Product> editProduct(@PathVariable Long id,@RequestBody Product productEdit){
-        Optional<Product> productOptional = productService.findById(productEdit.getId());
+        Optional<Product> productOptional = productService.findById(id);
         if (!productOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if(productEdit.getImageSet().isEmpty()){
+            productEdit.setImageSet(productOptional.get().getImageSet());
         }
         productService.save(productEdit);
         return new ResponseEntity<>(productEdit, HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<Page<Product>> searchByProduct(@RequestParam Optional<String> search,Pageable pageable){
+        if(search.isPresent()){
+            Page<Product> productPage = productService.findAllByNameContaining(search.get(),pageable);
+            return new ResponseEntity<>(productPage,HttpStatus.OK);
+        }else {
+            Page<Product> productPage = productService.findAll(pageable);
+            return new ResponseEntity<>(productPage,HttpStatus.NO_CONTENT);
+        }
+    }
 
 }

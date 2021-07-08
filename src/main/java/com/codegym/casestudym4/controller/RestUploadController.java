@@ -75,11 +75,8 @@ public class RestUploadController {
         if (StringUtils.isEmpty(uploadedFileName)) {
             return new ResponseEntity(imageSet, HttpStatus.OK);
         }
-
         try {
-
             saveUploadedFiles(Arrays.asList(uploadFiles));
-
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -117,13 +114,11 @@ public class RestUploadController {
             if (file.isEmpty()) {
                 continue; //next pls
             }
-
             byte[] bytes = file.getBytes();
             //Save the uploaded file to this folder
 //            String UPLOADED_FOLDER = "D://temp//";
-            Path path = Paths.get(filePart + file.getOriginalFilename());
+            Path path = Paths.get(filePart+"image\\" + file.getOriginalFilename());
             Files.write(path, bytes);
-
         }
 
     }
