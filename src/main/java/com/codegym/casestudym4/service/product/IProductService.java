@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IProductService extends IGeneralService<Product> {
     Page<Product> findAllByNameContaining(String name,Pageable pageable);
@@ -18,4 +19,8 @@ public interface IProductService extends IGeneralService<Product> {
     List<Product> findAllUsingQueryForPagination(Integer limit, Integer offset);
 
     void deleteProductsByIdUseProceduce(Long id);
+
+    Optional<Product> findProductByName(String name);
+
+
 }
