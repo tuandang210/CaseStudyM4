@@ -9,20 +9,14 @@ import com.codegym.casestudym4.service.brand.IBrandService;
 import com.codegym.casestudym4.service.color.IColorService;
 import com.codegym.casestudym4.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 @RestController
 @RequestMapping("/products")
@@ -110,12 +104,20 @@ public class ProductController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<Product> editProduct(@PathVariable Long id,@RequestBody Product productEdit){
-        Optional<Product> productOptional = productService.findById(productEdit.getId());
+        Optional<Product> productOptional = productService.findById(id);
         if (!productOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        if(productEdit.getImageSet().isEmpty()){
+            productEdit.setImageSet(productOptional.get().getImageSet());
+        }
         productService.save(productEdit);
         return new ResponseEntity<>(productEdit, HttpStatus.OK);
+    }
+
+    @GetMapping("/aaaaa/{name}")
+    public ResponseEntity<?> getProduct(@PathVariable String name){
+        return new ResponseEntity<>(productService.findProductByName(name).get(),HttpStatus.OK);
     }
 
 

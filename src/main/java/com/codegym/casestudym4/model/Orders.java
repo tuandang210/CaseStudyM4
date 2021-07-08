@@ -29,4 +29,8 @@ public class Orders {
         this.user = user;
         this.date = date;
     }
+
+    public Orders(User user) {
+        this.user = user;
+    }
 }

@@ -29,7 +29,7 @@
         </tr>
         <tr th:each="x:${ordersPage}">
             <td th:text="${x.id}"></td>
-            <td th:text="${x.user.fullName}"></td>
+            <td th:text="${x.user.username}"></td>
             <td th:text="${x.date}"></td>
             <td><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show_Form_Order_Detail"
                    th:attr="data-brands-id=''+${x.id}+''">view</a></td>
