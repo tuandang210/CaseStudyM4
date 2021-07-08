@@ -8,15 +8,18 @@
     <link rel="stylesheet" href="../../../loginPage/css/style.css">
     <style>
         .error{
-            color: red;
+            color: gold;
             font-weight: 500;
         }
         .success{
-            color: green;
+            color: chartreuse;
             font-weight: 500;
         }
         .okllll:hover{
             cursor: pointer;
+        }
+        p{
+            margin-left: 20px;
         }
         </style>
 
@@ -24,14 +27,9 @@
 <body class="img js-fullheight" style="background-image: url(../../../loginPage/images/supercar-wallpapers-lamborghini-background.jpg);">
 
 
-<!--new form-->
+<!--login form-->
 <section class="ftco-section">
     <div class="container">
-<!--        <div class="row justify-content-center">-->
-<!--            <div class="col-md-6 text-center mb-5">-->
-<!--                <h2 class="heading-section"></h2>-->
-<!--            </div>-->
-<!--        </div>-->
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-4">
                 <div class="login-wrap p-0">
@@ -42,13 +40,11 @@
                         </div>
                         <div class="form-group">
                             <input id="password_login" type="password" class="form-control" placeholder="Password" required>
-<!--                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>-->
                         </div>
                         <div class="form-group">
                             <p class = "error" id="login_error"></p>
                         </div>
                         <div class="form-group">
-<!--                            <button type="button" class="btn btn-success" id="login_button1">Login</button>-->
                             <button id="login_button" type="button" class="form-control btn btn-primary submit px-3">Sign In</button>
                         </div>
                        <div class="form-group d-md-flex">
@@ -65,7 +61,6 @@
                     <p class="w-100 text-center">&mdash; Or Sign In With &mdash;</p>
                     <div class="social d-flex text-center">
                         <a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Facebook</a>
-<!--                        <a href="#" class="px-2 py-2 ml-md-1 rounded"><span class="ion-logo-twitter mr-2"></span> Twitter</a>-->
                     </div>
                 </div>
             </div>
@@ -75,54 +70,33 @@
 
 
 
-
-
-<!--<h3>Welcome !</h3>-->
-<!--<br/>-->
-
-<!--&lt;!&ndash; Button trigger create modal &ndash;&gt;-->
-<!--<button type="button" class="btn btn-success" data-bs-toggle="modal"-->
-<!--        data-bs-target="#createModal" > Register New Account-->
-<!--</button>-->
-
-<!--<br/><br/>-->
-<!--<p th:if="${logoutMsg}" th:text="${logoutMsg}" class="success"></p>-->
-
-
-<!--Create Modal-->
+<!--Register Modal-->
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="background-color:darkgray; border-color: dimgray">
                 <h5 class="modal-title" id="createModalLabel">Register Form</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="background-color: dimgray; border-color: dimgray ">
                 <form>
-                    <table cellpadding="10">
-                        <tr>
-                            <td>Email</td>
-                            <td><input type="text" id="email" placeholder="email"></td>
-                        </tr>
-                        <tr><td colspan="2"><p class = "error" id="email_error"></p></td></tr>
-                        <tr>
-                            <td>Username</td>
-                            <td><input type="text" id="username" placeholder="username"></td>
-                        </tr>
-                        <tr><td colspan="2"><p class = "error" id="username_error"></p></td></tr>
-                        <tr>
-                            <td>Password</td>
-                            <td><input type="password" id="password" placeholder="password"></td>
-                        </tr>
-                        <tr><td colspan="2"><p class = "error" id="password_error"></p></td></tr>
-                        <tr><td colspan="2"><p class="error" id="message_error"></p></td></tr>
-                        <tr><td colspan="2"><p class = "success" id="register_success"></p></td></tr>
-                    </table>
+                    <div class="form-group">
+                        <input type="text" id="email" class="form-control" placeholder="Email" required>
+                        <p class = "error" id="email_error"></p>
+                    </div>
+                    <div class="form-group">
+                        <input id="username" type="text" class="form-control" placeholder="Username" required>
+                        <p class = "error" id="username_error"></p>
+                    </div>
+                    <div class="form-group">
+                        <input id="password" type="password" class="form-control" placeholder="Password" required>
+                        <p class = "error" id="password_error"></p>
+                    </div>
+                    <p class="error" id="message_error">
+                    <p class = "success" id="register_success">
+                    <div class="form-group">
+                        <button id="create_button" type="button" class="form-control btn btn-primary submit px-3">Sign Up</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="create_button">Register</button>
             </div>
         </div>
     </div>
@@ -131,27 +105,6 @@
 
 
 
-<!--form login-->
-
-<!--<div class="modal-body">-->
-<!--    <form>-->
-<!--        <table cellpadding="10">-->
-<!--            <tr>-->
-<!--                <td>Username</td>-->
-<!--                <td><input type="text" id="username_login1" placeholder="username"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>Password</td>-->
-<!--                <td><input type="password" id="password_logi1n" placeholder="password"></td>-->
-<!--            </tr>-->
-<!--            <tr><td colspan="2"><p class = "error" id="login_error1"></p></td></tr>-->
-<!--        </table>-->
-<!--    </form>-->
-<!--</div>-->
-<!--<div class="modal-footer">-->
-<!--    <a href="/" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</a>-->
-<!--    <button type="button" class="btn btn-success" id="login_button1">Login</button>-->
-<!--</div>-->
 
 <script src="../../../loginPage/js/jquery.min.js"></script>
 <script src="../../../loginPage/js/popper.js"></script>
@@ -251,7 +204,12 @@
 
     function printFieldErrors(errors){
         for (const key in errors){
-            document.getElementById(`${key}_error`).innerHTML = `${errors[key]}`;
+            let required="* Required";
+            if (errors[key] == "must not be blank"){
+                document.getElementById(`${key}_error`).innerHTML = required;
+            } else {
+                document.getElementById(`${key}_error`).innerHTML = `${errors[key]}`;
+            }
         }
     }
 
