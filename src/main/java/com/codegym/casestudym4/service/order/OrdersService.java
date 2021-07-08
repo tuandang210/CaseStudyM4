@@ -39,4 +39,9 @@ public class OrdersService implements IOrdersService {
     public Page<Orders> findAllPageable(Pageable pageable) {
         return orderRepository.findAll(pageable);
     }
+
+    @Override
+    public Optional<Long> findLastOrderIdByUserId(Long id) {
+        return orderRepository.findLastOrderIdByUserId(id);
+    }
 }

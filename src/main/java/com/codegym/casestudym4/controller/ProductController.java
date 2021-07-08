@@ -9,17 +9,14 @@ import com.codegym.casestudym4.service.brand.IBrandService;
 import com.codegym.casestudym4.service.color.IColorService;
 import com.codegym.casestudym4.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
@@ -71,6 +68,17 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<Page<Product>> searchByProduct(@RequestParam Optional<String> search, Pageable pageable){
+        if(search.isPresent()){
+            Page<Product> productPage = productService.findAllByNameContaining(search.get(),pageable);
+            return new ResponseEntity<>(productPage,HttpStatus.OK);
+        }else {
+            Page<Product> productPage = productService.findAll(pageable);
+            return new ResponseEntity<>(productPage,HttpStatus.NO_CONTENT);
+        }
+    }
+
     @PostMapping()
     public ResponseEntity<Product> createNew(@RequestBody Product product){
         return new ResponseEntity<>(productService.save(product),HttpStatus.OK);
@@ -107,15 +115,10 @@ public class ProductController {
         return new ResponseEntity<>(productEdit, HttpStatus.OK);
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<Page<Product>> searchByProduct(@RequestParam Optional<String> search,Pageable pageable){
-        if(search.isPresent()){
-            Page<Product> productPage = productService.findAllByNameContaining(search.get(),pageable);
-            return new ResponseEntity<>(productPage,HttpStatus.OK);
-        }else {
-            Page<Product> productPage = productService.findAll(pageable);
-            return new ResponseEntity<>(productPage,HttpStatus.NO_CONTENT);
-        }
+    @GetMapping("/aaaaa/{name}")
+    public ResponseEntity<?> getProduct(@PathVariable String name){
+        return new ResponseEntity<>(productService.findProductByName(name).get(),HttpStatus.OK);
     }
+
 
 }
