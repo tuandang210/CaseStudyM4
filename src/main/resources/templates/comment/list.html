@@ -42,7 +42,7 @@
         </tr>
         <tr th:each="x:${comments}">
             <td th:text="${x.id}"></td>
-            <td th:text="${x.author}"></td>
+            <td th:text="${x.user.username}"></td>
             <td th:text="${x.content}"></td>
             <td th:text="${x.rate}"></td>
             <td th:text="${x.product.name}"></td>
@@ -68,7 +68,7 @@
         let search = $('#search').val();
         $.ajax({
             type: "GET",
-            url: `/comments?search=${search}`,
+            url: `/comments?user=${search}`,
             success: function (data) {
                 $('#search').val("");
                 let content = '    <tr>\n' +

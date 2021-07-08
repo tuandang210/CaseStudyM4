@@ -2,6 +2,7 @@ package com.codegym.casestudym4.controller;
 
 import com.codegym.casestudym4.model.Comment;
 import com.codegym.casestudym4.model.Product;
+import com.codegym.casestudym4.model.User;
 import com.codegym.casestudym4.service.comment.ICommentService;
 import com.codegym.casestudym4.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,11 @@ public class CommentController {
         return new ResponseEntity<>(commentService.save(comment), HttpStatus.CREATED);
     }
 
+    @GetMapping("/list/{id}")
+    public ResponseEntity<Iterable<Comment>> getComment(@PathVariable Long id){
+        return new ResponseEntity<>(commentService.findAllByProduct(productService.findById(id).get()),HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Comment> updateComment(@PathVariable Long id, @RequestBody Comment comment) {
         Optional<Comment> commentOptional = commentService.findById(id);
@@ -76,17 +82,17 @@ public class CommentController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<?> search(@RequestParam(required = false) String search, @PageableDefault Pageable pageable){
-        Page<Comment> comments;
-        if (search == null) {
-            search = "";
-        }
-        if (!search.isEmpty()) {
-            comments = commentService.findAllByAuthor(pageable, search);
-        } else {
-            comments = commentService.findAllPageable(pageable);
-        }
-        return new ResponseEntity<>(comments, HttpStatus.OK);
-    }
+//    @GetMapping
+//    public ResponseEntity<?> search(@RequestParam(required = false) User user, @PageableDefault Pageable pageable){
+//        Page<Comment> comments;
+//        if (user == null) {
+//            user = "";
+//        }
+//        if (user !=) {
+//            comments = commentService.findAllByUser(pageable, user);
+//        } else {
+//            comments = commentService.findAllPageable(pageable);
+//        }
+//        return new ResponseEntity<>(comments, HttpStatus.OK);
+//    }
 }
