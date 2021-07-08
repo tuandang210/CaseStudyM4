@@ -67,7 +67,9 @@
           <li><a href="terms.html">Terms</a></li>
         </ul>
       </li>
-      <li><a href="contact.html">Contact Us</a></li>
+<!--      <li><a href="contact.html">Contact Us</a></li>-->
+      <li><a id="logout">Logout</a></li>
+
     </ul>
   </nav>
 
@@ -374,5 +376,15 @@
 <script src="../../users/js/jquery.scrolly.min.js"></script>
 <script src="../../users/js/jquery.scrollex.min.js"></script>
 <script src="../../users/js/main.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type = "text/javascript">
+  $(document).ready(function(){
+    $('#logout').click(function (){
+      localStorage.clear();
+      window.location.href="/logout";
+    });
+  });
+
+</script>
 </body>
 </html>
