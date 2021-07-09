@@ -1,9 +1,12 @@
 package com.codegym.casestudym4.controller;
 
 import com.codegym.casestudym4.model.Product;
+import com.codegym.casestudym4.model.User;
 import com.codegym.casestudym4.service.brand.IBrandService;
 import com.codegym.casestudym4.service.color.IColorService;
+import com.codegym.casestudym4.service.jwt.JwtService;
 import com.codegym.casestudym4.service.product.IProductService;
+import com.codegym.casestudym4.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,15 +14,16 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
 
 @RestController
 public class UserProductController {
+    @Autowired
+    private IUserService userService;
+
     @Autowired
     private IProductService productService;
 
@@ -28,6 +32,9 @@ public class UserProductController {
 
     @Autowired
     private IColorService colorService;
+
+    @Autowired
+    private JwtService jwtService;
 
     @GetMapping
     public ModelAndView showIndex(){
@@ -72,5 +79,13 @@ public class UserProductController {
         }
         ModelAndView modelAndView = new ModelAndView("/show-car-detail-for-user", "product",productOptional.get());
         return modelAndView;
+    }
+    @PostMapping("/user-product11")
+    public ResponseEntity<User> returnUsername(@RequestBody Long id){
+      Optional<User> userOptional = userService.findById(id);
+      if(!userOptional.isPresent()){
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
     }
 }
