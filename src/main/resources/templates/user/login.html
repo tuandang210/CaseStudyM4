@@ -136,7 +136,6 @@
                         <p class="error" id="password_error"></p>
                     </div>
                     <p class="error" id="message_error">
-                    <p class="success" id="register_success">
                     <div class="form-group">
                         <button id="create_button" type="button" class="form-control btn btn-primary submit px-3">Sign
                             Up
@@ -148,6 +147,16 @@
     </div>
 </div>
 
+<!--Register success modal-->
+<div class="modal fade" id="registerOkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="alert alert-success" role="alert" style="text-align: center">
+            <p id="register_success" style="margin-left: 10px; font-size: 20px;font-family: 'Apple Color Emoji',serif;border: none; color: green"
+               class="modal-title"></p>
+        </div>
+    </div>
+</div>
 
 <script src="../../../loginPage/js/jquery.min.js"></script>
 <script src="../../../loginPage/js/popper.js"></script>
@@ -159,6 +168,11 @@
         crossorigin="anonymous"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
+
+    window.onload = function (){
+        localStorage.clear();
+        hideWarnings();
+    }
 
     function loginHandler() {
         let username = $('#username_login').val();
@@ -229,7 +243,13 @@
             url: "/api/auth/signup",
 
             success: function (data) {
+                $('#username_login').val(username);
+                $('#password_login').val(password);
+                $('#createModal').modal('hide');
+
                 document.getElementById("register_success").innerHTML = data.message;
+                $('#registerOkModal').modal('show');
+                setTimeout($('#registerOkModal').modal('hide'), 2000);
             },
 
             error: function (errors) {
@@ -238,7 +258,6 @@
             }
         });
     }
-
 
 
 
