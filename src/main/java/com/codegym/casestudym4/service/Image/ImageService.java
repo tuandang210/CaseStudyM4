@@ -5,6 +5,8 @@ import com.codegym.casestudym4.repository.IImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -32,5 +34,10 @@ public class ImageService implements IImageService{
     @Override
     public void delete(Long id) {
         imageRepository.deleteById(id);
+    }
+
+    @Override
+    public List<BigInteger> findImageIdOfProductByID(Long productId) {
+        return imageRepository.findImageIdOfProductByID(productId);
     }
 }

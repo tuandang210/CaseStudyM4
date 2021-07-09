@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigInteger;
 import java.util.*;
 import java.util.function.Function;
 
@@ -82,7 +83,17 @@ public class ProductController {
         if (!productOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+
+        List<BigInteger> imageListDelete=  imageService.findImageIdOfProductByID(id);
+
         productService.deleteProductsByIdUseProceduce(id);
+
+        if(!imageListDelete.isEmpty()){
+            for (BigInteger imageId : imageListDelete) {
+                Long idDelete = imageId.longValue();
+                imageService.delete(idDelete);
+            }
+        }
         return new ResponseEntity<>(productOptional,HttpStatus.OK);
     }
 
@@ -96,7 +107,7 @@ public class ProductController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<Product> editProduct(@PathVariable Long id,@RequestBody Product productEdit){
-        Optional<Product> productOptional = productService.findById(id);
+        Optional<Product> productOptional = productService.findById(productEdit.getId());
         if (!productOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

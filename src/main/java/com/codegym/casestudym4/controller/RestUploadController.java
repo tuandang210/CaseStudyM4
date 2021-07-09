@@ -56,8 +56,8 @@ public class RestUploadController {
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity("Successfully uploaded - " +
-                uploadfile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
+        Image image = new Image(uploadfile.getOriginalFilename());
+        return new ResponseEntity(image, HttpStatus.OK);
 
     }
 

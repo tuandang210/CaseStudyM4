@@ -46,7 +46,7 @@
                 <td th:text="${product.sellPrice}"></td>
                 <td th:text="${product.brand.name}"></td>
                 <td >
-                    <img style="width: 200px ; height: 200px" th:each="img:${product.imageSet}" th:src="@{ '/../image/'+${img.image}}" alt="photo">
+                    <img th:each="img:${product.imageSet}"  th:src="@{ '/../image/'+${img.image}}" alt="photo" style="width: 200px ; height: 200px">
                 </td>
 
                 <td>
@@ -122,17 +122,19 @@
                         <tr>
                             <td>Image</td>
                             <td>
-                                <form method="post" enctype="multipart/form-data" id="fileUploadForm">
-                                    <input type="file" name="files" id="fileUpload1"/><br/><br/>
-                                    <input type="file" name="files" id="fileUpload2"/><br/><br/>
-                                </form>
+                                <button type="button" class="btn btn-primary"
+                                        data-bs-toggle="modal" data-bs-target="#createImgModal">
+                                    Add new
+                                </button>
                             </td>
+                            </table>
+
                         </tr>
                     </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button onclick="addNewProduct()" id="createButton" type="button" class="btn btn-primary">Create
+                    <button  id="createButton" type="button" class="btn btn-primary">Create
                     </button>
                 </div>
             </div>
@@ -244,6 +246,29 @@
         </div>
     </div>
 
+    <div class="modal fade" id="createImgModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalImgLabel">Create new</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" enctype="multipart/form-data" id="fileUploadForm">
+                        <input type="file" name="files"/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button  id="createImgButton" type="button" class="btn btn-primary">Create
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -253,86 +278,79 @@
 
 <script type="text/javascript">
 
-    //--- them moi
-    function addNewProduct() {
-                let form = $('#fileUploadForm')[0];
+     function addNewProduct() {
 
-                let data = new FormData(form);
+                 let form = $('#fileUploadForm')[0];
 
-                data.append("CustomField", "This is some extra data, testing");
+                 let data = new FormData(form);
 
-                $.ajax({
-                    type: "POST",
-                    enctype: 'multipart/form-data',
-                    url: "/api/upload/multi",
-                    data: data,
-                    processData: false, //prevent jQuery from automatically transforming the data into a query string
-                    contentType: false,
-                    cache: false,
-                    timeout: 600000,
-                    success: function (data) {
-                        let name = $('#createName').val();
-                        let type = $('#createType').val();
-                        let seat = $('#createSeat').val();
-                        let color = $('#createColor').val();
-                        let buyPrice = $('#createBuyPrice').val();
-                        let sellPrice = $('#createSellPrice').val();
-                        let quantity = $('#createQuantity').val();
-                        let brand = $('#createBrand').val();
-                        let newProduct = {
-                            name: name,
-                            type: type,
-                            seat: seat,
-                            color: {
-                                id: color
-                            },
-                            buyPrice: buyPrice,
-                            sellPrice: sellPrice,
-                            quantity: quantity,
-                            brand: {
-                                id: brand
-                            },
-                            imageSet: data
-                        }
-                        $("#createName").val("")
-                        $("#createType").val("")
-                        $("#createQuantity").val("")
-                        $("#createSeat").val("")
-                        $("#createBuyPrice").val("")
-                        $("#createSellPrice").val("")
-                        $("#fileUpload1").val("")
-                        $("#fileUpload2").val("")
-                        //goi ajax
-                        $.ajax({
-                            headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            },
-                            type: "POST",
-                            data: JSON.stringify(newProduct),
-                            // API
-                            url: "/products",
-                            //su ly khi thanh cong
-                            success: successHandler
-                        });
-                        //chan su kien mac dinh cua the
-                        event.preventDefault();
-                    },
-                    error: function (e) {
-                        console.log("ERROR : ", e);
+                 data.append("CustomField", "This is some extra data, testing");
 
-                    }
-                });
-                event.preventDefault();
+                 $.ajax({
+                     type: "POST",
+                     enctype: 'multipart/form-data',
+                     url: "/api/upload/multi",
+                     data: data,
+                     processData: false, //prevent jQuery from automatically transforming the data into a query string
+                     contentType: false,
+                     cache: false,
+                     timeout: 600000,
+                     success: function (data) {
 
-    }
+                         let newProduct = {
+                             name: name,
+                             type: type,
+                             seat: seat,
+                             color: {
+                                 id: color
+                             },
+                             buyPrice: buyPrice,
+                             sellPrice: sellPrice,
+                             quantity: quantity,
+                             brand: {
+                                 id: brand
+                             },
+                             imageSet: data
+                         }
+                         $("#createName").val("")
+                         $("#createType").val("")
+                         $("#createQuantity").val("")
+                         $("#createSeat").val("")
+                         $("#createBuyPrice").val("")
+                         $("#createSellPrice").val("")
+                         $("#fileUpload1").val("")
+                         $("#fileUpload2").val("")
+                         //goi ajax
+                         $.ajax({
+                             headers: {
+                                 'Accept': 'application/json',
+                                 'Content-Type': 'application/json'
+                             },
+                             type: "POST",
+                             data: JSON.stringify(newProduct),
+                             // API
+                             url: "/products",
+                             //su ly khi thanh cong
+                             success: successHandler
+                         });
+                         //chan su kien mac dinh cua the
+                         event.preventDefault();
+                     },
+                     error: function (e) {
+                         console.log("ERROR : ", e);
+
+                     }
+                 });
+                 event.preventDefault();
+
+     }
 
     //--ve thong tin smartphone
     function getProduct(product) {
         let str = "";
         if (product.imageSet.length>0){
             product.imageSet.forEach(value =>
-                str+=`<img style="width: 200px ; height: 200px"src="/../${value.image}">`);
+                str+=`<img style="width: 200px ; height: 200px"src="/../image/${value.image}">`);
         }
        // <img th:each="img:${product.imageSet}" th:src="@{'/resources/static/image/' + ${img.image}}" alt="photo">
 
