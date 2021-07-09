@@ -4,27 +4,54 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../../loginPage/css/style.css">
     <style>
-        .error{
+        .error {
             color: gold;
             font-weight: 500;
         }
-        .success{
+
+        .success {
             color: chartreuse;
             font-weight: 500;
         }
-        .okllll:hover{
+
+        .okllll:hover {
             cursor: pointer;
         }
-        p{
+
+        p {
             margin-left: 20px;
         }
-        </style>
+
+        .form-input {
+            position: relative;
+            margin-bottom: 10px;
+            margin-top: 10px
+        }
+
+        .form-input i {
+            position: absolute;
+            color: azure;
+            font-size: 18px;
+            top: 15px;
+            left: 10px
+        }
+
+        .form-input input {
+            padding-left: 30px;
+        }
+
+        .modal-backdrop {
+            background-color: azure;
+        }
+    </style>
 
 </head>
-<body class="img js-fullheight" style="background-image: url(../../../loginPage/images/supercar-wallpapers-lamborghini-background.jpg);">
+<body class="img js-fullheight"
+      style="background-image: url(../../../loginPage/images/supercar-wallpapers-lamborghini-background.jpg);">
 
 
 <!--login form-->
@@ -36,38 +63,46 @@
                     <h3 class="mb-4 text-center">Have an account?</h3>
                     <form class="signin-form">
                         <div class="form-group">
-                            <input type="text" id="username_login" class="form-control" placeholder="Username" required>
+                            <div class="form-input">
+                                <i class="fa fa-user"></i><input type="text" id="username_login" class="form-control"
+                                                                 placeholder="Username" required>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <input id="password_login" type="password" class="form-control" placeholder="Password" required>
+                            <div class="form-input">
+                                <i class="fa fa-lock"></i><input id="password_login" type="password"
+                                                                 class="form-control" placeholder="Password" required>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <p class = "error" id="login_error"></p>
+                            <p class="error" id="login_error"></p>
                         </div>
                         <div class="form-group">
-                            <button id="login_button" type="button" class="form-control btn btn-primary submit px-3">Sign In</button>
+                            <button id="login_button" type="button" class="form-control btn btn-primary submit px-3">
+                                Sign In
+                            </button>
                         </div>
-                       <div class="form-group d-md-flex">
-                           <div class="w-50" style="padding-left: 20px">
-                               <a class="okllll" href="/" style="color: #fff; text-decoration: underline">Back</a>
-                           </div>
-                           <div class="w-50 text-md-right" style="padding-right: 10px">
-                               <a class="okllll" data-bs-toggle="modal"
-                                  data-bs-target="#createModal" style="color: aqua">Register New Account</a>
-                           </div>
-                       </div>
+                        <div class="form-group d-md-flex">
+                            <div class="w-50" style="padding-left: 20px">
+                                <a class="okllll" href="/" style="color: #fff; text-decoration: underline">Back</a>
+                            </div>
+                            <div class="w-50 text-md-right" style="padding-right: 10px">
+                                <a class="okllll" data-bs-toggle="modal"
+                                   data-bs-target="#createModal" style="color: aqua">Register New Account</a>
+                            </div>
+                        </div>
 
                     </form>
                     <p class="w-100 text-center" style="margin-left: 0px">&mdash; Or Sign In With &mdash;</p>
                     <div class="social d-flex text-center">
-                        <a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Facebook</a>
+                        <a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span>
+                            Facebook</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 
 
 <!--Register Modal-->
@@ -80,21 +115,31 @@
             <div class="modal-body" style="background-color: dimgray; border-color: dimgray ">
                 <form>
                     <div class="form-group">
-                        <input type="text" id="email" class="form-control" placeholder="Email" required>
-                        <p class = "error" id="email_error"></p>
+                        <div class="form-input">
+                            <i class="fa fa-envelope"></i><input type="text" id="email" class="form-control"
+                                                                 placeholder="Email" required>
+                        </div>
+                        <p class="error" id="email_error"></p>
                     </div>
                     <div class="form-group">
-                        <input id="username" type="text" class="form-control" placeholder="Username" required>
-                        <p class = "error" id="username_error"></p>
+                        <div class="form-input">
+                            <i class="fa fa-user"></i><input id="username" type="text" class="form-control"
+                                                             placeholder="Username" required>
+                        </div>
+                        <p class="error" id="username_error"></p>
                     </div>
                     <div class="form-group">
-                        <input id="password" type="password" class="form-control" placeholder="Password" required>
-                        <p class = "error" id="password_error"></p>
+                        <div class="form-input">
+                            <i class="fa fa-lock"></i><input id="password" type="password" class="form-control"
+                                                             placeholder="Password" required>
+                        </div>
+                        <p class="error" id="password_error"></p>
                     </div>
                     <p class="error" id="message_error">
-                    <p class = "success" id="register_success">
                     <div class="form-group">
-                        <button id="create_button" type="button" class="form-control btn btn-primary submit px-3">Sign Up</button>
+                        <button id="create_button" type="button" class="form-control btn btn-primary submit px-3">Sign
+                            Up
+                        </button>
                     </div>
                 </form>
             </div>
@@ -102,55 +147,127 @@
     </div>
 </div>
 
-
-
-
+<!--Register success modal-->
+<div class="modal fade" id="registerOkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="alert alert-success" role="alert" style="text-align: center">
+            <p id="register_success" style="margin-left: 10px; font-size: 20px;font-family: 'Apple Color Emoji',serif;border: none; color: green"
+               class="modal-title"></p>
+        </div>
+    </div>
+</div>
 
 <script src="../../../loginPage/js/jquery.min.js"></script>
 <script src="../../../loginPage/js/popper.js"></script>
 <script src="../../../loginPage/js/bootstrap.min.js"></script>
 <script src="../../../loginPage/js/main.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type = "text/javascript">
-    //login
-    $(document).ready(function(){
-            document.getElementById("login_error").innerHTML = ""
-            $('#login_button').click(function () {
-                let username = $('#username_login').val();
-                let password = $('#password_login').val();
-                let loginInfo = {
-                    username: username,
-                    password: password
+<script type="text/javascript">
+
+    function getUrlVars() {
+        let vars = {};
+        let parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+
+    window.onload = function (){
+        let url = window.location.href;
+        if (url == "http://localhost:8080/login?logout"){
+            localStorage.clear();
+        }
+        hideWarnings();
+    }
+
+    function loginHandler() {
+        let username = $('#username_login').val();
+        let password = $('#password_login').val();
+        let loginInfo = {
+            username: username,
+            password: password
+        }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            data: JSON.stringify(loginInfo),
+
+            url: "/api/auth/signin",
+            success: function (data) {
+                localStorage.setItem("id", data.id);
+                localStorage.setItem("token", data.accessToken);
+                let roles = data.roles;
+                if (roles.indexOf("ROLE_USER") != -1) {
+                    window.location.href = "http://localhost:8080/user";
+                } else if (roles.indexOf("ROLE_ADMIN") != -1) {
+                    window.location.href = "http://localhost:8080/admin";
                 }
-                $.ajax({
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    type: "POST",
-                    data: JSON.stringify(loginInfo),
+                ;
+            },
+            error: function () {
+                document.getElementById("login_error").innerHTML = "Your username or password is invalid!"
+            }
+        });
+    }
 
-                    url: "/api/auth/signin",
-                    success: function(data){
-                        localStorage.setItem("id", data.id);
-                        localStorage.setItem("token", data.accessToken);
-                        let roles = data.roles;
-                        if (roles.indexOf("ROLE_USER") != -1){
-                            window.location.href="http://localhost:8080/user";
-                        } else if (roles.indexOf("ROLE_ADMIN") != -1){
-                            window.location.href="http://localhost:8080/admin";
-                        };
-                    },
 
-                    error: function(data){
-                        document.getElementById("login_error").innerHTML = "Your username or password is invalid!"
-                    }
-                });
-            });
+    //login
+    $(document).ready(function () {
+        hideWarnings();
+        $('#login_button').click(loginHandler);
     });
 
+    document.addEventListener('keydown', (event) => {
+        let username = $('#username_login').val();
+        let password = $('#password_login').val();
+        if (event.keyCode == 13 && username != "" && password != "") {
+            loginHandler();
+        }
+    });
+
+
+    function registerHandler() {
+        hideWarnings();
+        let username = $('#username').val();
+        let password = $('#password').val();
+        let email = $('#email').val();
+        let newUser = {
+            username: username,
+            password: password,
+            email: email
+        }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            data: JSON.stringify(newUser),
+            url: "/api/auth/signup",
+
+            success: function (data) {
+                $('#username_login').val(username);
+                $('#password_login').val(password);
+                $('#createModal').modal('hide');
+
+                document.getElementById("register_success").innerHTML = data.message;
+                $('#registerOkModal').modal('show');
+            },
+
+            error: function (errors) {
+                let error = $.parseJSON(errors.responseText);
+                printFieldErrors(error);
+            }
+        });
+    }
 
 
 
@@ -160,56 +277,28 @@
             $('#username').val("");
             $('#password').val("");
             $('#email').val("");
-            document.getElementById("username_error").innerHTML = "";
-            document.getElementById("password_error").innerHTML = "";
-            document.getElementById("email_error").innerHTML = "";
-            document.getElementById("message_error").innerHTML = "";
-            document.getElementById("login_error").innerHTML = "";
-            $('#create_button').click(function (event) {
-                document.getElementById("username_error").innerHTML = "";
-                document.getElementById("password_error").innerHTML = "";
-                document.getElementById("email_error").innerHTML = "";
-                document.getElementById("message_error").innerHTML = "";
-                let username = $('#username').val();
-                let password = $('#password').val();
-                let email = $('#email').val();
-                let newUser = {
-                    username: username,
-                    password: password,
-                    email: email
-                }
-                $.ajax({
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    type: "POST",
-                    data: JSON.stringify(newUser),
-                    url: "/api/auth/signup",
-
-                    success: function(data){
-                        document.getElementById("register_success").innerHTML = data.message;
-                        // $('#createModal').modal('hide');
-                    },
-
-                    error: function(errors){
-                        let error = $.parseJSON(errors.responseText);
-                        printFieldErrors(error);
-                    }
-                });
-                event.preventDefault();
-            });
+            hideWarnings();
+            $('#create_button').click(registerHandler);
         });
     });
 
 
-    function printFieldErrors(errors){
-        for (const key in errors){
-            let required="* Required";
-            if (errors[key] == "must not be blank"){
-                document.getElementById(`${key}_error`).innerHTML = required;
+    function hideWarnings() {
+        document.getElementById("username_error").innerHTML = "";
+        document.getElementById("password_error").innerHTML = "";
+        document.getElementById("email_error").innerHTML = "";
+        document.getElementById("message_error").innerHTML = "";
+        document.getElementById("login_error").innerHTML = "";
+        document.getElementById("register_success").innerHTML = "";
+    }
+
+
+    function printFieldErrors(errors) {
+        for (const key in errors) {
+            if (errors[key] == "must not be blank") {
+                document.getElementById(`${key}_error`).innerHTML = `* Required ${key} `;
             } else {
-                document.getElementById(`${key}_error`).innerHTML = `${errors[key]}`;
+                document.getElementById(`${key}_error`).innerHTML = `* ${errors[key]}`;
             }
         }
     }

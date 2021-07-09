@@ -73,6 +73,18 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping("/{username}")
+    public ResponseEntity<Page<User>> showAllUsers(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "5") Integer size, @PathVariable String username){
+        Page<User> users = userService.findAllByUsernameContaining(username,page, size);
+        if (username.equals("")){
+            return new ResponseEntity<>(userService.findAll(page, size),HttpStatus.OK);
+        }
+        if (users.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
     @GetMapping("/about")
     public ModelAndView showFormAbout(){
         return new ModelAndView("/views/about");

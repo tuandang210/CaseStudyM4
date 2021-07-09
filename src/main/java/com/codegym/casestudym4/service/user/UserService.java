@@ -31,6 +31,9 @@ public class UserService implements IUserService{
 
     @Override
     public User save(User user) {
+        if (user.getTotalSpent()==null){
+            user.setTotalSpent(0.0);
+        }
         return userRepository.save(user);
     }
 
@@ -51,10 +54,6 @@ public class UserService implements IUserService{
         return userRepository.findAllByUsernameContaining(username, pageRequest);
     }
 
-    @Override
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
 
     @Override
     public Boolean existsByUsername(String username) {

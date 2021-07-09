@@ -12,5 +12,9 @@ import java.util.List;
 public class OrderDto {
     private Long user_id;
 
+    private String date;
+
+    private Double totalSpent;
+
     private List<ProductDto> products;
 }

@@ -2,6 +2,7 @@ package com.codegym.casestudym4.service.order;
 
 import com.codegym.casestudym4.model.Comment;
 import com.codegym.casestudym4.model.Orders;
+import com.codegym.casestudym4.model.User;
 import com.codegym.casestudym4.repository.IOrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,5 +44,10 @@ public class OrdersService implements IOrdersService {
     @Override
     public Optional<Long> findLastOrderIdByUserId(Long id) {
         return orderRepository.findLastOrderIdByUserId(id);
+    }
+
+    @Override
+    public Iterable<Orders> findAllByUser(User user) {
+        return orderRepository.findAllByUser(user);
     }
 }

@@ -47,6 +47,7 @@ public class CommentController {
 
     @GetMapping("/list/{id}")
     public ResponseEntity<Iterable<Comment>> getComment(@PathVariable Long id){
+        Iterable<Comment> comments = commentService.findAllByProduct(productService.findById(id).get());
         return new ResponseEntity<>(commentService.findAllByProduct(productService.findById(id).get()),HttpStatus.OK);
     }
 

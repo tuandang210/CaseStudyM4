@@ -14,20 +14,20 @@ public class Orders {
     private Long id;
     @ManyToOne
     private User user;
-    private Date date = new Date();
+    private String dates;
 
     public Orders() {
     }
 
-    public Orders(Long id, User user, Date date) {
+    public Orders(Long id, User user, String date) {
         this.id = id;
         this.user = user;
-        this.date = date;
+        this.dates = date;
     }
 
-    public Orders(User user, Date date) {
+    public Orders(User user, String date) {
         this.user = user;
-        this.date = date;
+        this.dates = date;
     }
 
     public Orders(User user) {
