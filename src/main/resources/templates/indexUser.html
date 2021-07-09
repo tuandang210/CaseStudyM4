@@ -231,7 +231,8 @@
             </section>
             <br>
             <!--view all cars-->
-            <p class="text-center"><a href="user-product/list" class="tuan">View Cars &nbsp;<i class="fa fa-long-arrow-right"></i></a></p>
+            <p class="text-center"><a href="user-product/list" class="tuan">View Cars &nbsp;<i
+                    class="fa fa-long-arrow-right"></i></a></p>
             <!--href="user-product/list"-->
             <br>
 
@@ -301,7 +302,8 @@
                 </div>
             </div>
 
-            <p class="text-center"><a href="/api/users/blog" class="tuan">Read More &nbsp;<i class="fa fa-long-arrow-right"></i></a></p>
+            <p class="text-center"><a href="/api/users/blog" class="tuan">Read More &nbsp;<i
+                    class="fa fa-long-arrow-right"></i></a></p>
             <!--            href="blog.html"-->
 
         </div>
@@ -334,7 +336,7 @@
                             <label>&nbsp;</label>
 
                             <ul class="actions">
-                                <li><input type="button" value="Send Message" class="tuan primary"/></li>
+                                <li><input id="sentMessage" type="button" value="Send Message" class="primary"/></li>
                             </ul>
                         </div>
                     </div>
@@ -367,7 +369,15 @@
         </div>
     </footer>
 </div>
-
+<div class="modal fade" id="okconde" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="alert alert-danger" role="alert">
+            <p style="margin-left: 70px;font-size: 20px;font-family: 'Apple Color Emoji',serif;border: none; color: red "
+               class="modal-title">You have to log in to use this feature!!</p>
+        </div>
+    </div>
+</div>
 
 <!-- Scripts -->
 <script src="../../users/js/jquery.min.js"></script>
@@ -385,7 +395,40 @@
     });
 
 
-    window.onload=function () {
+    $(document).ready(function () {
+        $('#sentMessage').click(function (e) {
+            let name = $('#name').val();
+            let email = $('#email').val();
+            let subject = $('#subject').val();
+            let notes = $('#message').val();
+            $('#name').val("");
+            $('#email').val("");
+            $('#subject').val("");
+            $('#message').val("");
+            let newMessage11 = {
+                name: name,
+                email: email,
+                subject: subject,
+                notes: notes
+            }
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                url: `/messages`,
+                data: JSON.stringify(newMessage11),
+                success: function (data){
+                    $('#okconde').modal('show');
+                    setTimeout("$('#okconde').modal('hide')", 2000);
+                }
+            })
+            event.preventDefault()
+        })
+    })
+
+    window.onload = function () {
         let token = localStorage.getItem("id")
         $.ajax({
             headers: {
@@ -393,11 +436,11 @@
                 'Content-Type': 'application/json'
             },
             type: "POST",
-            url:`/user-product11`,
+            url: `/user-product11`,
             data: JSON.stringify(token),
-            success:function (data){
+            success: function (data) {
                 console.log(data)
-                document.getElementById("show-user-name").innerHTML = "&nbsp; Welcome &nbsp;"+`<b>`+data.username+`</b>`;
+                document.getElementById("show-user-name").innerHTML = "&nbsp; Welcome &nbsp;" + `<b>` + data.username + `</b>`;
             }
         })
     }
