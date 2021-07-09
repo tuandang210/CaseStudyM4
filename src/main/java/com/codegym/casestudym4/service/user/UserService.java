@@ -51,10 +51,6 @@ public class UserService implements IUserService{
         return userRepository.findAllByUsernameContaining(username, pageRequest);
     }
 
-    @Override
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
 
     @Override
     public Boolean existsByUsername(String username) {
