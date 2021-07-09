@@ -6,37 +6,37 @@
             background: #eee
         }
 
-        .date {
-            font-size: 11px
+        .media .media-object { max-width: 120px; }
+
+        .media-date li { padding: 0; }
+        .media-date li:first-child:before { content: ''; }
+        .media-date li:before {
+            content: '.';
+            margin-left: -2px;
+            margin-right: 2px;
         }
 
-        .comment-text {
-            font-size: 12px
+
+        .btn-circle {
+            font-weight: bold;
+            font-size: 12px;
+            padding: 6px 15px;
+            border-radius: 20px;
+        }
+        .btn-circle span { padding-right: 6px; }
+
+        input[type="file"]{
+            z-index: 999;
+            line-height: 0;
+            font-size: 0;
+            position: absolute;
+            opacity: 0;
+            filter: alpha(opacity = 0);-ms-filter: "alpha(opacity=0)";
+            margin: 0;
+            padding:0;
+            left:0;
         }
 
-        .fs-12 {
-            font-size: 12px
-        }
-
-        .shadow-none {
-            box-shadow: none
-        }
-
-        .name {
-            color: #007bff
-        }
-
-        .cursor:hover {
-            color: blue
-        }
-
-        .cursor {
-            cursor: pointer
-        }
-
-        .textarea {
-            resize: none
-        }
     </style>
     <meta charset="UTF-8">
     <title>Cars Dealer Website</title>
@@ -249,46 +249,46 @@
         </div>
     </div>
     <!-- comment-->
-
     <div>
         <div class="container mt-5">
             <div class="d-flex justify-content-center row">
                 <div class="col-md-10">
                     <div class="p-3 bg-white rounded">
-                        <div id="container" style="text-align: center">
-                            <div class="d-flex flex-row user-info"><img class="rounded-circle"
-                                                                        src="https://i.imgur.com/RpzrMR2.jpg"
-                                                                        width="40">
-                                <div class="d-flex flex-column justify-content-start ml-2"><span
-                                        class="d-block font-weight-bold name">Marry Andrews</span><span
-                                        class="date text-black-50">Shared publicly - Jan 2020</span></div>
+                            <div class="tab-pane active" id="add-comment">
+                                <form action="#" method="post" class="form-horizontal" id="commentForm" role="form">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Comment</label>
+                                        <div class="col-sm-10">
+                                            <textarea style="width: 528px;height: 134px;" class="form-control" name="addComment" id="comment_content"
+                                                      rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button class="btn btn-success btn-circle text-uppercase"
+                                                    onclick="send_comment()" type="button" id="submitComment"><span
+                                                    class="glyphicon glyphicon-send"></span> Summit comment
+                                            </button>
+                                            <button class="btn btn-success btn-circle text-uppercase"
+                                                    onclick="cancels()" type="button"><span
+                                                    class="glyphicon glyphicon-send"></span>Cancel
+                                            </button>
+                                            <input hidden="hidden" th:value="${product.id}" id="comment_product_in">
+                                            <label style="background-color: aliceblue;font-size: 15px;"
+                                                   for="comment_rate"
+                                                   class="col-form-label">Rate:</label>
+                                            <select style="border-radius: 10px;"
+                                                    id="comment_rate">
+                                                <option value="5" selected>5*</option>
+                                                <option value="4">4*</option>
+                                                <option value="3">3*</option>
+                                                <option value="2">2*</option>
+                                                <option value="1">1*</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                            <input hidden="hidden" value="1" id="comment_author_in">
-                            <input hidden="hidden" th:value="${product.id}" id="comment_product_in">
-                            <div class="bg-light p-2">
-                                <div  class="d-flex flex-row align-items-start">
-                                    <textarea id="comment_content" class="form-control ml-1 shadow-none textarea"></textarea></div>
-                                <div class="mt-2 text-right">
-                                    <button onclick="send_comment()" class="btn btn-primary btn-sm shadow-none"
-                                            type="button">Post comment
-                                    </button>
-                                    <button  onclick="cancels()" class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">
-                                        Cancel
-                                    </button>
-                                </div>
-                            </div>
-                            <div>
-                                <label for="comment_rate" class="col-form-label">Rate:</label>
-                                <select id="comment_rate">
-                                    <option th:selected="5" value="5">5*</option>
-                                    <option value="4">4*</option>
-                                    <option value="3">3*</option>
-                                    <option value="2">2*</option>
-                                    <option value="1">1*</option>
-                                </select>
-                            </div>
-
-                        </div>
                         <h6 id="commentList_out">Reviews[8]</h6>
                     </div>
                 </div>
@@ -296,6 +296,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Footer -->
 <footer id="footer">
@@ -330,24 +331,20 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 
-    function cancels(){
+    function cancels() {
         $('#comment_content').val("");
     }
 
     function formatDate() {
         let date = new Date()
-        // let second = date.getSeconds();
-        // let minute = date.getMinutes()
-        // let hour = date.getHours()
-        let day = date.getDay();
-        let month = date.getMonth();
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
         let year = date.getFullYear();
-        // hour + ':' + minute + ':' + second + ' ' +
         return day + '/' + month + '/' + year;
     }
 
     function send_comment() {
-        let user_id = $('#comment_author_in').val();
+        let user_id = localStorage.getItem('id');
         let content = $('#comment_content').val();
         let date = formatDate();
         if (content === "") {
@@ -391,8 +388,14 @@
             url: `/comments/list/${product_id}`,
             success: function (data) {
                 let content = '';
-                for (let i = data.length - 1; i > data.length - 6; i--) {
-                    content += getComment(data[i]);
+                if (data.length > 5) {
+                    for (let i = data.length - 1; i > data.length - 6; i--) {
+                        content += getComment(data[i]);
+                    }
+                } else {
+                    for (let i = data.length - 1; i > -1; i--) {
+                        content += getComment(data[i]);
+                    }
                 }
                 document.getElementById("commentList_out").innerHTML = content;
             }
@@ -410,7 +413,8 @@
                                                                width="40">
                 <div className="ml-2">
                     <div className="d-flex flex-row align-items-center"><span className="name font-weight-bold">${comment.user.username}</span><span
-                        className="dot"></span><span className="date">${comment.date}</span></div>
+                        className="dot"></span></div>
+                        <div><span className="date">${comment.date}</span></div>
                     <div className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i
                         className="fa fa-star"></i><i className="fa fa-star"></i></div>
                 </div>
