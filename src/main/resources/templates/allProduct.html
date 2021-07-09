@@ -30,8 +30,8 @@
     <header id="header">
         <div class="inner">
             <!-- Logo -->
-            <a href="index.html" class="logo">
-                <span class="fa fa-star"></span> <span class="title">Cars Gallery</span>
+            <a href="/user" class="logo">
+                <span class="fa fa-star" aria-hidden="true"></span> <span>The Daimler AG</span>
             </a>
 
             <!-- Cart -->
@@ -62,9 +62,9 @@
     <nav id="menu">
         <h2>Menu</h2>
         <ul>
-            <li><a href="/">Home</a></li>
+            <li><a href="/user">Home</a></li>
 
-            <li><a href="#" class="active">Cars</a></li>
+            <li><a href="user-product/list" class="active">Cars</a></li>
 
             <li>
                 <a href="#" class="dropdown-toggle">About</a>
@@ -72,23 +72,24 @@
                 <ul>
                     <li><a href="/api/users/about">About Us</a></li>
                     <li><a href="/api/users/team">Team</a></li>
-                    <li><a href="/api/users/blog">Blog</a></li>
+                    <li><a href="/api/users/blog">News</a></li>
                     <li><a href="/api/users/testimonials">Testimonials</a></li>
                     <li><a href="/api/users/faq">FAQ</a></li>
                     <li><a href="/api/users/terms">Terms</a></li>
                 </ul>
             </li>
-            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="/logout">Log out</a></li>
         </ul>
     </nav>
 
     <!-- Main -->
     <div id="main">
         <div class="inner">
-            <h1>Cars</h1>
+            <h1>Cars Gallery</h1>
             <div class="image main">
-                <img style="height: 370px; object-fit: cover" src="../../users/newImage/j8RQ7b.jpg" class="img-fluid"
-                     alt=""/>
+                <img style="height: 320px; width: 100%; object-fit: cover"
+                     src="https://cdn.wallpapersafari.com/92/71/j8RQ7b.jpg" class="img-fluid"
+                     alt="1"/>
             </div>
 
             <div class="container-fluid">
@@ -164,7 +165,8 @@
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function (e) {
+
+        function drawOkla() {
             $.ajax({
                 type: "GET",
                 url: "/user-product",
@@ -203,238 +205,243 @@
                         shoppingCart.addItemToCart(name, price, id, 1);
                         displayCart();
                     });
-
-                    $('#producer').change(function (e) {
-                        let brand = document.getElementById("producer");
-                        let ab = brand.value;
-                        let content = "";
-                        for (let i = 0; i < data.content.length; i++) {
-                            if (ab === data.content[i].brand.name) {
-                                let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
-                                content += `
-
-                                  <article>
-                                   <span class="image">
-                                    ${str}
-                                    </span>
-                                       <a href="/user-product/${data.content[i].id}">
-
-                                           <h3>${data.content[i].name}</h3>
-                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
-
-                                        </a>
-                                  </article>
-
-                               `
-                            } else if (ab === "") {
-                                let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
-                                content += `
-
-                                  <article>
-                                   <span class="image">
-                                    ${str}
-                                    </span>
-                                       <a href="/user-product/${data.content[i].id}">
-
-                                           <h3>${data.content[i].name}</h3>
-                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
-
-                                        </a>
-                                  </article>
-
-                               `
-                            }
-                        }
-                        document.getElementById("okla").innerHTML = content;
-
-                        $('.add-to-cart').click(function (e) {
-                            event.preventDefault();
-                            var name = $(this).data('name');
-                            var price = Number($(this).data('price'));
-                            var id = Number($(this).data('id'));
-                            shoppingCart.addItemToCart(name, price, id, 1);
-                            displayCart();
-                        });
-                    })
-
-                    //find by color
-                    $('#colors').change(function (e) {
-                        let cl = document.getElementById("colors");
-                        let ab = cl.value;
-                        let content = "";
-                        for (let i = 0; i < data.content.length; i++) {
-                            if (ab === data.content[i].color.name) {
-                                let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
-                                content += `
-
-                                  <article>
-                                   <span class="image">
-                                    ${str}
-                                    </span>
-                                       <a href="/user-product/${data.content[i].id}">
-
-                                           <h3>${data.content[i].name}</h3>
-                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
-
-                                        </a>
-                                  </article>
-
-                               `
-                            } else if (ab === "") {
-                                let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
-                                content += `
-
-                                  <article>
-                                   <span class="image">
-                                    ${str}
-                                    </span>
-                                       <a href="/user-product/${data.content[i].id}">
-
-                                           <h3>${data.content[i].name}</h3>
-                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
-
-                                        </a>
-                                  </article>
-
-                               `
-                            }
-                        }
-                        document.getElementById("okla").innerHTML = content;
-
-                        $('.add-to-cart').click(function (e) {
-                            event.preventDefault();
-                            var name = $(this).data('name');
-                            var price = Number($(this).data('price'));
-                            var id = Number($(this).data('id'));
-                            shoppingCart.addItemToCart(name, price, id, 1);
-                            displayCart();
-                        });
-                    })
-
-                    //find by seats
-                    $('#seatss').change(function (e) {
-                        let col = document.getElementById("seatss");
-                        let ab = col.value;
-                        let content = "";
-                        for (let i = 0; i < data.content.length; i++) {
-                            if (ab == data.content[i].seat) {
-                                let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
-                                content += `
-
-                                  <article>
-                                   <span class="image">
-                                    ${str}
-                                    </span>
-                                       <a href="/user-product/${data.content[i].id}">
-
-                                           <h3>${data.content[i].name}</h3>
-                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
-
-                                        </a>
-                                  </article>
-
-                               `
-                            } else if (ab === "") {
-                                let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
-                                content += `
-
-                                  <article>
-                                   <span class="image">
-                                    ${str}
-                                    </span>
-                                       <a href="/user-product/${data.content[i].id}">
-
-                                           <h3>${data.content[i].name}</h3>
-                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
-
-                                        </a>
-                                  </article>
-
-                               `
-                            }
-                        }
-                        document.getElementById("okla").innerHTML = content;
-
-                        $('.add-to-cart').click(function (e) {
-                            event.preventDefault();
-                            var name = $(this).data('name');
-                            var price = Number($(this).data('price'));
-                            var id = Number($(this).data('id'));
-                            shoppingCart.addItemToCart(name, price, id, 1);
-                            displayCart();
-                        });
-                    })
-
-                    //find by type
-                    $('#typess').change(function (e) {
-                        let okokok = document.getElementById("typess");
-                        let ab = okokok.value;
-                        let content = "";
-                        for (let i = 0; i < data.content.length; i++) {
-                            if (ab === data.content[i].type) {
-                                let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
-                                content += `
-
-                                  <article>
-                                   <span class="image">
-                                    ${str}
-                                    </span>
-                                       <a href="/user-product/${data.content[i].id}">
-
-                                           <h3>${data.content[i].name}</h3>
-                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
-
-                                        </a>
-                                  </article>
-
-                               `
-                            } else if (ab === "") {
-                                let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
-                                content += `
-
-                                  <article>
-                                   <span class="image">
-                                    ${str}
-                                    </span>
-                                       <a href="/user-product/${data.content[i].id}">
-
-                                           <h3>${data.content[i].name}</h3>
-                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
-                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
-
-                                        </a>
-                                  </article>
-
-                               `
-                            }
-                        }
-                        document.getElementById("okla").innerHTML = content;
-
-                        $('.add-to-cart').click(function (e) {
-                            event.preventDefault();
-                            var name = $(this).data('name');
-                            var price = Number($(this).data('price'));
-                            var id = Number($(this).data('id'));
-                            shoppingCart.addItemToCart(name, price, id, 1);
-                            displayCart();
-                        });
-                    })
                 }
+            })
+        }
+
+
+        $(document).ready(function (e) {
+
+            drawOkla()
+            $('#producer').change(function (e) {
+                let brand = document.getElementById("producer");
+                let ab = brand.value;
+                let content = "";
+                for (let i = 0; i < data.content.length; i++) {
+                    if (ab === data.content[i].brand.name) {
+                        let str = "";
+                        str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                        content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                    } else if (ab === "") {
+                        let str = "";
+                        str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                        content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                    }
+                }
+                document.getElementById("okla").innerHTML = content;
+
+                $('.add-to-cart').click(function (e) {
+                    event.preventDefault();
+                    var name = $(this).data('name');
+                    var price = Number($(this).data('price'));
+                    var id = Number($(this).data('id'));
+                    shoppingCart.addItemToCart(name, price, id, 1);
+                    displayCart();
+                });
+            })
+
+            //find by color
+            $('#colors').change(function (e) {
+                let cl = document.getElementById("colors");
+                let ab = cl.value;
+                let content = "";
+                for (let i = 0; i < data.content.length; i++) {
+                    if (ab === data.content[i].color.name) {
+                        let str = "";
+                        str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                        content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                    } else if (ab === "") {
+                        let str = "";
+                        str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                        content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                    }
+                }
+                document.getElementById("okla").innerHTML = content;
+
+                $('.add-to-cart').click(function (e) {
+                    event.preventDefault();
+                    var name = $(this).data('name');
+                    var price = Number($(this).data('price'));
+                    var id = Number($(this).data('id'));
+                    shoppingCart.addItemToCart(name, price, id, 1);
+                    displayCart();
+                });
+            })
+
+            //find by seats
+            $('#seatss').change(function (e) {
+                let col = document.getElementById("seatss");
+                let ab = col.value;
+                let content = "";
+                for (let i = 0; i < data.content.length; i++) {
+                    if (ab == data.content[i].seat) {
+                        let str = "";
+                        str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                        content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                    } else if (ab === "") {
+                        let str = "";
+                        str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                        content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                    }
+                }
+                document.getElementById("okla").innerHTML = content;
+
+                $('.add-to-cart').click(function (e) {
+                    event.preventDefault();
+                    var name = $(this).data('name');
+                    var price = Number($(this).data('price'));
+                    var id = Number($(this).data('id'));
+                    shoppingCart.addItemToCart(name, price, id, 1);
+                    displayCart();
+                });
+            })
+
+            //find by type
+            $('#typess').change(function (e) {
+                let okokok = document.getElementById("typess");
+                let ab = okokok.value;
+                let content = "";
+                for (let i = 0; i < data.content.length; i++) {
+                    if (ab === data.content[i].type) {
+                        let str = "";
+                        str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                        content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                    } else if (ab === "") {
+                        let str = "";
+                        str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                        content += `
+
+                                  <article>
+                                   <span class="image">
+                                    ${str}
+                                    </span>
+                                       <a href="/user-product/${data.content[i].id}">
+
+                                           <h3>${data.content[i].name}</h3>
+                                           <p><strong>Price:$ ${data.content[i].sellPrice}</strong></p>
+                                            <p type="button" data-name="${data.content[i].name}" data-price="${data.content[i].sellPrice}" data-id="${data.content[i].id}" class="add-to-cart btn btn-outline-primary btn-sm">Add to cart</p>
+
+                                        </a>
+                                  </article>
+
+                               `
+                    }
+                }
+                document.getElementById("okla").innerHTML = content;
+
+                $('.add-to-cart').click(function (e) {
+                    event.preventDefault();
+                    var name = $(this).data('name');
+                    var price = Number($(this).data('price'));
+                    var id = Number($(this).data('id'));
+                    shoppingCart.addItemToCart(name, price, id, 1);
+                    displayCart();
+                });
             })
             event.preventDefault();
         })
@@ -486,12 +493,15 @@
 
 <div class="modal fade" id="modal_show_message" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <p style="font-family: 'Apple Color Emoji',serif;color: green;border: none " class="modal-title">Your
-                    order has been saved successfully !</p>
-            </div>
+    <div class="modal-dialog" role="document">
+        <!--        <div class="modal-content">-->
+        <!--            <div style="height: 100%" class="alert alert-success">-->
+        <!--                <p style="margin-left: 30px; font-size: 20px;font-family: 'Apple Color Emoji',serif;color: green;border: none " class="modal-title">Success. We will contact you to confirm!</p>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <div class="alert alert-success" role="alert">
+            <p style="margin-left: 60px;font-size: 20px;font-family: 'Apple Color Emoji',serif;border: none; color: green "
+               class="modal-title">Success. We will contact you to confirm!</p>
         </div>
     </div>
 </div>
@@ -697,7 +707,7 @@
                 + "<td>" + cartArray[i].name + "</td>"
                 + "<td>(" + cartArray[i].price + ")</td>"
                 + "<td><div class='input-group'><button class='minus-item input-group-addon' data-name=" + cartArray[i].name + ">-</button>"
-                + "<input onclick='checkQuantity(" + cartArray[i].id + ", " + cartArray[i].count + ")' style='margin-top: 3px' type='number' class='alool item-count form-control' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
+                + "<input style='margin-top: 3px' type='number' class='alool item-count form-control' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
                 + "<button class='plus-item input-group-addon' data-name=" + cartArray[i].name + ">+</button></div></td>"
                 + "<td><button class='delete-item' data-name=" + cartArray[i].name + ">X</button></td>"
                 + " = "
@@ -734,10 +744,10 @@
                     let cartArray = shoppingCart.listCart();
                     let totalSpents = parseFloat(document.getElementById("total-cart").textContent);
                     let quantitys = [];
-                    let id_product =  [];
+                    let id_product = [];
                     for (let i = 0; i < cartArray.length; i++) {
                         let product = {
-                            id : cartArray[i].id
+                            id: cartArray[i].id
                         }
                         quantitys.push(cartArray[i].count);
                         id_product.push(product)
@@ -748,7 +758,7 @@
                         },
                         product: id_product,
                         quantity: quantitys,
-                        totalSpent : totalSpents
+                        totalSpent: totalSpents
                     };
                     $.ajax({
                         headers: {
@@ -761,9 +771,11 @@
                         success: function () {
                             $('#cart').modal('hide');
                             shoppingCart.clearCart();
+                            drawOkla()
                             displayCart();
                             $('#modal_show_message').modal('show');
                             setTimeout("$('#modal_show_message').modal('hide')", 3000);
+
                         }
                     })
                 }
@@ -778,7 +790,7 @@
         let minute = date.getMinutes()
         let hour = date.getHours()
         let day = date.getDate();
-        let month = date.getMonth()+1;
+        let month = date.getMonth() + 1;
         let year = date.getFullYear();
         return hour + ':' + minute + ':' + second + ' ' + day + '/' + month + '/' + year;
     }
