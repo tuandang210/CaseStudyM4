@@ -2,6 +2,7 @@ package com.codegym.casestudym4.controller;
 
 import com.codegym.casestudym4.model.Orders;
 import com.codegym.casestudym4.service.order.IOrdersService;
+import com.codegym.casestudym4.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,10 @@ public class OrdersController {
     @Autowired
     private IOrdersService ordersService;
 
+
+    @Autowired
+    private IUserService userService;
+
     @GetMapping("/list")
     public ModelAndView showList(@PageableDefault(size = 1000) Pageable pageable){
         ModelAndView modelAndView = new ModelAndView("/order/list");
@@ -31,8 +36,9 @@ public class OrdersController {
     }
 
     @PostMapping
-    public ResponseEntity<Orders> createBrand(@RequestBody Orders orders) {
-        return new ResponseEntity<>(ordersService.save(orders), HttpStatus.CREATED);
+    public ResponseEntity<Long> createBrand(@RequestBody Orders orders) {
+        ordersService.save(orders);
+        return new ResponseEntity<>(ordersService.findLastOrderIdByUserId(orders.getUser().getId()).get(), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -44,4 +50,14 @@ public class OrdersController {
         orders.setId(ordersOptional.get().getId());
         return new ResponseEntity<>(ordersService.save(orders), HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOrderById(@PathVariable Long id){
+        Iterable<Orders> orders = ordersService.findAllByUser(userService.findById(id).get());
+        if (!orders.iterator().hasNext()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(orders,HttpStatus.OK);
+    }
+
 }

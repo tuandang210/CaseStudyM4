@@ -14,8 +14,6 @@ public interface IUserService extends IGeneralService<User>, UserDetailsService 
 
     Page<User> findAllByUsernameContaining(String username, Integer page, Integer size);
 
-    Optional<User> findByUsername(String username);
-
     Boolean existsByUsername(String username);
 
     Boolean existsByEmail(String email);
