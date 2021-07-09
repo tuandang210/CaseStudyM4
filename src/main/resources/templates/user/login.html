@@ -169,8 +169,19 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 
+    function getUrlVars() {
+        let vars = {};
+        let parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+
     window.onload = function (){
-        localStorage.clear();
+        let url = window.location.href;
+        if (url == "http://localhost:8080/login?logout"){
+            localStorage.clear();
+        }
         hideWarnings();
     }
 
@@ -249,7 +260,6 @@
 
                 document.getElementById("register_success").innerHTML = data.message;
                 $('#registerOkModal').modal('show');
-                setTimeout($('#registerOkModal').modal('hide'), 2000);
             },
 
             error: function (errors) {
