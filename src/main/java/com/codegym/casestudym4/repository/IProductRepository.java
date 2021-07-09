@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface IProductRepository extends JpaRepository<Product,Long> {
     Page<Product> findAllByNameContaining(String name, Pageable pageable);
@@ -22,5 +24,6 @@ public interface IProductRepository extends JpaRepository<Product,Long> {
     @Query(value = "Call Delete_Product(?1)",nativeQuery = true)
     void deleteProductsByIdUseProceduce(Long id);
 
+    Optional<Product> findProductByName(String name);
 
 }

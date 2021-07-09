@@ -73,7 +73,7 @@ public class RestUploadController {
         Set<Image> imageSet = new HashSet<>();
 
         if (StringUtils.isEmpty(uploadedFileName)) {
-            return new ResponseEntity(imageSet, HttpStatus.OK);
+            return new ResponseEntity(imageSet, HttpStatus.NO_CONTENT);
         }
         try {
             saveUploadedFiles(Arrays.asList(uploadFiles));

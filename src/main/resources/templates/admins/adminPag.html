@@ -115,7 +115,7 @@
                             <i class="ti-settings text-primary"></i>
                             Settings
                         </a>
-                        <a class="dropdown-item">
+                        <a id="logout" class="dropdown-item">
                             <i class="ti-power-off text-primary"></i>
                             Logout
                         </a>
@@ -1077,7 +1077,6 @@
 <div id="modal"></div>
 <!-- Modal Create-->
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -1101,9 +1100,11 @@
                     </tr>
                     <tr>
                         <td>Color</td>
-                        <td><select id="createColor">
+                        <td>
+                            <select id="createColor">
                             <option th:each="color:${colors}" th:text="${color.name}" th:value="${color.id}"></option>
-                        </select></td>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>Quantity</td>
@@ -1175,7 +1176,8 @@
                     <tr>
                         <td>Color</td>
                         <td><select id="editColor">
-                            <option th:each="color:${colors}" th:text="${color.name}" th:value="${color.id}"  ></option>
+                            <option th:each="color:${colors}" th:text="${color.name}"
+                                    th:value="${color.id}" ></option>
                         </select></td>
                     </tr>
                     <tr>
@@ -1205,8 +1207,7 @@
                         <td>
                             <form method="post" enctype="multipart/form-data" id="editFileUploadForm">
                                 <img id ="imgEdit1">
-                                <input type="file" name="files" id="editInputImg1"
-                                       value="C:\Users\Administrator\Desktop\caseStudy4\CaseStudyM4\src\main\resources\static\image\aaaaa.jpg" >
+                                <input type="file" name="files" id="editInputImg1" >
                                 <img id ="imgEdit2">
                                 <input type="file" name="files" id ="editInputImg2" >
                             </form>
@@ -1373,7 +1374,7 @@
                                        <input onclick="searchByProduct()" id="bt_search"type="submit" value="Search"/>
                                     </td>
                                     <td>
-                                         <button type="button" class="btn btn-primary"
+                                         <button type="button" class="btn btn-primary" id="bt_showCreateProductForm"
                                          data-bs-toggle="modal" data-bs-target="#createModal">
                                          Create
                                          </button>
@@ -1731,6 +1732,65 @@
         });
         event.preventDefault();
     }
+    // // lấy colors và brands
+    // var colors=[];
+    // var brands=[];
+    // $(document).ready(function () {
+    //     $.ajax({
+    //         type:'get',
+    //         url:'/colors',
+    //         success:function (data) {
+    //             for (let i = 0; i < data.length; i++) {
+    //                 let jsonColor = {};
+    //                 jsonColor.id = data[i].id;
+    //                 jsonColor.name = data[i].name;
+    //                 colors.push(jsonColor);
+    //             }
+    //         }
+    //     });
+    //     $.ajax({
+    //         type:'get',
+    //         url:'/brands',
+    //         success:function (data) {
+    //             for (let i = 0; i < data.length; i++) {
+    //                 let jsonBrand = {};
+    //                 jsonBrand.id = data[i].id;
+    //                 jsonBrand.name = data[i].name;
+    //                 brands.push(jsonBrand);
+    //             }
+    //         }
+    //     });
+    //     let str="";
+    //     for(let i =0; i< colors.length; i ++){
+    //
+    //     };
+    // });
+    //
+    // // vẽ lại option cho colors và brand
+    // $(document).ready(function () {
+    //     $('#bt_showCreateProductForm').click(function () {
+    //         let contentColorSelectOption ="";
+    //         for (let i = 0 ; i <colors.length; i ++){
+    //             contentColorSelectOption +=`<option value='${colors[i].id}' >${colors[i].name}</option>`;
+    //         }
+    //         document.getElementById('createColor').innerHTML = contentColorSelectOption;
+    //
+    //         let contentBrandSelectOption ="";
+    //         for (let i = 0 ; i <brands.length; i ++){
+    //             contentColorSelectOption +=`<option value='${brands[i].id}' >${brands[i].name}</option>`;
+    //         }
+    //         document.getElementById('createBrand').innerHTML = contentBrandSelectOption;
+    //     });
+    // });
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type = "text/javascript">
+    $(document).ready(function(){
+        $('#logout').click(function (){
+            localStorage.clear();
+            window.location.href="/logout";
+        });
+    });
 
 </script>
 </body>

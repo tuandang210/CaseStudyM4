@@ -25384,7 +25384,7 @@ dl li {
 
 .pricing-table .pricing-card .pricing-card-body .plan-features li {
   text-align: left;
-  padding: 4px 0px;
+  padding: 4px 0;
   font-weight: 400;
   font-size: 0.875rem;
 }

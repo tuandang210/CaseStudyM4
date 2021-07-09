@@ -54,11 +54,6 @@ public class UserController {
         return new ModelAndView("/user/user");
     }
 
-    @GetMapping("/admin")
-    public ModelAndView adminPage(){
-        return new ModelAndView("/admins/adminPag");
-    }
-
     @GetMapping
     public ResponseEntity<Page<User>> showAllUsers(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "5") Integer size){
         Page<User> users = userService.findAll(page, size);
@@ -77,4 +72,25 @@ public class UserController {
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/about")
+    public ModelAndView showFormAbout(){
+        return new ModelAndView("/views/about");
+    }
+
+    @GetMapping("/blog")
+    public ModelAndView showFormBlog(){return new ModelAndView("/views/blog");}
+
+    @GetMapping("/team")
+    public ModelAndView showFormTeam(){return new ModelAndView("/views/team");}
+
+    @GetMapping("/faq")
+    public ModelAndView showFormFag(){return new ModelAndView("/views/faq");}
+
+    @GetMapping("/terms")
+    public ModelAndView showFormTerms(){return new ModelAndView("/views/terms");}
+
+    @GetMapping("/testimonials")
+    public ModelAndView showFormTestimonials(){return new ModelAndView("/views/testimonials");}
+
 }

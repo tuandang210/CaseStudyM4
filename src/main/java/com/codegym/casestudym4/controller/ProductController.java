@@ -111,13 +111,12 @@ public class ProductController {
         if (!productOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if(productEdit.getImageSet().isEmpty()){
+        if(productEdit.getImageSet()==null&&productOptional.get().getImageSet()!=null){
             productEdit.setImageSet(productOptional.get().getImageSet());
-        }
+         }
         productService.save(productEdit);
         return new ResponseEntity<>(productEdit, HttpStatus.OK);
     }
-
     @GetMapping("/search")
     public ResponseEntity<Page<Product>> searchByProduct(@RequestParam Optional<String> search,Pageable pageable){
         if(search.isPresent()){
@@ -128,5 +127,4 @@ public class ProductController {
             return new ResponseEntity<>(productPage,HttpStatus.NO_CONTENT);
         }
     }
-
 }

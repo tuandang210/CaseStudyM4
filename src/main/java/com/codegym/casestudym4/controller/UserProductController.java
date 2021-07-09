@@ -1,6 +1,10 @@
 package com.codegym.casestudym4.controller;
 
+import com.codegym.casestudym4.model.Brand;
+import com.codegym.casestudym4.model.Color;
+import com.codegym.casestudym4.model.Image;
 import com.codegym.casestudym4.model.Product;
+import com.codegym.casestudym4.service.Image.IImageService;
 import com.codegym.casestudym4.service.brand.IBrandService;
 import com.codegym.casestudym4.service.color.IColorService;
 import com.codegym.casestudym4.service.product.IProductService;
@@ -10,7 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,6 +39,17 @@ public class UserProductController {
         return new ModelAndView("/index");
     }
 
+    @GetMapping("/user")
+    @PreAuthorize("hasRole('USER')")
+    public ModelAndView showIndexUser(){
+        return new ModelAndView("/indexUser");
+    }
+
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView adminPage(){
+        return new ModelAndView("/admins/adminPag");
+    }
 
     @GetMapping("/user-product/list")
     public ModelAndView showAllCars(@PageableDefault Pageable pageable){
@@ -61,4 +78,15 @@ public class UserProductController {
         ModelAndView modelAndView = new ModelAndView("/show-car-detail-for-user", "product",productOptional.get());
         return modelAndView;
     }
+
+    @ModelAttribute("brands")
+    public Iterable<Brand>brands(){
+        return brandService.findAll();
+    }
+
+    @ModelAttribute("colors")
+    public Iterable<Color>colors(){
+        return colorService.findAll();
+    }
+
 }

@@ -12,6 +12,22 @@
     <h1>Comment List</h1>
     <p><a class="btn btn-info" data-bs-toggle="modal" data-bs-target="#createNew">Create New Comment</a></p>
     <hr>
+    <div>
+        <div style="float: left">
+            <img alt="sss" src="/wer.j"/>
+        </div>
+        <div style="float: left">
+            <div>
+                <input id="comment" placeholder="Comment...">
+            </div>
+            <div>
+                <button style="float: right">huy</button>
+                <button style="float: right">gui</button>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <br>
     <input type="text" id="search" name="search" placeholder="Search By author">
     <input onclick="findAuthor()" type="submit" value="Search">
     <hr>
@@ -26,7 +42,7 @@
         </tr>
         <tr th:each="x:${comments}">
             <td th:text="${x.id}"></td>
-            <td th:text="${x.author}"></td>
+            <td th:text="${x.user.username}"></td>
             <td th:text="${x.content}"></td>
             <td th:text="${x.rate}"></td>
             <td th:text="${x.product.name}"></td>
@@ -52,7 +68,7 @@
         let search = $('#search').val();
         $.ajax({
             type: "GET",
-            url: `/comments?search=${search}`,
+            url: `/comments?user=${search}`,
             success: function (data) {
                 $('#search').val("");
                 let content = '    <tr>\n' +
