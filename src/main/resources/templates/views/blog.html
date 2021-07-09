@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
-  <title>PHPJabbers.com | Free Car Dealer Website Template</title>
+  <title>Cars Dealer Website</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="../../../assets/bootstrap/css/bootstrap.min.css">
@@ -18,8 +18,8 @@
     <div class="inner">
 
       <!-- Logo -->
-      <a href="index.html" class="logo">
-        <span class="fa fa-car"></span> <span class="title">Car Dealer Website</span>
+      <a href="/user" class="logo">
+        <span class="fa fa-star" aria-hidden="true"></span> <span>The Daimler AG</span>
       </a>
 
       <!-- Nav -->
@@ -46,59 +46,67 @@
         <ul>
           <li><a href="/api/users/about">About Us</a></li>
           <li><a href="/api/users/team">Team</a></li>
-          <li><a href="#" class="active">Blog</a></li>
+          <li><a href="/api/users/blog" class="active">News</a></li>
           <li><a href="/api/users/testimonials">Testimonials</a></li>
           <li><a href="/api/users/faq">FAQ</a></li>
           <li><a href="/api/users/terms">Terms</a></li>
         </ul>
       </li>
-      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="/logout">Logout</a></li>
     </ul>
   </nav>
 
   <!-- Main -->
   <div id="main">
     <div class="inner">
-      <h1>Blog</h1>
+      <h1>News</h1>
 
       <div class="image main">
-        <img src="images/banner-image-6-1920x500.jpg" class="img-fluid" alt="" />
+        <img style="height: 320px; width: 100%; object-fit: cover" src="https://wallpaperaccess.com/full/2602337.jpg" class="img-fluid" alt="" />
       </div>
-
+<br>
       <div class="container-fluid">
         <div class="row">
           <div class="col-9">
             <div class="row">
               <div class="col-sm-6 text-center">
-                <img src="images/blog-1-720x480.jpg" class="img-fluid" alt="" />
+                <img style="height: 180px;width: 300px; object-fit: cover"
+                     src="https://muaxegiatot.vn/wp-content/uploads/2020/07/gia-xe-honda-cr-v-2020-2021-lap-rap-muaxegiatot-vn-1.jpg"
+                     class="img-fluid" alt="1"/>
 
-                <h2 class="m-n"><a href="blog-post.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></h2>
+                <h2 class="m-n"><a href="/1">Honda giới thiệu phiên bản Honda CR-V LSE.</a></h2>
 
-                <p> John Doe &nbsp;|&nbsp; 12/06/2020 10:30</p>
+                <p>05/7/2021 11:15</p>
               </div>
 
               <div class="col-sm-6 text-center">
-                <img src="images/blog-2-720x480.jpg" class="img-fluid" alt="" />
+                <img style="height: 180px;width: 300px; object-fit: cover"
+                     src="https://www.otosaigon.com/attachments/2020-honda-city-rs-preview-1-850x567-jpg.2325906/"
+                     class="img-fluid" alt="2"/>
 
-                <h2 class="m-n"><a href="blog-post.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></h2>
+                <h2 class="m-n"><a href="/2">Honda chính thức ra mắt Honda City thế hệ thứ 5.</a></h2>
 
-                <p> John Doe &nbsp;|&nbsp; 12/06/2020 10:30</p>
+                <p>12/06/2021 10:30</p>
               </div>
 
               <div class="col-sm-6 text-center">
-                <img src="images/blog-3-720x480.jpg" class="img-fluid" alt="" />
+                <img style="height: 180px;width: 300px; object-fit: cover"
+                     src="https://cdn.honda.com.vn/news-car/November2020/z4E0yf45QSwgajlAoXee.jpg" class="img-fluid"
+                     alt="3"/>
 
-                <h2 class="m-n"><a href="blog-post.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></h2>
+                <h2 class="m-n"><a href="/3">Chiến dịch Honda Ôtô “Feel The Performance”.</a></h2>
 
-                <p> John Doe &nbsp;|&nbsp; 12/06/2020 10:30</p>
+                <p>11/07/2020 8:15</p>
               </div>
 
               <div class="col-sm-6 text-center">
-                <img src="images/blog-3-720x480.jpg" class="img-fluid" alt="" />
+                <img style="height: 180px;width: 300px; object-fit: cover"
+                     src="https://cdn.honda.com.vn/news-car/September2020/HR-V%20promotion.jpg" class="img-fluid"
+                     alt="4"/>
 
-                <h2 class="m-n"><a href="blog-post.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></h2>
+                <h2 class="m-n"><a href="/4">Cơ hội sở hữu Honda HR-V với ưu đãi vô cùng hấp dẫn.</a></h2>
 
-                <p> John Doe &nbsp;|&nbsp; 12/06/2020 10:30</p>
+                <p>21/09/2020 9:45</p>
               </div>
             </div>
           </div>
@@ -112,19 +120,19 @@
               <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
 
-                <span class="input-group-addon"><a href="#"><i class="fa fa-search"></i></a></span>
+<!--                <span class="input-group-addon"><a href="#"><i class="fa fa-search"></i></a></span>-->
               </div>
             </div>
 
             <br>
 
-            <p><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></p>
+            <p><a href="/1">Honda Việt Nam giới thiệu phiên bản Honda CR-V LSE.</a></p>
 
-            <p><a href="#">Non, magni, sequi. Explicabo illum quas debitis ut.</a></p>
+            <p><a href="/2">Honda chính thức ra mắt Honda City thế hệ thứ 5.</a></p>
 
-            <p><a href="#">Vatae expedita deleniti optio ex adipisci . </a></p>
+            <p><a href="/3">Chiến dịch Honda Ôtô “Feel The Performance”.</a></p>
 
-            <p><a href="#">Soluta non modi dolorem voluptates dolor laborum.</a></p>
+            <p><a href="/4">Cơ hội sở hữu Honda HR-V với ưu đãi vô cùng hấp dẫn.</a></p>
           </div>
         </div>
       </div>
@@ -146,8 +154,7 @@
       </section>
 
       <ul class="copyright">
-        <li>Copyright © 2020 Company Name </li>
-        <li>Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></li>
+        <li>Copyright © 2021 D3T Production</li>
       </ul>
     </div>
   </footer>
