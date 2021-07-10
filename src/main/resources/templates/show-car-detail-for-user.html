@@ -36,7 +36,7 @@
 
             <!-- Logo -->
             <a href="/user-product/list" class="logo">
-                <span class="fa fa-star"></span> <span class="title">Car Detail</span>
+                <span class="fa fa-star"></span> <span class="title">The Daimler AG</span>
             </a>
 
             <!-- Nav -->
@@ -52,24 +52,26 @@
     <!-- Menu -->
     <nav id="menu">
         <h2>Menu</h2>
-        <ul>
-            <li><a href="/">Home</a></li>
 
-            <li><a href="/user-product/list" class="active">Cars</a></li>
+        <ul>
+            <li><a href="/user">Home</a></li>
+
+            <li class="active"><a href="user-product/list">Cars</a></li>
 
             <li>
                 <a href="#" class="dropdown-toggle">About</a>
 
                 <ul>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="team.html">Team</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="testimonials.html">Testimonials</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="terms.html">Terms</a></li>
+                    <li><a href="/api/users/about">About Us</a></li>
+                    <li><a href="/api/users/team">Team</a></li>
+                    <li><a href="/api/users/blog">News</a></li>
+                    <li><a href="/api/users/testimonials">Testimonials</a></li>
+                    <li><a href="/api/users/faq">FAQ</a></li>
+                    <li><a href="/api/users/terms">Terms</a></li>
                 </ul>
             </li>
-            <li><a href="contact.html">Contact Us</a></li>
+
+            <li><a href="/logout">Log out</a></li>
         </ul>
     </nav>
 
@@ -202,96 +204,89 @@
             <!-- comment-->
 
 
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-3">
-                        <h3>Contact Details</h3>
+            <!--            <div class="container-fluid">-->
+            <!--                <div class="row">-->
+            <!--                    <div class="col-md-3">-->
+            <!--                        <h3>Contact Details</h3>-->
 
-                        <ul class="alt">
-                            <li><span class="fa fa-user"></span> John Smith</li>
-                            <li><span class="fa fa-phone"></span> +1 333 4040 5566</li>
-                            <li><span class="fa fa-mobile-phone"></span> +1 333 4040 5566</li>
-                            <li><span class="fa fa-envelope-o"></span> <a href="#">john@carsales.com</a></li>
+            <!--                        <ul class="alt">-->
+            <!--                            <li><span class="fa fa-user"></span> John Smith</li>-->
+            <!--                            <li><span class="fa fa-phone"></span> +1 333 4040 5566</li>-->
+            <!--                            <li><span class="fa fa-mobile-phone"></span> +1 333 4040 5566</li>-->
+            <!--                            <li><span class="fa fa-envelope-o"></span> <a href="#">john@carsales.com</a></li>-->
 
-                        </ul>
-                    </div>
+            <!--                        </ul>-->
+            <!--                    </div>-->
 
-                    <div class="col-md-9">
-                        <h3>Extras </h3>
+            <!--                    <div class="col-md-9">-->
+            <!--                        <h3>Extras </h3>-->
 
-                        <p>ABS, Leather seats, Power Assisted Steering, Electric heated seats, New HU and AU, Xenon
-                            headlights</p>
+            <!--                        <p>ABS, Leather seats, Power Assisted Steering, Electric heated seats, New HU and AU, Xenon-->
+            <!--                            headlights</p>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
+        </div>
+    </div>
+
+
+    <!-- comment-->
+    <form>
+        <div style="margin-right: 200px; margin-left: 200px" align="center">
+            <div>
+                <div>
+                    <div>
+                        <div>
+                            <p>Comment :</p>
+                        </div>
+                        <div>
+                            <textarea style="border: 1px solid black" id="comment_content"></textarea>
+                        </div>
+
+                    </div><br>
+                    <div>
+                        <button onclick="send_comment()" id="submitComment">Summit</button>
+                        <button onclick="cancels()" type="button">Cancel</button>
+                        <select id="comment_rate">
+                            <option selected value="5">5*</option>
+                            <option value="4">4*</option>
+                            <option value="3">3*</option>
+                            <option value="2">2*</option>
+                            <option value="1">1*</option>
+                        </select>
+                        <div for="comment_rate">Rate :</div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-</div>
-<!-- comment-->
-<form>
-    <div style="position: relative">
-        <div style="position: absolute;left: 35%">
-            <div style="float: right;background-color: gainsboro;border-radius: 4px;height: 105px;">
-                <div style="width: 650px;clear: right">
-                    <div style="float: right;width: 80%;height: 70px;border-radius: 9px;margin-right: 2%;margin-top: 1%">
-                        <textarea id="comment_content" style="width: 100%;height: 100%;border-radius: 9px"></textarea>
-                    </div>
-                    <div style="float: right;width: auto">
-                        <p>Comment :</p>
-                    </div>
-                </div>
-                <div style="clear: right;width: 650px">
-                    <button onclick="send_comment()" id="submitComment"
-                            style="float: right;margin-right: 3%;border-radius: 5px;border: none;margin-top: 1%">Summit
-                        comment
-                    </button>
-                    <button onclick="cancels()" type="button"
-                            style="float: right;margin-right: 3%;border-radius: 5px;border: none;margin-top: 1%">Cancel
-                    </button>
-                    <select id="comment_rate" style="float: right;border-radius: 20px;margin-right: 3%;margin-top: 1%">
-                        <option selected value="5">5*</option>
-                        <option value="4">4*</option>
-                        <option value="3">3*</option>
-                        <option value="2">2*</option>
-                        <option value="1">1*</option>
-                    </select>
-                    <label style="float: right;margin-right: 3%;margin-top: 1%" for="comment_rate">Rate :</label>
-                </div>
-            </div>
+        <input hidden="hidden" th:value="${product.id}" id="comment_product_in">
+        <div style="margin-right: 200px; margin-left: 200px" align="center">
+            <h3>All Comments</h3>
         </div>
-    </div>
-    <input hidden="hidden" th:value="${product.id}" id="comment_product_in">
-    <hr style="position: relative;width: 42.75%;top: 110px;left: 98px">
-    <div>
-        <h3 style="position: relative;width: 42.75%;top: 110px;left: 527px">Reviews[8]</h3>
-    </div>
-    <div style="position: relative;top: 110px" id="commentList_out">
+        <div id="commentList_out">
 
-    </div>
-</form>
-<!-- Footer -->
-<footer id="footer">
-    <div class="inner">
-        <section>
-            <ul class="icons">
-                <li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
-                <li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
-                <li><a href="#" class="icon style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        </div>
+    </form>
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <section>
+                <ul class="icons">
+                    <li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
+                    <li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
+                    <li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
+                    <li><a href="#" class="icon style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                </ul>
+
+                &nbsp;
+            </section>
+
+            <ul class="copyright">
+                <li>Copyright © 2021 D3T Production</li>
             </ul>
-
-            &nbsp;
-        </section>
-
-        <ul class="copyright">
-            <li>Copyright © 2020 Company Name</li>
-            <li>Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></li>
-        </ul>
-    </div>
-</footer>
+        </div>
+    </footer>
 </div>
-
 
 <!-- Scripts -->
 <script src="../../users/js/jquery.min.js"></script>
@@ -382,33 +377,27 @@
     function getComment(comment) {
         let a = comment.content;
         let content = setComment(a);
-        return `<div style="position: absolute;left: 35%;height: auto;width:42.75%;background-color: wheat;border-radius: 4px">
-            <div>
-                <div style="margin-left: 10px;margin-top: 5px">
-                    Username :
-                    <span>${comment.user.username}</span>
-                    <span style="margin-left: 10px">  Rate : ${comment.rate}</span>
+        return `<div>
+
+</div>
+<div style="margin-left: 200px; margin-right: 200px">
+                <table  border="0">
+                    <tr style="text-align: center">
+                        <td style="width: 30px;"><span>${comment.user.username}</span></td>
+                        <td><span>  Rate : ${comment.rate} stars</span></td>
+                        <td><span>${comment.date}</span></td>
+                        <td><span id="${comment.id}" >${comment.likes}</span></td>
+                        <td><button onclick="likes(${comment.id})" type="button">Likes</button></td>
+                    </tr>
+
+                    <tr>
+                         <td colspan="5"><p>${content}</p></td>
+                    </tr>
+
+                </table>
                 </div>
-                <div style="margin-left: 10px;margin-top: 5px">
-                    <span>${comment.date}</span>
-                </div>
-            </div>
-            <br>
-            <div>
-                <div style="float: right"></div>
-                <div style="float: right;text-align: left;margin-right: 9%;border-radius: 4px;border: #999999 solid 0.5px">
-                    <p>${content}</p>
-                </div>
-                <div style="float: right;width: 10px"></div>
-            </div>
-            <br>
-            <div style="clear: right;margin-right: 10px;margin-bottom: 27px">
-                <button style="float: right;border-radius: 4px" onclick="likes(${comment.id})" type="button">Likes</button>
-                <div style="float: right;text-align: left;margin-right: 20px">
-                    <span id="${comment.id}" style="color: blue">${comment.likes}</span>
-                </div>
-            </div>
-        </div><br>`;
+                <div></div>
+              <br>`;
     }
 
     // set comment
