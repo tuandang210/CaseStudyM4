@@ -2,41 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <style>
-        body {
-            background: #eee
+        button:hover {
+            background-color: chartreuse;
+            color: blue;
         }
 
-        .media .media-object { max-width: 120px; }
-
-        .media-date li { padding: 0; }
-        .media-date li:first-child:before { content: ''; }
-        .media-date li:before {
-            content: '.';
-            margin-left: -2px;
-            margin-right: 2px;
+        textarea:hover {
         }
 
-
-        .btn-circle {
-            font-weight: bold;
-            font-size: 12px;
-            padding: 6px 15px;
-            border-radius: 20px;
+        select:hover {
+            background-color: chartreuse;
+            color: blue;
         }
-        .btn-circle span { padding-right: 6px; }
-
-        input[type="file"]{
-            z-index: 999;
-            line-height: 0;
-            font-size: 0;
-            position: absolute;
-            opacity: 0;
-            filter: alpha(opacity = 0);-ms-filter: "alpha(opacity=0)";
-            margin: 0;
-            padding:0;
-            left:0;
-        }
-
     </style>
     <meta charset="UTF-8">
     <title>Cars Dealer Website</title>
@@ -145,7 +122,6 @@
 
             <br>
 
-
             <form action="#">
                 <div class="fields">
                     <div class="field quarter">
@@ -223,6 +199,8 @@
                 </div>
             </form>
 
+            <!-- comment-->
+
 
             <div class="container-fluid">
                 <div class="row">
@@ -248,56 +226,50 @@
             </div>
         </div>
     </div>
-    <!-- comment-->
-    <div>
-        <div class="container mt-5">
-            <div class="d-flex justify-content-center row">
-                <div class="col-md-10">
-                    <div class="p-3 bg-white rounded">
-                            <div class="tab-pane active" id="add-comment">
-                                <form action="#" method="post" class="form-horizontal" id="commentForm" role="form">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Comment</label>
-                                        <div class="col-sm-10">
-                                            <textarea style="width: 528px;height: 134px;" class="form-control" name="addComment" id="comment_content"
-                                                      rows="5"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button class="btn btn-success btn-circle text-uppercase"
-                                                    onclick="send_comment()" type="button" id="submitComment"><span
-                                                    class="glyphicon glyphicon-send"></span> Summit comment
-                                            </button>
-                                            <button class="btn btn-success btn-circle text-uppercase"
-                                                    onclick="cancels()" type="button"><span
-                                                    class="glyphicon glyphicon-send"></span>Cancel
-                                            </button>
-                                            <input hidden="hidden" th:value="${product.id}" id="comment_product_in">
-                                            <label style="background-color: aliceblue;font-size: 15px;"
-                                                   for="comment_rate"
-                                                   class="col-form-label">Rate:</label>
-                                            <select style="border-radius: 10px;"
-                                                    id="comment_rate">
-                                                <option value="5" selected>5*</option>
-                                                <option value="4">4*</option>
-                                                <option value="3">3*</option>
-                                                <option value="2">2*</option>
-                                                <option value="1">1*</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        <h6 id="commentList_out">Reviews[8]</h6>
+
+</div>
+<!-- comment-->
+<form>
+    <div style="position: relative">
+        <div style="position: absolute;left: 35%">
+            <div style="float: right;background-color: gainsboro;border-radius: 4px;height: 105px;">
+                <div style="width: 650px;clear: right">
+                    <div style="float: right;width: 80%;height: 70px;border-radius: 9px;margin-right: 2%;margin-top: 1%">
+                        <textarea id="comment_content" style="width: 100%;height: 100%;border-radius: 9px"></textarea>
                     </div>
+                    <div style="float: right;width: auto">
+                        <p>Comment :</p>
+                    </div>
+                </div>
+                <div style="clear: right;width: 650px">
+                    <button onclick="send_comment()" id="submitComment"
+                            style="float: right;margin-right: 3%;border-radius: 5px;border: none;margin-top: 1%">Summit
+                        comment
+                    </button>
+                    <button onclick="cancels()" type="button"
+                            style="float: right;margin-right: 3%;border-radius: 5px;border: none;margin-top: 1%">Cancel
+                    </button>
+                    <select id="comment_rate" style="float: right;border-radius: 20px;margin-right: 3%;margin-top: 1%">
+                        <option selected value="5">5*</option>
+                        <option value="4">4*</option>
+                        <option value="3">3*</option>
+                        <option value="2">2*</option>
+                        <option value="1">1*</option>
+                    </select>
+                    <label style="float: right;margin-right: 3%;margin-top: 1%" for="comment_rate">Rate :</label>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <input hidden="hidden" th:value="${product.id}" id="comment_product_in">
+    <hr style="position: relative;width: 42.75%;top: 110px;left: 98px">
+    <div>
+        <h3 style="position: relative;width: 42.75%;top: 110px;left: 527px">Reviews[8]</h3>
+    </div>
+    <div style="position: relative;top: 110px" id="commentList_out">
 
-
+    </div>
+</form>
 <!-- Footer -->
 <footer id="footer">
     <div class="inner">
@@ -408,31 +380,81 @@
     })
 
     function getComment(comment) {
-        return `<div className="review mt-4">
-            <div className="d-flex flex-row comment-user"><img className="rounded" src="https://i.imgur.com/xxJl1D7.jpg"
-                                                               width="40">
-                <div className="ml-2">
-                    <div className="d-flex flex-row align-items-center"><span className="name font-weight-bold">${comment.user.username}</span><span
-                        className="dot"></span></div>
-                        <div><span className="date">${comment.date}</span></div>
-                    <div className="rating"><i className="fa fa-star"></i><i className="fa fa-star"></i><i
-                        className="fa fa-star"></i><i className="fa fa-star"></i></div>
+        let a = comment.content;
+        let content = setComment(a);
+        return `<div style="position: absolute;left: 35%;height: auto;width:42.75%;background-color: wheat;border-radius: 4px">
+            <div>
+                <div style="margin-left: 10px;margin-top: 5px">
+                    Username :
+                    <span>${comment.user.username}</span>
+                    <span style="margin-left: 10px">  Rate : ${comment.rate}</span>
+                </div>
+                <div style="margin-left: 10px;margin-top: 5px">
+                    <span>${comment.date}</span>
                 </div>
             </div>
-            <div className="mt-2">
-                <p className="comment-text">${comment.content}</p>
+            <br>
+            <div>
+                <div style="float: right"></div>
+                <div style="float: right;text-align: left;margin-right: 9%;border-radius: 4px;border: #999999 solid 0.5px">
+                    <p>${content}</p>
+                </div>
+                <div style="float: right;width: 10px"></div>
             </div>
-            <div   style="width: 100%;clear: right">
-                                <span>rate : ${comment.rate}</span>
-                                <a  class="btn btn-info btn-lg" style="float: right" onclick="likes(${comment.id})" >
-                                <span class="glyphicon glyphicon-thumbs-up"></span>
-                                like
-                                </a>
-                                <div style="float: right">
-                                   <span style="float: right" id="${comment.id}">${comment.likes}   </span>
-                                </div>
+            <br>
+            <div style="clear: right;margin-right: 10px;margin-bottom: 27px">
+                <button style="float: right;border-radius: 4px" onclick="likes(${comment.id})" type="button">Likes</button>
+                <div style="float: right;text-align: left;margin-right: 20px">
+                    <span id="${comment.id}" style="color: blue">${comment.likes}</span>
+                </div>
             </div>
-        </div><br/><br/>`;
+        </div><br>`;
+    }
+
+    // set comment
+
+    function setComment(comment) {
+        let a = '';
+        let b = '';
+        let c = '';
+        let d = '';
+        if (comment.length < 71) {
+            return `<p>${comment}</p>`;
+        } else {
+            for (let i = 0; i < 70; i++) {
+                a += comment[i]
+            }
+        }
+        if (comment.length > 70) {
+            for (let i = 70; i < 140; i++) {
+                b += comment[i]
+            }
+        }
+        if (comment.length > 140)
+            for (let i = 140; i < 210; i++) {
+                c += comment[i]
+            }
+        if (comment.length > 210) {
+            for (let i = 210; i < 280; i++) {
+                d += comment[i]
+            }
+        }
+        if (a !== "") {
+            if (b !== "") {
+                if (c !== "") {
+                    if (d !== "") {
+                        return `<p>${a}</p><p>${b}</p><p>${c}</p><p>${d}</p>`;
+                    } else {
+                        return `<p>${a}</p><p>${b}</p><p>${c}</p>`;
+                    }
+                } else {
+                    return `<p>${a}</p><p>${b}</p>`;
+                }
+            } else {
+                return `<p>${a}</p>`
+            }
+        }
+        return ``;
     }
 
     function likes(id) {
