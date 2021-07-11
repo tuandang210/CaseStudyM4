@@ -47,7 +47,7 @@
                 <td th:text="${product.brand.name}"></td>
                 <td>
                     <img th:each="img:${product.imageSet}" th:src="@{ '/../image/'+${img.image}}" alt="photo"
-                         style="width: 200px ; height: 200px">
+                         style="width: 100px ; height: 100px">
                 </td>
 
                 <td>
@@ -122,12 +122,25 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Image</td>
                             <td>
-                                <button id="openAddNewImgModal_button" type="button" class="btn btn-primary"
-                                        data-bs-toggle="modal" data-bs-target="#createImgModal">
-                                    Add new
+                                Image
+                            </td>
+                            <td>
+                                <form method="post" enctype="multipart/form-data" id="fileUploadForm">
+                                    <input type="file" name="files" id="addNewImage_file"/>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <button id="createImgButton" type="button" class="btn btn-primary" >Add Image
                                 </button>
+<!--                                <button id="openAddNewImgModal_button" type="button" class="btn btn-primary"-->
+<!--                                        data-bs-toggle="modal" data-bs-target="#createImgModal">-->
+<!--                                    Add new-->
+<!--                                </button>-->
                                 <table id="table_showNameImg">
 
                                 </table>
@@ -251,27 +264,27 @@
         </div>
     </div>
     <!-- create new image modal -->
-    <div class="modal fade" id="createImgModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--    <div class="modal fade" id="createImgModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
 
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createModalImgLabel">Create new</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" enctype="multipart/form-data" id="fileUploadForm">
-                        <input type="file" name="files" id="addNewImage_file"/>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button id="createImgButton" type="button" class="btn btn-primary">Create
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--        <div class="modal-dialog">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h5 class="modal-title" id="createModalImgLabel">Create new</h5>-->
+<!--                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
+<!--                    <form method="post" enctype="multipart/form-data" id="fileUploadForm">-->
+<!--                        <input type="file" name="files" id="addNewImage_file"/>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--                <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--                    <button id="createImgButton" type="button" class="btn btn-primary">Create-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
 
 </div>
@@ -285,8 +298,19 @@
 
     var newImageSet = [];
 
-
+//upload file
     $(document).ready(function () {
+        if($('#addNewImage_file').val()==""){
+            $("#createImgButton").prop("disabled",true);
+        }
+    });
+    $(document).ready(function () {
+        $('#addNewImage_file').change(function () {
+            $("#createImgButton").prop("disabled",false);
+        })
+    });
+    $(document).ready(function () {
+       console.log("value file upload -->",$('#addNewImage_file').val())
         $("#createImgButton").click(function (event) {
             let form = $('#fileUploadForm')[0];
 
@@ -307,32 +331,34 @@
                 timeout: 600000,
                 success: function (data) {
 
-                    let str = "";
-                    for (let i = 0 ; i< newImageSet.length;i++){
-                        str += newImageSet[i]+',';
-                    }
-                    console.log("newImageSet -->",str)
-
+                   //gắn dữ liệu trả về cho jsonImage
                     let jsonImage = {};
-
                     for (let i = 0; i < data.length; i++) {
-
                         jsonImage.id = data[i].id;
                         jsonImage.image = data[i].image;
                         console.log("new json ",i,"--->", jsonImage.image);
-
                     }
-
-                    newImageSet.push(jsonImage);
+                    // kiểm tra trong list newImage có tồn tại ảnh mới tải lên chưa
+                    let check = false;
+                    for (let i = 0; i < newImageSet.length; i++) {
+                        if(newImageSet[i].image==jsonImage.image){
+                            check=true;
+                        }
+                    }
+                    //chưa có thì add vào newImageSet
+                    if(check == false){
+                        newImageSet.push(jsonImage);
+                    }else {
+                        alert("The picture has been upload")
+                    }
                     jsonImage = {};
-
-                    for (let i = 0 ; i< newImageSet.length;i++){
-                        str += newImageSet[i]+',';
-                    }
-                    console.log("newImageSet -->",str);
+                    check= false;
+                    console.log("value file upload -->",$('#addNewImage_file').val())
 
                     $('#addNewImage_file').val('');
-                    $('#createImgModal').modal('hide');
+                    $("#createImgButton").prop("disabled",true);
+
+                    //$('#createImgModal').modal('hide');
                     successAddNewImgHandler();
                 },
                 error: function (e) {
@@ -354,9 +380,36 @@
             console.log("name of image ",i,"----->",newImageSet[i].image);
             content1 += `<tr>
                             <td><p>${newImageSet[i].image}</p></td>
+                            <td><input type="button" value="delete" id="${newImageSet[i].id}" onclick="deleteImgUpload(this.id)"></td>
                         </tr>`
         }
         document.getElementById('table_showNameImg').innerHTML = content1;
+    }
+
+    // xóa ảnh vừa tải lên
+    function deleteImgUpload(jsonImageId) {
+        let index = -1;
+        for (let i = 0; i < newImageSet.length; i++) {
+            console.log("id image",i,"-->",newImageSet[i].id);
+            if(newImageSet[i].id==jsonImageId){
+                index=i;
+            }
+        }
+
+        if(index != -1){
+            console.log("độ dài trước khi xóa -->",newImageSet.length);
+            newImageSet.splice(index,1);
+            console.log("độ dài sau khi xóa -->",newImageSet.length);
+
+        }
+        $.ajax({
+            type: "DELETE",
+            //tên API
+            url: `/images/` + jsonImageId,
+            //xử lý khi thành công
+            success: console.log("xóa thành công img ",jsonImageId)
+        });
+        successAddNewImgHandler()
     }
     function addNewProduct() {
                 let name = $("#createName").val();
