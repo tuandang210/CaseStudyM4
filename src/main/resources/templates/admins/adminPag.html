@@ -54,6 +54,16 @@
             width: 100px;
             background: blue
         }
+
+        #productList {
+            table-layout: auto;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        #productList tr td {
+            width: 10%
+        }
     </style>
 </head>
 <body>
@@ -360,7 +370,7 @@
         </div>
         <!-- partial -->
         <!-- partial:partials/_sidebar.html -->
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <nav class="sidebar sidebar-offcanvas" id="sidebar" style="width: 15%">
             <ul class="nav">
                 <li class="nav-item">
                     <a class="nav-link" href="#">
@@ -402,7 +412,7 @@
         </nav>
         <!-- partial -->
         <div class="main-panel">
-            <div class="content-wrapper">
+            <div class="content-wrapper" style="margin-left: -30px">
                 <div class="row">
                     <div class="col-md-12 grid-margin">
                         <div class="row">
@@ -486,8 +496,9 @@
                 </div>
                 <!--              Product list   -->
                 <div class="row">
-                    <table class="table table-striped table-hover" id="productList">
-                    </table>
+                    <div class="col-md-12 grid-margin">
+                        <table class="table table-striped table-hover" id="productList"></table>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 grid-margin stretch-card">
@@ -650,27 +661,27 @@
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Create new</h5>
+            <div class="modal-header" style="background-color: aquamarine">
+                <h5 class="modal-title" id="createModalLabel">Add New Product</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <table>
+            <div class="modal-body" style="background-color: aliceblue">
+                <table cellpadding="10">
                     <tr>
-                        <td>Name</td>
+                        <th>Name</th>
                         <td><input type="text" id="createName"></td>
                     </tr>
                     <tr>
-                        <td>Type</td>
+                        <th>Type</th>
                         <td><input type="text" id="createType"></td>
                     </tr>
 
                     <tr>
-                        <td>Seat</td>
+                        <th>Seat</th>
                         <td><input type="text" id="createSeat"></td>
                     </tr>
                     <tr>
-                        <td>Color</td>
+                        <th>Color</th>
                         <td>
                             <select id="createColor">
                                 <option th:each="color:${colors}" th:text="${color.name}"
@@ -679,19 +690,19 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Quantity</td>
+                        <th>Quantity</th>
                         <td><input type="text" id="createQuantity"></td>
                     </tr>
                     <tr>
-                        <td>Buy Price</td>
+                        <th>Purchased Price</th>
                         <td><input type="text" id="createBuyPrice"></td>
                     </tr>
                     <tr>
-                        <td>Sell Price</td>
+                        <th>Sale Price</th>
                         <td><input type="text" id="createSellPrice"></td>
                     </tr>
                     <tr>
-                        <td>Brand</td>
+                        <th>Brand</th>
                         <td>
                             <select id="createBrand">
                                 <option th:each="brand:${brands}" th:text="${brand.name}"
@@ -701,7 +712,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Image</td>
+                        <th>Image</th>
                         <td>
                             <form method="post" enctype="multipart/form-data" id="fileUploadForm">
                                 <input type="file" name="files" id="fileUpload1"/><br/><br/>
@@ -711,9 +722,9 @@
                     </tr>
                 </table>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="background-color: aliceblue">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button onclick="addNewProduct()" id="createButton" type="button" class="btn btn-primary">Create
+                <button onclick="addNewProduct()" id="createButton" type="button" class="btn btn-success">Save
                 </button>
             </div>
         </div>
@@ -723,49 +734,49 @@
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <div class="modal-header" style="background-color: antiquewhite">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Product Information</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <table>
+            <div class="modal-body" style="background-color: floralwhite">
+                <table cellpadding="10">
                     <tr>
                         <td><input type="hidden" id="editId"></td>
                     </tr>
                     <tr>
-                        <td>Name</td>
+                        <th>Name</th>
                         <td><input type="text" id="editName"></td>
                     </tr>
                     <tr>
-                        <td>Type</td>
+                        <th>Type</th>
                         <td><input type="text" id="editType"></td>
                     </tr>
 
                     <tr>
-                        <td>Seat</td>
+                        <th>Seat</th>
                         <td><input type="text" id="editSeat"></td>
                     </tr>
                     <tr>
-                        <td>Color</td>
+                        <th>Color</th>
                         <td><select id="editColor">
                             <option th:each="color:${colors}" th:text="${color.name}"
                                     th:value="${color.id}"></option>
                         </select></td>
                     </tr>
                     <tr>
-                        <td>Quantity</td>
+                        <th>Quantity</th>
                         <td><input type="text" id="editQuantity"></td>
                     </tr>
                     <tr>
-                        <td>Buy Price</td>
+                        <th>Purchased Price</th>
                         <td><input type="text" id="editBuyPrice"></td>
                     </tr>
                     <tr>
-                        <td>Sell Price</td>
+                        <th>Sale Price</th>
                         <td><input type="text" id="editSellPrice"></td>
                     </tr>
                     <tr>
-                        <td>Brand</td>
+                        <th>Brand</th>
                         <td>
                             <select id="editBrand">
                                 <option th:each="brand:${brands}" th:text="${brand.name}"
@@ -775,7 +786,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Image</td>
+                        <th>Image</th>
                         <td>
                             <form method="post" enctype="multipart/form-data" id="editFileUploadForm">
                                 <img id="imgEdit1">
@@ -788,7 +799,7 @@
                 </table>
 
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="background-color: floralwhite">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button id="updateButton" type="button" class="btn btn-primary">Save changes</button>
             </div>
@@ -799,8 +810,8 @@
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Delete</h5>
+            <div class="modal-header" style="background-color: crimson">
+                <h3 class="modal-title" id="deleteModalLabel"><b>Are you sure ?</b></h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -809,17 +820,15 @@
                         <td><input type="hidden" value="${data.id}" id="deleteId"></td>
                     </tr>
                     <tr>
-                        <td>Product Name</td>
-                        <td><input type="text" id="deleteName" readonly></td>
-                    </tr>
-                    <tr>
-                        <td><span>Are you sure to delete??</span></td>
+                        <td colspan="2">
+                            <input style="border: none; color:crimson; font-weight: 600" type="text" id="deleteName" readonly>will be deleted.
+                        </td>
                     </tr>
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id="deleteButton" type="button" class="btn btn-primary">Delete</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button id="deleteButton" type="button" class="btn btn-danger">Delete</button>
             </div>
         </div>
     </div>
@@ -835,10 +844,10 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <div class="mb-3">
-                        <label for="name_user_name" class="col-form-label">Username:</label>
-                        <input readonly type="text" class="form-control" id="name_user_name">
-                    </div>
+<!--                    <div class="mb-3">-->
+<!--                        <label for="name_user_name" class="col-form-label">Username:</label>-->
+<!--                        <input readonly type="text" class="form-control" id="name_user_name">-->
+<!--                    </div>-->
                     <div class="mb-3">
                         <table class="table table-striped table-hover" id="list_order_my">
                         </table>
@@ -936,9 +945,6 @@
                                                         <button onclick="searchByUsername()" id="bt_search_by_username" class="btn btn-primary">Search</button> </div>
                                                   </div>
                                             </div>
-
-<!--                                       <input id="search_username" type="text" placeholder="Search by username"/>-->
-<!--                                       <input onclick="searchByUsername()" id="bt_search_by_username" type="submit" value="Search"/>-->
                                     </td>
                                 </tr>
                                 <tr>
@@ -972,9 +978,9 @@
                     <td>
                     <button onclick="transactionHistory(this.id)" id="${client.id}"  type="button" class="btn btn-primary"
                               data-bs-toggle="modal" data-bs-target="#show_Form_Order_Detail_by_user">
-                                 view
-                         </button>
-</td>`;
+                                 View
+                    </button>
+                    </td>`;
     }
 
     function transactionHistory(id) {
@@ -985,11 +991,19 @@
                 let content = `<tr><td>#</td>
                                   <td>Date Order</td>
                                   <td>Order Detail</td></tr>`;
-                for (let i = 0; i < data.length; i++) {
-                    content += getOrderByUserId(data[i], i + 1)
+
+                // $('#name_user_name').val(data[0].user.username);
+                if (data === undefined){
+                    document.getElementById('list_order_my').innerHTML = 'No Transaction Found'
+                } else {
+                    for (let i = 0; i < data.length; i++) {
+                        content += getOrderByUserId(data[i], i + 1)
+                    }
+                    document.getElementById('list_order_my').innerHTML = content;
                 }
-                $('#name_user_name').val(data[0].user.username);
-                document.getElementById('list_order_my').innerHTML = content;
+            },
+            error: function (){
+                document.getElementById('list_order_my').innerHTML = 'No Transaction Found'
             }
         })
     }
@@ -1142,24 +1156,20 @@
 
                                 </tr>
                                 <tr>
-                                     <td>
-                                         <button type="button" class="btn btn-primary" id="bt_showCreateProductForm"
+                                     <td colspan="11">
+                                         <button type="button" class="btn btn-success" id="bt_showCreateProductForm"
                                          data-bs-toggle="modal" data-bs-target="#createModal">
-                                         Create
+                                         Add New Product
                                          </button>
                                     </td>
                                 </tr>
                                 <tr>
                                   <th>#</th>
                                   <th>Name</th>
-                                  <th>Type</th>
-                                  <th>Seat</th>
                                   <th>Color</th>
                                   <th>Quantity</th>
-                                  <th>By Price</th>
-                                  <th>Sell Price</th>
-                                  <th>Brand</th>
-                                  <th>Image</th>
+                                  <th>Purchased</th>
+                                  <th>Sale</th
                                   <th>Edit</th>
                                   <th>Delete</th>
                                </tr>`;
@@ -1183,16 +1193,11 @@
         return `<tr>
                     <td >${i}</td>
                     <td >${product.name}</td>
-                    <td >${product.type}</td>
-                    <td >${product.seat}</td>
                     <td >${product.color.name}</td>
                     <td >${product.quantity}</td>
                     <td >${product.buyPrice}</td>
-                    <td >${product.sellPrice}</td>
-                    <td >${product.brand.name}</td>
-                    <td >` +
-            `${str}`
-            + `</td>` +
+                    <td >${product.sellPrice}</td>`
+                    +
             `<td>
                          <button onclick="editProduct(this.id)" id="${product.id}"  type="button" class="btn btn-primary"
                               data-bs-toggle="modal" data-bs-target="#editModal">
@@ -1200,7 +1205,7 @@
                          </button>
                     </td>
                     <td>
-                         <button onclick="deleteProduct(this.id)" id="${product.id}" type="button" class="btn btn-primary"
+                         <button onclick="deleteProduct(this.id)" id="${product.id}" type="button" class="btn btn-danger"
                             data-bs-toggle="modal" data-bs-target="#deleteModal">
                              Delete
                          </button>
@@ -1227,29 +1232,23 @@
                                                    <button onclick="searchByProduct()" id="bt_search" class="btn btn-primary">Search</button> </div>
                                               </div>
                                          </div>
-<!--                                       <input id="search1" type="text" placeholder="Search by product name"/>-->
-<!--                                       <input onclick="searchByProduct()" id="bt_search" type="submit" value="Search"/>-->
                                     </td>
                                   </tr>
                                   <tr>
-                                    <td>
-                                         <button type="button" class="btn btn-primary"
+                                    <td colspan="11">
+                                         <button type="button" class="btn btn-success"
                                          data-bs-toggle="modal" data-bs-target="#createModal">
-                                         Create
+                                         Add New Product
                                          </button>
                                     </td>
                                   </tr>
                                   <tr>
                                      <th>#</th>
                                      <th>Name</th>
-                                     <th>Type</th>
-                                     <th>Seat</th>
                                      <th>Color</th>
                                      <th>Quantity</th>
-                                     <th>By Price</th>
-                                     <th>Sell Price</th>
-                                     <th>Brand</th>
-                                     <th>Image</th>
+                                     <th>Purchased</th>
+                                     <th>Sale</th>
                                      <th>Edit</th>
                                      <th>Delete</th>
                                   </tr>`;
@@ -1486,24 +1485,20 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                         <button type="button" class="btn btn-primary"
+                                    <td colspan="11">
+                                         <button type="button" class="btn btn-success"
                                          data-bs-toggle="modal" data-bs-target="#createModal">
-                                         Create
+                                         Add New Product
                                          </button>
                                     </td>
                                   </tr>
                                 <tr>
                                      <th>#</th>
                                      <th>Name</th>
-                                     <th>Type</th>
-                                     <th>Seat</th>
                                      <th>Color</th>
                                      <th>Quantity</th>
-                                     <th>By Price</th>
-                                     <th>Sell Price</th>
-                                     <th>Brand</th>
-                                     <th>Image</th>
+                                     <th>Purchased</th>
+                                     <th>Sale</th>
                                      <th>Edit</th>
                                      <th>Delete</th>
                                </tr>`;
