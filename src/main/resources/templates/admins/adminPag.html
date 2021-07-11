@@ -8,6 +8,7 @@
     <title>Skydash Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../../admins/vendors/feather/feather.css">
     <link rel="stylesheet" href="../../../admins/vendors/ti-icons/css/themify-icons.css">
@@ -23,7 +24,37 @@
     <!-- endinject -->
     <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"-->
     <!--          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
+    <style>
+        .search {
+            position: relative;
+            box-shadow: 0 0 40px rgba(51, 51, 51, .1)
+        }
 
+        .search input {
+            height: 55px;
+            border: 2px solid #d6d4d4
+        }
+
+        .search input:focus {
+            box-shadow: none;
+            border: 2px solid blue
+        }
+
+        .search .fa-search {
+            position: absolute;
+            top: 20px;
+            left: 16px
+        }
+
+        .search button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            height: 45px;
+            width: 100px;
+            background: blue
+        }
+    </style>
 </head>
 <body>
 
@@ -34,7 +65,11 @@
         <!--        Logo  -->
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
             <a class="navbar-brand brand-logo mr-5" href="#">
-                <img src="../../../admins/images/adminLogoPag.png" class="mr-2" alt="logo"/>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCwbZnhzjj-CzWJ5jolN4axlj2OJL9PnmdrQ&amp;usqp=CAU"
+                     class="mr-2" alt="logo" style="
+                    object-fit: cover;
+                    height: 50%;
+                    width: 50%;">
             </a>
             <a class="navbar-brand brand-logo-mini" href="#">
                 <img src="../../../admins/images/adminLogoPag.png" alt="logo"/></a>
@@ -109,7 +144,8 @@
                 </li>
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                        <img src="../../../admins/images/avatarAdmin.png" alt="profile"/>
+                        <img src="data:image/png;base64,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"
+                             alt="profile"/>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                         <a class="dropdown-item">
@@ -341,27 +377,27 @@
                     </a>
                     <div class="collapse" id="ui-basic">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"><a class="nav-link" onclick="showTableCars()">Table Cars</a>
+                            <li class="nav-item"><a class="nav-link" onclick="showTableCars()">Products</a>
                             </li>
                             <li class="nav-item"><a class="nav-link"
-                                                    onclick="showTableClients()">Table Clients</a></li>
+                                                    onclick="showTableClients()">Users</a></li>
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
-                       aria-controls="form-elements">
-                        <i class="icon-columns menu-icon"></i>
-                        <span class="menu-title">Form elements</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="form-elements">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"><a class="nav-link" href="#">Basic
-                                Elements</a></li>
-                        </ul>
-                    </div>
-                </li>
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"-->
+                <!--                       aria-controls="form-elements">-->
+                <!--                        <i class="icon-columns menu-icon"></i>-->
+                <!--                        <span class="menu-title">Form elements</span>-->
+                <!--                        <i class="menu-arrow"></i>-->
+                <!--                    </a>-->
+                <!--                    <div class="collapse" id="form-elements">-->
+                <!--                        <ul class="nav flex-column sub-menu">-->
+                <!--                            <li class="nav-item"><a class="nav-link" href="#">Basic-->
+                <!--                                Elements</a></li>-->
+                <!--                        </ul>-->
+                <!--                    </div>-->
+                <!--                </li>-->
             </ul>
         </nav>
         <!-- partial -->
@@ -372,8 +408,7 @@
                         <div class="row">
                             <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                                 <h3 class="font-weight-bold">Welcome Administrator</h3>
-                                <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span
-                                        class="text-primary">3 unread alerts!</span></h6>
+                                <h6 class="font-weight-normal mb-0">All systems are running smoothly!</h6>
                             </div>
                             <div class="col-12 col-xl-4">
                                 <div class="justify-content-end d-flex">
@@ -381,7 +416,7 @@
                                         <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button"
                                                 id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true"
                                                 aria-expanded="true">
-                                            <i class="mdi mdi-calendar"></i> Today (10 Jan 2021)
+                                            <i class="mdi mdi-calendar"></i> Today
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right"
                                              aria-labelledby="dropdownMenuDate2">
@@ -400,8 +435,9 @@
                     <div class="col-md-6 grid-margin stretch-card">
                         <div>
                             <div class="card-people mt-auto">
-                                <img style="height: 100% ; width: 100% ;object-fit: cover; margin-top: -10px"
-                                     src="../../../admins/images/admin_1.png" alt="people">
+                                <img style="height: 100% ; width: 100% ;object-fit: cover; margin-top: -17.5px"
+                                     src="https://images.pexels.com/photos/618613/pexels-photo-618613.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                                     alt="people">
                             </div>
                         </div>
                     </div>
@@ -410,7 +446,7 @@
                             <div class="col-md-6 mb-4 stretch-card transparent">
                                 <div class="card card-tale">
                                     <div class="card-body">
-                                        <p class="mb-4">Total Cars</p>
+                                        <p class="mb-4">Total Cars Left</p>
                                         <p class="fs-30 mb-2" id="quantity_oto"></p>
                                         <p id="quantity_oto_date"></p>
                                     </div>
@@ -448,7 +484,7 @@
                         </div>
                     </div>
                 </div>
-<!--              Product list   -->
+                <!--              Product list   -->
                 <div class="row">
                     <table class="table table-striped table-hover" id="productList">
                     </table>
@@ -466,13 +502,13 @@
                                                 <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
                                                     <div class="ml-xl-4 mt-3">
 
-                                                        <p class="card-title">Detailed Reports</p>
+                                                        <p class="card-title">Total Profits</p>
                                                         <h1 id="text-primary" class="text-primary"></h1>
-                                                        <h3 class="font-weight-500 mb-xl-4 text-primary">North
-                                                            America</h3>
-                                                        <p class="mb-2 mb-xl-0">The total number of sessions within the
-                                                            date range. It is the period time a user is actively engaged
-                                                            with your website, page or app, etc</p>
+                                                        <h3 class="font-weight-500 mb-xl-4 text-primary">Viet Nam</h3>
+                                                        <p class="mb-2 mb-xl-0">The total number of profits since the
+                                                            Grand Opening. It is calculated whenever a registered client
+                                                            books an order
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 col-xl-9">
@@ -581,144 +617,15 @@
                                                 </div>
                                             </div>
                                         </div>
-<!--                                        <div class="carousel-item">-->
-<!--                                            <div class="row">-->
-<!--                                                <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">-->
-<!--                                                    <div class="ml-xl-4 mt-3">-->
-<!--                                                        <p class="card-title">Detailed Reports</p>-->
-<!--                                                        <h1 class="text-primary">$34040</h1>-->
-<!--                                                        <h3 class="font-weight-500 mb-xl-4 text-primary">North-->
-<!--                                                            America</h3>-->
-<!--                                                        <p class="mb-2 mb-xl-0">The total number of sessions within the-->
-<!--                                                            date range. It is the period time a user is actively engaged-->
-<!--                                                            with your website, page or app, etc</p>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                                <div class="col-md-12 col-xl-9">-->
-<!--                                                    <div class="row">-->
-<!--                                                        <div class="col-md-6 border-right">-->
-<!--                                                            <div class="table-responsive mb-3 mb-md-0 mt-3">-->
-<!--                                                                <table class="table table-borderless report-table">-->
-<!--                                                                    <tr>-->
-<!--                                                                        <td class="text-muted">Illinois</td>-->
-<!--                                                                        <td class="w-100 px-0">-->
-<!--                                                                            <div class="progress progress-md mx-4">-->
-<!--                                                                                <div class="progress-bar bg-primary"-->
-<!--                                                                                     role="progressbar"-->
-<!--                                                                                     style="width: 70%"-->
-<!--                                                                                     aria-valuenow="70"-->
-<!--                                                                                     aria-valuemin="0"-->
-<!--                                                                                     aria-valuemax="100"></div>-->
-<!--                                                                            </div>-->
-<!--                                                                        </td>-->
-<!--                                                                        <td><h5 class="font-weight-bold mb-0">713</h5>-->
-<!--                                                                        </td>-->
-<!--                                                                    </tr>-->
-<!--                                                                    <tr>-->
-<!--                                                                        <td class="text-muted">Washington</td>-->
-<!--                                                                        <td class="w-100 px-0">-->
-<!--                                                                            <div class="progress progress-md mx-4">-->
-<!--                                                                                <div class="progress-bar bg-warning"-->
-<!--                                                                                     role="progressbar"-->
-<!--                                                                                     style="width: 30%"-->
-<!--                                                                                     aria-valuenow="30"-->
-<!--                                                                                     aria-valuemin="0"-->
-<!--                                                                                     aria-valuemax="100"></div>-->
-<!--                                                                            </div>-->
-<!--                                                                        </td>-->
-<!--                                                                        <td><h5 class="font-weight-bold mb-0">583</h5>-->
-<!--                                                                        </td>-->
-<!--                                                                    </tr>-->
-<!--                                                                    <tr>-->
-<!--                                                                        <td class="text-muted">Mississippi</td>-->
-<!--                                                                        <td class="w-100 px-0">-->
-<!--                                                                            <div class="progress progress-md mx-4">-->
-<!--                                                                                <div class="progress-bar bg-danger"-->
-<!--                                                                                     role="progressbar"-->
-<!--                                                                                     style="width: 95%"-->
-<!--                                                                                     aria-valuenow="95"-->
-<!--                                                                                     aria-valuemin="0"-->
-<!--                                                                                     aria-valuemax="100"></div>-->
-<!--                                                                            </div>-->
-<!--                                                                        </td>-->
-<!--                                                                        <td><h5 class="font-weight-bold mb-0">924</h5>-->
-<!--                                                                        </td>-->
-<!--                                                                    </tr>-->
-<!--                                                                    <tr>-->
-<!--                                                                        <td class="text-muted">California</td>-->
-<!--                                                                        <td class="w-100 px-0">-->
-<!--                                                                            <div class="progress progress-md mx-4">-->
-<!--                                                                                <div class="progress-bar bg-info"-->
-<!--                                                                                     role="progressbar"-->
-<!--                                                                                     style="width: 60%"-->
-<!--                                                                                     aria-valuenow="60"-->
-<!--                                                                                     aria-valuemin="0"-->
-<!--                                                                                     aria-valuemax="100"></div>-->
-<!--                                                                            </div>-->
-<!--                                                                        </td>-->
-<!--                                                                        <td><h5 class="font-weight-bold mb-0">664</h5>-->
-<!--                                                                        </td>-->
-<!--                                                                    </tr>-->
-<!--                                                                    <tr>-->
-<!--                                                                        <td class="text-muted">Maryland</td>-->
-<!--                                                                        <td class="w-100 px-0">-->
-<!--                                                                            <div class="progress progress-md mx-4">-->
-<!--                                                                                <div class="progress-bar bg-primary"-->
-<!--                                                                                     role="progressbar"-->
-<!--                                                                                     style="width: 40%"-->
-<!--                                                                                     aria-valuenow="40"-->
-<!--                                                                                     aria-valuemin="0"-->
-<!--                                                                                     aria-valuemax="100"></div>-->
-<!--                                                                            </div>-->
-<!--                                                                        </td>-->
-<!--                                                                        <td><h5 class="font-weight-bold mb-0">560</h5>-->
-<!--                                                                        </td>-->
-<!--                                                                    </tr>-->
-<!--                                                                    <tr>-->
-<!--                                                                        <td class="text-muted">Alaska</td>-->
-<!--                                                                        <td class="w-100 px-0">-->
-<!--                                                                            <div class="progress progress-md mx-4">-->
-<!--                                                                                <div class="progress-bar bg-danger"-->
-<!--                                                                                     role="progressbar"-->
-<!--                                                                                     style="width: 75%"-->
-<!--                                                                                     aria-valuenow="75"-->
-<!--                                                                                     aria-valuemin="0"-->
-<!--                                                                                     aria-valuemax="100"></div>-->
-<!--                                                                            </div>-->
-<!--                                                                        </td>-->
-<!--                                                                        <td><h5 class="font-weight-bold mb-0">793</h5>-->
-<!--                                                                        </td>-->
-<!--                                                                    </tr>-->
-<!--                                                                </table>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="col-md-6 mt-3">-->
-<!--                                                            <canvas id="south-america-chart"></canvas>-->
-<!--                                                            <div id="south-america-legend"></div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
                                     </div>
-                                    <a class="carousel-control-prev" href="#detailedReports" role="button"
-                                       data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#detailedReports" role="button"
-                                       data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- content-wrapper ends -->
-            <!-- partial:partials/_footer.html -->
+            <!--             content-wrapper ends-->
+            <!--            partial:partials/_footer.html &ndash;&gt;-->
             <footer class="footer">
                 <div class="d-sm-flex justify-content-center justify-content-sm-between">
                     <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a
@@ -734,8 +641,6 @@
     <!-- page-body-wrapper ends -->
 </div>
 <!-- container-scroller -->
-
-
 
 
 <!--Display modal-->
@@ -768,7 +673,8 @@
                         <td>Color</td>
                         <td>
                             <select id="createColor">
-                            <option th:each="color:${colors}" th:text="${color.name}" th:value="${color.id}"></option>
+                                <option th:each="color:${colors}" th:text="${color.name}"
+                                        th:value="${color.id}"></option>
                             </select>
                         </td>
                     </tr>
@@ -843,7 +749,7 @@
                         <td>Color</td>
                         <td><select id="editColor">
                             <option th:each="color:${colors}" th:text="${color.name}"
-                                    th:value="${color.id}" ></option>
+                                    th:value="${color.id}"></option>
                         </select></td>
                     </tr>
                     <tr>
@@ -872,10 +778,10 @@
                         <td>Image</td>
                         <td>
                             <form method="post" enctype="multipart/form-data" id="editFileUploadForm">
-                                <img id ="imgEdit1">
-                                <input type="file" name="files" id="editInputImg1" >
-                                <img id ="imgEdit2">
-                                <input type="file" name="files" id ="editInputImg2" >
+                                <img id="imgEdit1">
+                                <input type="file" name="files" id="editInputImg1">
+                                <img id="imgEdit2">
+                                <input type="file" name="files" id="editInputImg2">
                             </form>
                         </td>
                     </tr>
@@ -953,7 +859,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" >Order Detail</h5>
+                <h5 class="modal-title">Order Detail</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -974,8 +880,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 <!-- plugins:js -->
@@ -1015,9 +919,9 @@
 
     function showTableClients() {
         $.ajax({
-            type : "GET",
-            url : `/api/users`,
-            success : showFormSuccess
+            type: "GET",
+            url: `/api/users`,
+            success: showFormSuccess
 
         })
     }
@@ -1025,19 +929,27 @@
     function showFormSuccess(data) {
         let content = `<tr>
                                     <td  colspan="11">
-                                       <input id="search_username" type="text" placeholder="Search by username"/>
-                                       <input onclick="searchByUsername()" id="bt_search_by_username" type="submit" value="Search"/>
+
+                                            <div class="row d-flex justify-content-center align-items-center">
+                                                  <div class="col-md-8">
+                                                        <div class="search"> <i class="fa fa-search"></i> <input style="margin-left: 10px" id="search_username" type="text" class="form-control" placeholder="Search by username">
+                                                        <button onclick="searchByUsername()" id="bt_search_by_username" class="btn btn-primary">Search</button> </div>
+                                                  </div>
+                                            </div>
+
+<!--                                       <input id="search_username" type="text" placeholder="Search by username"/>-->
+<!--                                       <input onclick="searchByUsername()" id="bt_search_by_username" type="submit" value="Search"/>-->
                                     </td>
                                 </tr>
                                 <tr>
-                                  <td>#</td>
-                                  <td>Username</td>
-                                  <td>Email</td>
-                                  <td>TotalSpent</td>
-                                  <td>Transaction History</td>
+                                  <th>#</th>
+                                  <th>Username</th>
+                                  <th>Email</th>
+                                  <th>Total Money Spent</th>
+                                  <th>Transaction History</th>
                                </tr>`;
         for (let i = 0; i < data.content.length; i++) {
-            content += getClients(data.content[i],i+1);
+            content += getClients(data.content[i], i + 1);
         }
         document.getElementById('productList').innerHTML = content;
     }
@@ -1045,13 +957,13 @@
     function searchByUsername() {
         let username = $('#search_username').val();
         $.ajax({
-            type : "GET",
-            url : `/api/users/${username}`,
-            success : showFormSuccess
+            type: "GET",
+            url: `/api/users/${username}`,
+            success: showFormSuccess
         })
     }
 
-    function getClients(client,i) {
+    function getClients(client, i) {
         return `<tr>
                     <td>${i}</td>
                     <td>${client.username}</td>
@@ -1064,25 +976,26 @@
                          </button>
 </td>`;
     }
+
     function transactionHistory(id) {
         $.ajax({
-            type : "GET",
-            url : `/orders/${id}`,
-            success : function (data){
+            type: "GET",
+            url: `/orders/${id}`,
+            success: function (data) {
                 let content = `<tr><td>#</td>
                                   <td>Date Order</td>
                                   <td>Order Detail</td></tr>`;
-                for (let i = 0;i<data.length;i++){
-                    content += getOrderByUserId(data[i],i+1)
+                for (let i = 0; i < data.length; i++) {
+                    content += getOrderByUserId(data[i], i + 1)
                 }
-                $('#name_user_name').val(data[0].user.username) ;
+                $('#name_user_name').val(data[0].user.username);
                 document.getElementById('list_order_my').innerHTML = content;
             }
         })
     }
 
     // get order by id user
-    function getOrderByUserId(order,i){
+    function getOrderByUserId(order, i) {
         return `<tr><td >${i}</td>
                     <td >${order.date}</td>
 <td>
@@ -1097,9 +1010,9 @@
 
     function getDetailOrder(id) {
         $.ajax({
-            type : "GET",
-            url : `/orderdetails/${id}`,
-            success : function (data){
+            type: "GET",
+            url: `/orderdetails/${id}`,
+            success: function (data) {
                 $('#name_user_id').val(data.content[0].orders.user.username)
                 let content = `<tr>
                                 <th>Product Name</th>
@@ -1122,6 +1035,7 @@
             }
         })
     }
+
     // get content of order detail
     function getContent(data) {
         return `<tr><td>${data.product.name}</td>
@@ -1150,7 +1064,7 @@
         let minute = date.getMinutes()
         let hour = date.getHours()
         let day = date.getDate();
-        let month = date.getMonth()+1;
+        let month = date.getMonth() + 1;
         let year = date.getFullYear();
         return hour + ':' + minute + ':' + second + ' ' + day + '/' + month + '/' + year;
     }
@@ -1161,7 +1075,7 @@
             url: `/products`,
             success: function (data) {
                 let quantity = 0;
-                for (let i = 0;i<data.content.length;i++){
+                for (let i = 0; i < data.content.length; i++) {
                     quantity += data.content[i].quantity;
                 }
                 document.getElementById('quantity_oto').textContent = '' + quantity + ' Cars';
@@ -1194,7 +1108,7 @@
             type: "GET",
             url: `/api/users`,
             success: function (data) {
-                document.getElementById('number_of_clients').textContent = '' + data.content.length + ' Clients';
+                document.getElementById('number_of_clients').textContent = '' + (data.content.length - 1) + ' Clients';
             }
         })
 
@@ -1218,10 +1132,17 @@
             success: function (data) {
                 let content = `<tr>
                                     <td  colspan="11">
-                                       <input id="search1" type="text" placeholder="Search by product"/>
-                                       <input onclick="searchByProduct()" id="bt_search"type="submit" value="Search"/>
+                                      <div class="row d-flex justify-content-center align-items-center">
+                                              <div class="col-md-8">
+                                                   <div class="search"> <i class="fa fa-search"></i> <input id="search1"  style="margin-left: 10px" id="search_username" type="text" class="form-control" placeholder="Search by Product Name">
+                                                   <button onclick="searchByProduct()" id="bt_search" class="btn btn-primary">Search</button> </div>
+                                              </div>
+                                      </div>
                                     </td>
-                                    <td>
+
+                                </tr>
+                                <tr>
+                                     <td>
                                          <button type="button" class="btn btn-primary" id="bt_showCreateProductForm"
                                          data-bs-toggle="modal" data-bs-target="#createModal">
                                          Create
@@ -1229,32 +1150,33 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                  <td>#</td>
-                                  <td>Name</td>
-                                  <td>Type</td>
-                                  <td>Seat</td>
-                                  <td>Color</td>
-                                  <td>Quantity</td>
-                                  <td>By Price</td>
-                                  <td>Sell Price</td>
-                                  <td>Brand</td>
-                                  <td>Image</td>
-                                  <td>Edit</td>
-                                  <td>Delete</td>
+                                  <th>#</th>
+                                  <th>Name</th>
+                                  <th>Type</th>
+                                  <th>Seat</th>
+                                  <th>Color</th>
+                                  <th>Quantity</th>
+                                  <th>By Price</th>
+                                  <th>Sell Price</th>
+                                  <th>Brand</th>
+                                  <th>Image</th>
+                                  <th>Edit</th>
+                                  <th>Delete</th>
                                </tr>`;
                 for (let i = 0; i < data.content.length; i++) {
-                    content += getProduct(data.content[i],i+1);
+                    content += getProduct(data.content[i], i + 1);
                 }
                 document.getElementById('productList').innerHTML = content;
             }
         })
     }
+
     //--ve thong tin smartphone
-    function getProduct(product,i) {
+    function getProduct(product, i) {
         let str = "";
-        if (product.imageSet.length>0){
+        if (product.imageSet.length > 0) {
             product.imageSet.forEach(value =>
-                str+=`<img style="width: 100px ; height: 100px"src="/../image/${value.image}">`);
+                str += `<img style="width: 100px ; height: 100px"src="/../image/${value.image}">`);
         }
         // <img th:each="img:${product.imageSet}" th:src="@{'/resources/static/image/' + ${img.image}}" alt="photo">
 
@@ -1268,9 +1190,9 @@
                     <td >${product.buyPrice}</td>
                     <td >${product.sellPrice}</td>
                     <td >${product.brand.name}</td>
-                    <td >`+
+                    <td >` +
             `${str}`
-            +`</td>` +
+            + `</td>` +
             `<td>
                          <button onclick="editProduct(this.id)" id="${product.id}"  type="button" class="btn btn-primary"
                               data-bs-toggle="modal" data-bs-target="#editModal">
@@ -1285,6 +1207,7 @@
                     </td>
                  </tr>`;
     }
+
     function successHandler() {
 
         $('#editModal').modal('hide');
@@ -1298,9 +1221,17 @@
                 let content1 = `
                                   <tr>
                                     <td  colspan="11">
-                                       <input id="search1" type="text" placeholder="Search by product name"/>
-                                       <input onclick="searchByProduct()" id="bt_search"type="submit" value="Search"/>
+                                         <div class="row d-flex justify-content-center align-items-center">
+                                              <div class="col-md-8">
+                                                   <div class="search"> <i class="fa fa-search"></i> <input id="search1"  style="margin-left: 10px" id="search_username" type="text" class="form-control" placeholder="Search by Product Name">
+                                                   <button onclick="searchByProduct()" id="bt_search" class="btn btn-primary">Search</button> </div>
+                                              </div>
+                                         </div>
+<!--                                       <input id="search1" type="text" placeholder="Search by product name"/>-->
+<!--                                       <input onclick="searchByProduct()" id="bt_search" type="submit" value="Search"/>-->
                                     </td>
+                                  </tr>
+                                  <tr>
                                     <td>
                                          <button type="button" class="btn btn-primary"
                                          data-bs-toggle="modal" data-bs-target="#createModal">
@@ -1324,7 +1255,7 @@
                                   </tr>`;
 
                 for (let i = 0; i < data.content.length; i++) {
-                    content1 += getProduct(data.content[i],i+1);
+                    content1 += getProduct(data.content[i], i + 1);
                 }
                 document.getElementById('productList').innerHTML = content1;
 
@@ -1462,7 +1393,7 @@
                                 let brand = $('#editBrand').val();
 
                                 let productEdit = {
-                                    id:id,
+                                    id: id,
                                     name: name,
                                     type: type,
                                     seat: seat,
@@ -1487,7 +1418,7 @@
                                     type: "PUT",
                                     data: JSON.stringify(productEdit),
                                     // API
-                                    url: "/products/"+id,
+                                    url: "/products/" + id,
                                     //su ly khi thanh cong
                                     success: successHandler
                                 });
@@ -1507,6 +1438,7 @@
         })
         event.preventDefault();
     }
+
     <!-- delete funcition-->
     function deleteProduct(id) {
         $.ajax({
@@ -1522,7 +1454,7 @@
                         $.ajax({
                             type: "DELETE",
                             //tên API
-                            url: `/products/`+ id,
+                            url: `/products/` + id,
                             //xử lý khi thành công
                             success: successHandler
                         });
@@ -1536,18 +1468,24 @@
 
     }
 
-    function searchByProduct(){
+    function searchByProduct() {
         let search = $('#search1').val();
         $.ajax({
             type: "get",
-            url:`/products/search?search=${search}`,
+            url: `/products/search?search=${search}`,
             success: function (data) {
                 let content1 = `
                                 <tr>
                                     <td  colspan="11">
-                                       <input id="search1" type="text" placeholder="Search by product"/>
-                                       <input onclick="searchByProduct()" id="bt_search"type="submit" value="Search"/>
+                                       <div class="row d-flex justify-content-center align-items-center">
+                                              <div class="col-md-8">
+                                                   <div class="search"> <i class="fa fa-search"></i> <input id="search1"  style="margin-left: 10px" id="search_username" type="text" class="form-control" placeholder="Search by Product Name">
+                                                   <button onclick="searchByProduct()" id="bt_search" class="btn btn-primary">Search</button> </div>
+                                              </div>
+                                       </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <td>
                                          <button type="button" class="btn btn-primary"
                                          data-bs-toggle="modal" data-bs-target="#createModal">
@@ -1571,7 +1509,7 @@
                                </tr>`;
 
                 for (let i = 0; i < data.content.length; i++) {
-                    content1 += getProduct(data.content[i],i+1);
+                    content1 += getProduct(data.content[i], i + 1);
                 }
                 document.getElementById('productList').innerHTML = content1;
 
@@ -1580,6 +1518,7 @@
         });
         event.preventDefault();
     }
+
     // // lấy colors và brands
     // var colors=[];
     // var brands=[];
@@ -1632,11 +1571,11 @@
     // });
 </script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type = "text/javascript">
-    $(document).ready(function(){
-        $('#logout').click(function (){
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#logout').click(function () {
             localStorage.clear();
-            window.location.href="/logout";
+            window.location.href = "/logout";
         });
     });
 
