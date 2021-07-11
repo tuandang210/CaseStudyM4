@@ -64,7 +64,7 @@
         <ul>
             <li><a href="/user">Home</a></li>
 
-            <li><a href="user-product/list" class="active">Cars</a></li>
+            <li><a href="/user-product/list" class="active">Cars</a></li>
 
             <li>
                 <a href="#" class="dropdown-toggle">About</a>
@@ -747,12 +747,12 @@
                 + "<td>" + cartArray[i].name + "</td>"
                 + "<td>(" + cartArray[i].price + ")</td>"
                 + "<td><div class='input-group'><button class='minus-item input-group-addon' data-name=" + cartArray[i].name + ">-</button>"
-                + "<input style='margin-top: 3px' type='number' class='alool item-count form-control' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
+                + "<input style='margin-top: 3px' type='number' readonly class='alool item-count form-control' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
                 + "<button class='plus-item input-group-addon' data-name=" + cartArray[i].name + ">+</button></div></td>"
                 + "<td><button class='delete-item' data-name=" + cartArray[i].name + ">X</button></td>"
                 + " = "
                 + "<td>" + cartArray[i].total + "</td>"
-                + "<td class='okokok'>" + cartArray[i].id + "<td/>"
+                + "<td hidden class='okokok'>" + cartArray[i].id + "<td/>"
                 + "</tr>";
 
         }
