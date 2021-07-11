@@ -16,6 +16,7 @@ import java.util.Optional;
 @Repository
 public interface IProductRepository extends JpaRepository<Product,Long> {
     Page<Product> findAllByNameContaining(String name, Pageable pageable);
+
     @Query(value = "select * from products limit ?1 offset ?2", nativeQuery = true)
     List<Product> findAllUsingQueryForPagination(Integer limit, Integer offset);
 

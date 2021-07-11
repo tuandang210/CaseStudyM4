@@ -69,7 +69,7 @@ public class RestUploadController {
 
         // Get file name
         String uploadedFileName = Arrays.stream(uploadFiles).map(MultipartFile::getOriginalFilename)
-                .filter(x -> !StringUtils.isEmpty(x)).collect(Collectors.joining(" , "));
+                .filter(x -> !StringUtils.isEmpty(x)).collect(Collectors.joining(","));
         Set<Image> imageSet = new HashSet<>();
 
         if (StringUtils.isEmpty(uploadedFileName)) {
