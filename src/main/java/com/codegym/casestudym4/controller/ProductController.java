@@ -127,4 +127,9 @@ public class ProductController {
             return new ResponseEntity<>(productPage,HttpStatus.NO_CONTENT);
         }
     }
+
+    @GetMapping("/aaaaa/{name}")
+    public ResponseEntity<?> getProduct(@PathVariable String name){
+        return new ResponseEntity<>(productService.findProductByName(name).get(),HttpStatus.OK);
+    }
 }

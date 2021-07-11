@@ -64,7 +64,7 @@
         <ul>
             <li><a href="/user">Home</a></li>
 
-            <li><a href="user-product/list" class="active">Cars</a></li>
+            <li><a href="/user-product/list" class="active">Cars</a></li>
 
             <li>
                 <a href="#" class="dropdown-toggle">About</a>
@@ -176,7 +176,7 @@
                     for (let i = 0; i < data.content.length; i++) {
                         let str = "";
                         if (data.content[i].quantity > 0) {
-                            str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                            str += `<img style="object-fit: cover; height: 200px; width: 100%" src="/../image/${data.content[i].imageSet[0].image}">`
                             content += `
 
                                   <article>
@@ -233,7 +233,7 @@
                                     continue
                                 }
                                 let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                str += `<img style="object-fit: cover; height: 200px; width: 100%" src="/../image/${data.content[i].imageSet[0].image}">`
                                 content += `
 
                                   <article>
@@ -255,7 +255,7 @@
                                     continue
                                 }
                                 let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                str += `<img style="object-fit: cover; height: 200px; width: 100%" src="/../image/${data.content[i].imageSet[0].image}">`
                                 content += `
 
                                   <article>
@@ -297,7 +297,7 @@
                             }
                             if (ab === data.content[i].color.name) {
                                 let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                str += `<img style="object-fit: cover; height: 200px; width: 100%" src="/../image/${data.content[i].imageSet[0].image}">`
                                 content += `
 
                                   <article>
@@ -319,7 +319,7 @@
                                     continue
                                 }
                                 let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                str += `<img style="object-fit: cover; height: 200px; width: 100%" src="/../image/${data.content[i].imageSet[0].image}">`
                                 content += `
 
                                   <article>
@@ -361,7 +361,7 @@
                                     continue
                                 }
                                 let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                str += `<img style="object-fit: cover; height: 200px; width: 100%" src="/../image/${data.content[i].imageSet[0].image}">`
                                 content += `
 
                                   <article>
@@ -383,7 +383,7 @@
                                     continue
                                 }
                                 let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                str += `<img style="object-fit: cover; height: 200px; width: 100%" src="/../image/${data.content[i].imageSet[0].image}">`
                                 content += `
 
                                   <article>
@@ -425,7 +425,7 @@
                             }
                             if (ab === data.content[i].type) {
                                 let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                str += `<img style="object-fit: cover; height: 200px; width: 100%" src="/../image/${data.content[i].imageSet[0].image}">`
                                 content += `
 
                                   <article>
@@ -447,7 +447,7 @@
                                     continue
                                 }
                                 let str = "";
-                                str += `<img style="object-fit: cover; height: 180px; width: 100%" src="/../${data.content[i].imageSet[0].image}">`
+                                str += `<img style="object-fit: cover; height: 200px; width: 100%" src="/../image/${data.content[i].imageSet[0].image}">`
                                 content += `
 
                                   <article>
@@ -747,12 +747,12 @@
                 + "<td>" + cartArray[i].name + "</td>"
                 + "<td>(" + cartArray[i].price + ")</td>"
                 + "<td><div class='input-group'><button class='minus-item input-group-addon' data-name=" + cartArray[i].name + ">-</button>"
-                + "<input style='margin-top: 3px' type='number' class='alool item-count form-control' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
+                + "<input style='margin-top: 3px' type='number' readonly class='alool item-count form-control' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
                 + "<button class='plus-item input-group-addon' data-name=" + cartArray[i].name + ">+</button></div></td>"
                 + "<td><button class='delete-item' data-name=" + cartArray[i].name + ">X</button></td>"
                 + " = "
                 + "<td>" + cartArray[i].total + "</td>"
-                + "<td class='okokok'>" + cartArray[i].id + "<td/>"
+                + "<td hidden class='okokok'>" + cartArray[i].id + "<td/>"
                 + "</tr>";
 
         }
